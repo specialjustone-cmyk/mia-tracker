@@ -7,747 +7,405 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="咪啊健康">
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236b5b4e' width='100' height='100' rx='20'/><text y='70' x='50' text-anchor='middle' font-size='60'>🐱</text></svg>">
-<title>Mia 咪啊 Health Tracker</title>
+<title>Mia 咪啊 Health Tracker v2</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #fdf6ee; --bg2: #f5ebe0; --bg3: #edede9;
-  --card: #ffffff; --border: #e8e0d6; --border-light: #f0ebe4;
-  --brown: #6b5b4e; --brown-mid: #8b7355; --brown-light: #a39171;
-  --gold: #c9a96e; --green: #7a9b6d; --orange: #c47a5a; --yellow: #d4a843;
-  --text: #3d3229; --text-light: #a09890; --text-mid: #6b5b4e;
-}
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-body { font-family:'Noto Sans TC','DM Sans',sans-serif; background:linear-gradient(160deg,var(--bg),var(--bg2) 40%,var(--bg3)); color:var(--text); min-height:100vh; padding-bottom:80px; }
-.header { background:linear-gradient(135deg,var(--brown),var(--brown-mid) 50%,var(--brown-light)); padding:max(env(safe-area-inset-top),20px) 20px 18px; color:var(--bg); position:relative; overflow:hidden; }
-.header::after { content:'🐾'; position:absolute; top:-30px; right:-20px; font-size:120px; opacity:.07; }
-.header-sub { font-size:11px; letter-spacing:3px; text-transform:uppercase; opacity:.65; margin-bottom:4px; }
-.header-title { font-family:'DM Serif Display',serif; font-size:28px; margin-bottom:2px; }
-.header-info { font-size:12px; opacity:.7; }
-
-.tab-bar { display:flex; background:var(--card); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; overflow-x:auto; }
-.tab-btn { flex:1; min-width:60px; padding:10px 4px 8px; border:none; background:transparent; border-bottom:3px solid transparent; color:var(--text-light); font-family:inherit; font-size:10px; font-weight:500; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; transition:all .2s; }
-.tab-btn.active { background:var(--bg); border-bottom-color:var(--brown-mid); color:var(--brown); }
-.tab-btn span { font-size:17px; }
-
-.content { padding:14px; max-width:600px; margin:0 auto; }
-.tab-content { display:none; flex-direction:column; gap:14px; }
-.tab-content.active { display:flex; }
-
-.card { background:var(--card); border-radius:14px; padding:14px 16px; box-shadow:0 1px 4px rgba(107,91,78,.06); }
-.card-title { font-weight:700; font-size:14px; color:var(--text-mid); margin-bottom:10px; border-bottom:2px solid var(--border-light); padding-bottom:7px; }
-
-.info-row { display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid #f8f4ef; gap:10px; flex-wrap:wrap; }
-.info-label { font-size:12px; color:var(--text-light); flex-shrink:0; }
-.info-value { font-size:12px; font-weight:500; text-align:right; word-break:break-all; }
-
-.badge-row { display:flex; gap:8px; flex-wrap:wrap; }
-.badge { background:var(--bg); border-radius:10px; padding:7px 10px; flex:1 1 85px; }
-.badge-label { font-size:10px; color:var(--text-light); }
-.badge-value { font-size:14px; font-weight:700; margin-top:2px; }
-
-input[type=text],input[type=number],input[type=date],input[type=time],select,textarea {
-  border:1px solid #e0d8ce; border-radius:8px; padding:8px 10px; font-size:13px;
-  font-family:inherit; color:var(--text); background:var(--bg); outline:none; width:100%;
-}
-textarea { resize:vertical; min-height:60px; }
-.input-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
-.input-row > * { flex:1; min-width:0; }
-.input-half { flex:1 1 45% !important; }
-.input-third { flex:1 1 30% !important; }
-
-.btn { background:linear-gradient(135deg,var(--brown-mid),var(--brown)); color:#fff; border:none; border-radius:8px; padding:9px 16px; font-size:13px; font-weight:600; font-family:inherit; cursor:pointer; white-space:nowrap; }
-.btn-outline { background:transparent; border:1.5px solid var(--brown-mid); color:var(--brown-mid); border-radius:8px; padding:8px 14px; font-size:12px; font-weight:500; font-family:inherit; cursor:pointer; }
-.btn-danger { background:#e8c4b8; color:var(--orange); }
-.btn-sm { padding:6px 12px; font-size:11px; }
-
-.chip-row { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:8px; }
-.chip { border:none; border-radius:18px; padding:5px 12px; font-size:12px; font-weight:500; font-family:inherit; cursor:pointer; background:var(--border-light); color:var(--text-mid); transition:all .15s; }
-.chip.active { background:var(--brown-mid); color:#fff; }
-.chip.green { background:var(--green); color:#fff; }
-
-.log-item { display:flex; align-items:flex-start; gap:8px; padding:9px 0; border-bottom:1px solid var(--border-light); }
-.log-tag { background:var(--border-light); border-radius:6px; padding:3px 7px; font-size:10px; font-weight:600; color:var(--brown-mid); white-space:nowrap; flex-shrink:0; }
-.log-body { flex:1; min-width:0; }
-.log-date { font-size:11px; color:var(--text-light); }
-.log-text { font-size:12px; font-weight:500; margin-top:1px; }
-.log-note { font-size:11px; color:var(--text-mid); margin-top:1px; }
-.log-del { border:none; background:none; color:#ccc; cursor:pointer; font-size:13px; padding:4px; flex-shrink:0; }
-
-.empty { font-size:12px; color:var(--text-light); text-align:center; padding:20px; }
-.hint { font-size:12px; line-height:1.6; color:var(--brown-mid); margin-top:6px; }
-.section-label { font-size:13px; font-weight:700; color:var(--brown-mid); margin:8px 0 3px; }
-.highlight-box { background:var(--bg); border-radius:10px; padding:10px; border:1px solid var(--border); margin-top:6px; font-size:12px; line-height:1.7; }
-
-.shedding-bar { display:flex; gap:5px; }
-.shedding-bar button { flex:1; height:34px; border-radius:8px; border:none; cursor:pointer; font-weight:600; font-size:13px; color:#bbb; background:var(--border-light); transition:all .15s; }
-.shedding-bar button.on { color:#fff; }
-
-.cross-box { background:#fef9f0; border:1.5px solid var(--gold); border-radius:12px; padding:12px; margin-top:8px; }
-.cross-title { font-size:13px; font-weight:700; color:var(--orange); margin-bottom:6px; }
-.cross-item { font-size:12px; line-height:1.6; color:var(--text); padding:4px 0; border-bottom:1px solid #f5efe5; }
-
-.footer { text-align:center; padding:20px 16px 40px; font-size:10px; color:#ccc; }
-
-.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:200; justify-content:center; align-items:center; }
-.modal-overlay.show { display:flex; }
-.modal { background:var(--card); border-radius:16px; padding:20px; width:90%; max-width:400px; max-height:80vh; overflow-y:auto; }
-.modal-title { font-size:16px; font-weight:700; color:var(--brown); margin-bottom:12px; }
-.modal pre { background:var(--bg); border-radius:8px; padding:10px; font-size:11px; overflow-x:auto; white-space:pre-wrap; word-break:break-all; max-height:50vh; }
+:root{--bg:#fdf6ee;--bg2:#f5ebe0;--bg3:#edede9;--card:#fff;--border:#e8e0d6;--bl:#f0ebe4;--brown:#6b5b4e;--bm:#8b7355;--blt:#a39171;--gold:#c9a96e;--green:#7a9b6d;--orange:#c47a5a;--yellow:#d4a843;--text:#3d3229;--tl:#a09890;--tm:#6b5b4e}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Noto Sans TC','DM Sans',sans-serif;background:linear-gradient(160deg,var(--bg),var(--bg2) 40%,var(--bg3));color:var(--text);min-height:100vh;padding-bottom:80px}
+.hdr{background:linear-gradient(135deg,var(--brown),var(--bm) 50%,var(--blt));padding:max(env(safe-area-inset-top),20px) 20px 18px;color:var(--bg);position:relative;overflow:hidden}
+.hdr::after{content:'🐾';position:absolute;top:-30px;right:-20px;font-size:120px;opacity:.07}
+.hdr-sub{font-size:11px;letter-spacing:3px;text-transform:uppercase;opacity:.65;margin-bottom:4px}
+.hdr-t{font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:2px}
+.hdr-i{font-size:12px;opacity:.7}
+.tb{display:flex;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;overflow-x:auto}
+.tb button{flex:1;min-width:50px;padding:10px 2px 8px;border:none;background:transparent;border-bottom:3px solid transparent;color:var(--tl);font-family:inherit;font-size:9px;font-weight:500;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .2s}
+.tb button.on{background:var(--bg);border-bottom-color:var(--bm);color:var(--brown)}
+.tb button span{font-size:16px}
+.ct{padding:14px;max-width:600px;margin:0 auto}
+.tc{display:none;flex-direction:column;gap:14px}
+.tc.on{display:flex}
+.cd{background:var(--card);border-radius:14px;padding:14px 16px;box-shadow:0 1px 4px rgba(107,91,78,.06)}
+.ct-t{font-weight:700;font-size:14px;color:var(--tm);margin-bottom:10px;border-bottom:2px solid var(--bl);padding-bottom:7px}
+.ir{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f8f4ef;gap:10px;flex-wrap:wrap}
+.il{font-size:12px;color:var(--tl);flex-shrink:0}.iv{font-size:12px;font-weight:500;text-align:right;word-break:break-all}
+.br{display:flex;gap:8px;flex-wrap:wrap}
+.bd{background:var(--bg);border-radius:10px;padding:7px 10px;flex:1 1 85px}
+.bl{font-size:10px;color:var(--tl)}.bv{font-size:14px;font-weight:700;margin-top:2px}
+input[type=text],input[type=number],input[type=date],input[type=time],select,textarea{border:1px solid #e0d8ce;border-radius:8px;padding:8px 10px;font-size:13px;font-family:inherit;color:var(--text);background:var(--bg);outline:none;width:100%}
+textarea{resize:vertical;min-height:60px}
+.fr{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}.fr>*{flex:1;min-width:0}
+.fh{flex:1 1 45%!important}.ft{flex:1 1 30%!important}
+.btn{background:linear-gradient(135deg,var(--bm),var(--brown));color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap}
+.bo{background:transparent;border:1.5px solid var(--bm);color:var(--bm);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:500;font-family:inherit;cursor:pointer}
+.bd2{background:#e8c4b8;color:var(--orange)}.bs{padding:6px 12px;font-size:11px}
+.cr{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+.ch{border:none;border-radius:18px;padding:5px 12px;font-size:12px;font-weight:500;font-family:inherit;cursor:pointer;background:var(--bl);color:var(--tm);transition:all .15s}
+.ch.on{background:var(--bm);color:#fff}.ch.gn{background:var(--green);color:#fff}
+.li{display:flex;align-items:flex-start;gap:8px;padding:9px 0;border-bottom:1px solid var(--bl)}
+.lt{background:var(--bl);border-radius:6px;padding:3px 7px;font-size:10px;font-weight:600;color:var(--bm);white-space:nowrap;flex-shrink:0}
+.lb{flex:1;min-width:0}.ld{font-size:11px;color:var(--tl)}.lx{font-size:12px;font-weight:500;margin-top:1px}.ln{font-size:11px;color:var(--tm);margin-top:1px}
+.ld2{border:none;background:none;color:#ccc;cursor:pointer;font-size:13px;padding:4px;flex-shrink:0}
+.emp{font-size:12px;color:var(--tl);text-align:center;padding:20px}
+.ht{font-size:12px;line-height:1.6;color:var(--bm);margin-top:6px}
+.sl{font-size:13px;font-weight:700;color:var(--bm);margin:8px 0 3px}
+.hb{background:var(--bg);border-radius:10px;padding:10px;border:1px solid var(--border);margin-top:6px;font-size:12px;line-height:1.7}
+.sb{display:flex;gap:5px}.sb button{flex:1;height:34px;border-radius:8px;border:none;cursor:pointer;font-weight:600;font-size:13px;color:#bbb;background:var(--bl);transition:all .15s}
+.cb{background:#fef9f0;border:1.5px solid var(--gold);border-radius:12px;padding:12px;margin-top:8px}
+.cbt{font-size:13px;font-weight:700;color:var(--orange);margin-bottom:6px}
+.cbi{font-size:12px;line-height:1.6;color:var(--text);padding:4px 0;border-bottom:1px solid #f5efe5}
+.ft2{text-align:center;padding:20px 16px 40px;font-size:10px;color:#ccc}
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;justify-content:center;align-items:center}
+.mo.sh{display:flex}.ml{background:var(--card);border-radius:16px;padding:20px;width:90%;max-width:420px;max-height:80vh;overflow-y:auto}
+.ml-t{font-size:16px;font-weight:700;color:var(--brown);margin-bottom:12px}
+.ml pre{background:var(--bg);border-radius:8px;padding:10px;font-size:11px;overflow-x:auto;white-space:pre-wrap;word-break:break-all;max-height:50vh}
+.qb{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:6px 12px;margin:3px;cursor:pointer;font-size:12px;font-family:inherit;color:var(--text);transition:all .15s}
+.qb:active{background:var(--bm);color:#fff;border-color:var(--bm)}
+.med-card{background:linear-gradient(135deg,#f8f4ef,#f0ebe4);border-radius:12px;padding:12px;margin-bottom:8px;border:1px solid var(--border)}
+.med-name{font-weight:600;font-size:13px;color:var(--brown)}.med-info{font-size:11px;color:var(--tl);margin-top:2px}
+.med-bar{height:6px;border-radius:3px;background:#e8e0d6;margin-top:6px;overflow:hidden}
+.med-fill{height:100%;border-radius:3px;transition:width .3s}
 </style>
 </head>
 <body>
-
-<div class="header">
-  <div class="header-sub">Pet Health Tracker</div>
-  <div class="header-title">Mia 咪啊</div>
-  <div class="header-info">Tuxedo DSH · <span id="age"></span> · Sydney, Australia</div>
+<div class="hdr"><div class="hdr-sub">Pet Health Tracker v2</div><div class="hdr-t">Mia 咪啊</div><div class="hdr-i">Tuxedo DSH · <span id="age"></span> · Sydney</div></div>
+<div class="tb" id="tabBar"></div>
+<div class="ct">
+<!-- PROFILE -->
+<div class="tc" id="tab-profile">
+<div class="cd"><div class="ct-t">基本資料</div>
+<div class="ir"><span class="il">名字</span><span class="iv">Mia 咪啊</span></div>
+<div class="ir"><span class="il">品種</span><span class="iv">DSH (Tuxedo)</span></div>
+<div class="ir"><span class="il">性別</span><span class="iv">已結紮母貓</span></div>
+<div class="ir"><span class="il">出生</span><span class="iv">2014/07/01（<span id="ageD"></span>）</span></div>
+<div class="ir"><span class="il">晶片</span><span class="iv">982000356220576</span></div>
+<div class="ir"><span class="il">飼主</span><span class="iv">Emma Shih</span></div>
+<div class="ir"><span class="il">所在地</span><span class="iv">Sydney, NSW</span></div></div>
+<div class="cd"><div class="ct-t">🛡️ 保險資訊</div>
+<div class="ir"><span class="il">保險公司</span><span class="iv">Trupanion Australia</span></div>
+<div class="ir"><span class="il">保單號碼</span><span class="iv">TA0000028910</span></div>
+<div class="ir"><span class="il">保期</span><span class="iv">2025/09/08 - 2026/09/08</span></div>
+<div class="ir"><span class="il">月繳保費</span><span class="iv">$83.13 AUD</span></div>
+<div class="ir"><span class="il">Excess</span><span class="iv">$1,000 / per illness or injury</span></div>
+<div class="ir"><span class="il">Co-Pay</span><span class="iv">90% Trupanion / 10% 自付</span></div>
+<div class="ir"><span class="il">理賠上限</span><span class="iv">No Limit</span></div>
+<div class="ir"><span class="il">等待期</span><span class="iv">意外 5 天 / 疾病 30 天</span></div>
+<div class="ir"><span class="il">客服</span><span class="iv">1300 328 042 (24/7)</span></div>
+<div class="ir"><span class="il">Claim</span><span class="iv">trupanion.com.au/claim</span></div></div>
+<div class="cd"><div class="ct-t">病史摘要</div>
+<div style="font-size:12px;line-height:1.6">
+<div style="padding:4px 0;border-bottom:1px solid var(--bl)"><span style="color:var(--gold)">●</span> Pancreatitis history (prior to adoption)</div>
+<div style="padding:4px 0;border-bottom:1px solid var(--bl)"><span style="color:var(--gold)">●</span> 嘔吐發作 ~2次/年，每次持續2-3週</div>
+<div style="padding:4px 0;border-bottom:1px solid var(--bl)"><span style="color:var(--gold)">●</span> T4 grey zone (45→23) — 持續監控</div>
+<div style="padding:4px 0;border-bottom:1px solid var(--bl)"><span style="color:var(--gold)">●</span> Mild eosinophilia (May 2024)</div>
+<div style="padding:4px 0"><span style="color:var(--gold)">●</span> 微微過重 (BCS 5-6/9)</div></div></div>
+<div class="cd"><div class="ct-t">最近體檢 (2025/01/15)</div>
+<div class="ir"><span class="il">體重</span><span class="iv">6.90 kg（BCS 5/9）</span></div>
+<div class="ir"><span class="il">體溫</span><span class="iv">37.6°C</span></div>
+<div class="ir"><span class="il">血檢</span><span class="iv">WNL（全數正常）</span></div>
+<div class="ir"><span class="il">FAVN</span><span class="iv">≥ 4.56 IU/mL（通過）</span></div></div>
+<div class="cd"><div class="ct-t">⚙️ Google Sheets 連線</div>
+<div style="margin-bottom:8px"><input type="text" id="gasUrl" placeholder="貼上 Google Apps Script URL" style="font-size:11px"></div>
+<div class="fr"><button class="btn bs" onclick="saveGas()">儲存</button><button class="bo bs" onclick="testGas()">測試</button><button class="bo bs" onclick="syncGas()">同步</button></div>
+<div id="gasMsg" style="font-size:11px;color:var(--tl);margin-top:6px"></div></div>
 </div>
 
-<div class="tab-bar" id="tabBar"></div>
-
-<div class="content">
-  <!-- PROFILE -->
-  <div class="tab-content" id="tab-profile">
-    <div class="card">
-      <div class="card-title">基本資料</div>
-      <div class="info-row"><span class="info-label">名字</span><span class="info-value">Mia 咪啊</span></div>
-      <div class="info-row"><span class="info-label">品種</span><span class="info-value">Domestic Short Hair (Tuxedo)</span></div>
-      <div class="info-row"><span class="info-label">性別</span><span class="info-value">已結紮母貓</span></div>
-      <div class="info-row"><span class="info-label">出生日期</span><span class="info-value">2014/07/01（<span id="ageDetail"></span>）</span></div>
-      <div class="info-row"><span class="info-label">晶片</span><span class="info-value">982000356220576</span></div>
-      <div class="info-row"><span class="info-label">飼主</span><span class="info-value">Emma Shih</span></div>
-      <div class="info-row"><span class="info-label">所在地</span><span class="info-value">Sydney, NSW, Australia</span></div>
-    </div>
-    <div class="card">
-      <div class="card-title">飲食 & 用藥</div>
-      <div class="info-row"><span class="info-label">飲食</span><span class="info-value">I/D diet + GI moderate kibble</span></div>
-      <div class="info-row"><span class="info-label">保健品</span><span class="info-value">Probiotic</span></div>
-      <div class="info-row"><span class="info-label">跳蚤/蜱蟲</span><span class="info-value">Bravecto Topical（每12週）</span></div>
-    </div>
-    <div class="card">
-      <div class="card-title">病史摘要</div>
-      <div style="font-size:12px;line-height:1.6">
-        <div style="padding:4px 0;border-bottom:1px solid var(--border-light)"><span style="color:var(--gold)">●</span> Pancreatitis history (prior to adoption)</div>
-        <div style="padding:4px 0;border-bottom:1px solid var(--border-light)"><span style="color:var(--gold)">●</span> 嘔吐發作 ~2次/年，每次持續2-3週</div>
-        <div style="padding:4px 0;border-bottom:1px solid var(--border-light)"><span style="color:var(--gold)">●</span> T4 grey zone (45→23) — 持續監控</div>
-        <div style="padding:4px 0;border-bottom:1px solid var(--border-light)"><span style="color:var(--gold)">●</span> Mild eosinophilia (May 2024)</div>
-        <div style="padding:4px 0"><span style="color:var(--gold)">●</span> 微微過重 (BCS 5-6/9)</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">最近體檢 (2025/01/15)</div>
-      <div class="info-row"><span class="info-label">體重</span><span class="info-value">6.90 kg（BCS 5/9）</span></div>
-      <div class="info-row"><span class="info-label">體溫</span><span class="info-value">37.6°C</span></div>
-      <div class="info-row"><span class="info-label">血檢</span><span class="info-value">WNL（全數正常）</span></div>
-      <div class="info-row"><span class="info-label">FAVN 效價</span><span class="info-value">≥ 4.56 IU/mL（通過）</span></div>
-    </div>
-    <!-- Backend config -->
-    <div class="card">
-      <div class="card-title">⚙️ Google Sheets 連線設定</div>
-      <div style="margin-bottom:8px">
-        <input type="text" id="gasUrl" placeholder="貼上你的 Google Apps Script Web App URL" style="font-size:11px">
-      </div>
-      <div class="input-row">
-        <button class="btn btn-sm" onclick="saveGasUrl()">儲存</button>
-        <button class="btn-outline btn-sm" onclick="testConnection()">測試連線</button>
-        <button class="btn-outline btn-sm" onclick="syncToSheet()">同步到 Sheet</button>
-      </div>
-      <div id="gasStatus" style="font-size:11px;color:var(--text-light);margin-top:6px"></div>
-    </div>
-  </div>
-
-  <!-- DIET -->
-  <div class="tab-content" id="tab-diet">
-    <div class="card">
-      <div class="card-title">新增飲食紀錄</div>
-      <div class="chip-row">
-        <button class="chip active" data-diet="main" onclick="setDietType(this,'main')">主食</button>
-        <button class="chip" data-diet="treat" onclick="setDietType(this,'treat')">零食</button>
-        <button class="chip" data-diet="supplement" onclick="setDietType(this,'supplement')">保健品</button>
-        <button class="chip" data-diet="human" onclick="setDietType(this,'human')">人類食物</button>
-        <button class="chip" data-diet="other" onclick="setDietType(this,'other')">其他</button>
-      </div>
-      <div class="input-row">
-        <input type="date" id="dietDate" class="input-half">
-        <input type="time" id="dietTime" class="input-half">
-      </div>
-      <div class="input-row">
-        <input type="text" id="dietBrand" placeholder="品牌（如 Hill's, Royal Canin...）" class="input-half">
-        <input type="text" id="dietFlavor" placeholder="口味/品項" class="input-half">
-      </div>
-      <div class="input-row">
-        <input type="text" id="dietAmount" placeholder="份量（如 50g, 半罐, 幾顆）" class="input-half">
-        <input type="text" id="dietNote" placeholder="備註" class="input-half">
-      </div>
-      <button class="btn" onclick="addDiet()" style="width:100%">記錄飲食</button>
-    </div>
-    <div class="card">
-      <div class="card-title">飲食日誌</div>
-      <div id="dietList"></div>
-    </div>
-  </div>
-
-  <!-- WEIGHT -->
-  <div class="tab-content" id="tab-weight">
-    <div class="card">
-      <div class="card-title">體重趨勢</div>
-      <div id="weightChart" style="height:180px;overflow-x:auto;margin-bottom:8px"></div>
-      <div class="badge-row" id="weightBadges"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">新增體重紀錄</div>
-      <div class="input-row">
-        <input type="date" id="weightDate" class="input-half">
-        <input type="number" step="0.01" id="weightVal" placeholder="體重 (kg)" class="input-third">
-        <button class="btn" onclick="addWeight()">儲存</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- HEALTH -->
-  <div class="tab-content" id="tab-health">
-    <div class="card">
-      <div class="card-title">新增健康紀錄</div>
-      <div class="chip-row" id="healthChips"></div>
-      <div id="healthOptions"></div>
-      <div class="input-row">
-        <input type="date" id="healthDate" class="input-third">
-        <input type="time" id="healthTime" class="input-third">
-        <input type="text" id="healthNote" placeholder="備註" class="input-third">
-      </div>
-      <button class="btn" onclick="addHealth()" style="width:100%">記錄</button>
-    </div>
-    <div class="card">
-      <div class="card-title">嘔吐 × 飲食 交叉分析</div>
-      <div id="crossAnalysis"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">健康日誌</div>
-      <div id="healthList"></div>
-    </div>
-  </div>
-
-  <!-- VACCINES -->
-  <div class="tab-content" id="tab-vaccines">
-    <div class="card">
-      <div class="card-title">疫苗狀態</div>
-      <div id="vaccineList"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">🇦🇺 澳洲雪梨疫苗建議</div>
-      <div style="font-size:12px;line-height:1.7">
-        <div class="section-label">核心疫苗（F3 / FVRCP）</div>
-        <p style="margin:3px 0 10px">已於 <b>2025/08/06</b> 在 West King Edward Animal Clinic 施打 FVRCP 3年疫苗。<b>下次到期 2028/08/05</b>，目前有效。</p>
-        <div class="section-label">FeLV（貓白血病）</div>
-        <p style="margin:3px 0 10px">已有紀錄（2023/07, 3yr），預計 <b>2026/07</b> 到期。室內貓可與獸醫討論是否繼續。NSW 盛行率 ~10%。</p>
-        <div class="section-label">FIV（貓愛滋）</div>
-        <p style="margin:3px 0 10px">NSW 盛行率 ~15%。若咪啊會外出，建議討論是否施打（保護力 ~50%）。</p>
-        <div class="section-label">Rabies（狂犬病）</div>
-        <p style="margin:3px 0 10px">澳洲無狂犬病，境內不需施打。已有 Rabies（2024/12）& FAVN 通過。</p>
-        <div class="highlight-box">
-          ✅ F3 已施打，2028/08 前有效<br>
-          ✅ 評估 FeLV 到期後是否繼續（2026/07）<br>
-          ✅ 根據生活方式評估 FIV 需求<br>
-          ✅ 帶加拿大獸醫完整紀錄給雪梨獸醫<br>
-          ✅ 討論 T4 灰色地帶後續監控
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SHEDDING -->
-  <div class="tab-content" id="tab-shedding">
-    <div class="card">
-      <div class="card-title">目前掉毛季節狀態</div>
-      <div id="sheddingStatus"></div>
-      <div style="font-size:12px;line-height:1.6;color:var(--text-mid);margin-top:8px">
-        🌸 <b>春季（9-11月）</b>：換掉冬毛<br>
-        🍂 <b>秋季（3-5月）</b>：換掉夏毛<br>
-        室內貓掉毛較均勻，但換季時仍會增加。
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">記錄掉毛程度</div>
-      <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:11px;color:var(--text-light)">少量</span><span style="font-size:11px;color:var(--text-light)">大量</span></div>
-      <div class="shedding-bar" id="sheddingBar"></div>
-      <div class="input-row" style="margin-top:8px">
-        <input type="date" id="sheddingDate" class="input-half">
-        <input type="text" id="sheddingNote" placeholder="備註（刷毛/毛球...）" class="input-half">
-      </div>
-      <button class="btn" onclick="addShedding()" style="width:100%">記錄</button>
-    </div>
-    <div class="card">
-      <div class="card-title">掉毛紀錄</div>
-      <div id="sheddingList"></div>
-    </div>
-  </div>
-
-  <!-- EXPORT -->
-  <div class="tab-content" id="tab-export">
-    <div class="card">
-      <div class="card-title">📤 匯出分析報告</div>
-      <p style="font-size:12px;line-height:1.6;color:var(--text-mid);margin-bottom:10px">
-        產生文字報告，可直接複製貼到 Claude 對話裡進行深入分析，或帶去給獸醫參考。
-      </p>
-      <div class="input-row">
-        <button class="btn" onclick="exportReport('all')">完整報告</button>
-        <button class="btn-outline" onclick="exportReport('vomit')">嘔吐×飲食分析</button>
-        <button class="btn-outline" onclick="exportReport('csv')">CSV 格式</button>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">🗑️ 資料管理</div>
-      <p style="font-size:12px;color:var(--text-light);margin-bottom:8px">清除所有本機資料（此操作無法復原）</p>
-      <button class="btn btn-danger btn-sm" onclick="if(confirm('確定要清除所有資料嗎？此操作無法復原！'))resetAll()">清除所有資料</button>
-    </div>
-  </div>
+<!-- DIET -->
+<div class="tc" id="tab-diet">
+<div class="cd"><div class="ct-t">🍽️ 目前主食設定</div><div id="stapleDisplay"></div></div>
+<div class="cd"><div class="ct-t">💊 預防用藥</div><div id="medDisplay"></div></div>
+<div class="cd"><div class="ct-t">⚡ 快速記錄</div><div id="favBtns"></div>
+<div style="margin-top:8px;font-size:11px;color:var(--tl)">點選常用食物快速記錄，或用下方手動輸入</div></div>
+<div class="cd"><div class="ct-t">手動輸入飲食</div>
+<div class="cr" id="dietChips"></div>
+<div class="fr"><input type="date" id="dDate" class="fh"><input type="time" id="dTime" class="fh"></div>
+<div class="fr"><input type="text" id="dBrand" placeholder="品牌" class="fh"><input type="text" id="dFlavor" placeholder="口味/品項" class="fh"></div>
+<div class="fr"><input type="text" id="dAmt" placeholder="份量" class="fh"><input type="text" id="dNote" placeholder="備註" class="fh"></div>
+<button class="btn" onclick="addDiet()" style="width:100%">記錄</button></div>
+<div class="cd"><div class="ct-t">飲食日誌</div><div id="dietList"></div></div>
 </div>
 
-<!-- Export Modal -->
-<div class="modal-overlay" id="exportModal">
-  <div class="modal">
-    <div class="modal-title" id="modalTitle">匯出報告</div>
-    <pre id="modalContent"></pre>
-    <div style="margin-top:12px;display:flex;gap:8px">
-      <button class="btn" onclick="copyReport()">複製</button>
-      <button class="btn-outline" onclick="closeModal()">關閉</button>
-    </div>
-    <div id="copyMsg" style="font-size:11px;color:var(--green);margin-top:6px;display:none">已複製！</div>
-  </div>
+<!-- FAV MANAGER -->
+<div class="tc" id="tab-favs">
+<div class="cd"><div class="ct-t">⭐ 常用食物清單管理</div>
+<p style="font-size:12px;color:var(--tl);margin-bottom:10px">新增常用食物，之後在「飲食」分頁可快速一鍵記錄</p>
+<div class="fr"><select id="fType"><option value="treat">零食</option><option value="supplement">保健品</option><option value="human">人類食物</option><option value="main">主食</option><option value="other">其他</option></select></div>
+<div class="fr"><input type="text" id="fBrand" placeholder="品牌" class="fh"><input type="text" id="fFlavor" placeholder="品項名稱" class="fh"></div>
+<div class="fr"><input type="text" id="fAmt" placeholder="預設份量（選填）" class="fh"></div>
+<button class="btn" onclick="addFav()" style="width:100%">新增到常用清單</button></div>
+<div class="cd"><div class="ct-t">目前清單</div><div id="favList"></div></div>
+<div class="cd"><div class="ct-t">更換主食</div>
+<p style="font-size:12px;color:var(--tl);margin-bottom:8px">更換主食時使用，系統會自動記錄更換日期</p>
+<div class="fr"><input type="text" id="sNew" placeholder="新主食（如 Hill's I/D 雞肉罐 + GI kibble）"></div>
+<button class="btn" onclick="changeStaple()" style="width:100%">確認更換主食</button></div>
+<div class="cd"><div class="ct-t">新增/更換預防用藥</div>
+<p style="font-size:12px;color:var(--tl);margin-bottom:8px">跳蚤/蜱蟲/驅蟲藥等週期性用藥</p>
+<div class="fr"><input type="text" id="mName" placeholder="藥品名稱" class="fh"><input type="number" id="mCycle" placeholder="週期（天）" class="fh"></div>
+<div class="fr"><input type="date" id="mLast" class="fh"><span style="font-size:11px;color:var(--tl);display:flex;align-items:center">上次用藥日</span></div>
+<button class="btn" onclick="saveMed()" style="width:100%">儲存用藥設定</button></div>
 </div>
 
-<div class="footer">Mia 咪啊 Health Tracker v1.0<br>資料儲存於本機 + Google Sheets</div>
+<!-- WEIGHT -->
+<div class="tc" id="tab-weight">
+<div class="cd"><div class="ct-t">體重趨勢</div><div id="wChart" style="height:180px;overflow-x:auto;margin-bottom:8px"></div><div class="br" id="wBadge"></div></div>
+<div class="cd"><div class="ct-t">新增體重</div><div class="fr"><input type="date" id="wDate" class="fh"><input type="number" step="0.01" id="wVal" placeholder="kg" class="ft"><button class="btn" onclick="addW()">儲存</button></div></div>
+</div>
+
+<!-- HEALTH -->
+<div class="tc" id="tab-health">
+<div class="cd"><div class="ct-t">新增健康紀錄</div><div class="cr" id="hChips"></div><div id="hOpts"></div>
+<div class="fr"><input type="date" id="hDate" class="ft"><input type="time" id="hTime" class="ft"><input type="text" id="hNote" placeholder="備註" class="ft"></div>
+<button class="btn" onclick="addH()" style="width:100%">記錄</button></div>
+<div class="cd"><div class="ct-t">嘔吐 × 飲食 交叉分析</div><div id="xAnal"></div></div>
+<div class="cd"><div class="ct-t">健康日誌</div><div id="hList"></div></div>
+</div>
+
+<!-- VACCINES -->
+<div class="tc" id="tab-vax">
+<div class="cd"><div class="ct-t">疫苗狀態</div><div id="vList"></div></div>
+<div class="cd"><div class="ct-t">🇦🇺 澳洲疫苗建議</div>
+<div style="font-size:12px;line-height:1.7">
+<div class="sl">F3 / FVRCP</div><p style="margin:3px 0 10px">已於 <b>2025/08/06</b> 施打 3年疫苗。<b>下次 2028/08/05</b>。</p>
+<div class="sl">FeLV</div><p style="margin:3px 0 10px">2023/07 施打 3yr，<b>2026/07 到期</b>。室內貓可與獸醫討論。</p>
+<div class="sl">FIV</div><p style="margin:3px 0 10px">NSW 盛行率 ~15%。若外出建議討論。</p>
+<div class="sl">Rabies</div><p style="margin:3px 0 10px">澳洲不需要。已有 FAVN 通過。</p></div></div>
+</div>
+
+<!-- SHEDDING -->
+<div class="tc" id="tab-shed">
+<div class="cd"><div class="ct-t">掉毛狀態</div><div id="shedStat"></div>
+<div style="font-size:12px;line-height:1.6;color:var(--tm);margin-top:8px">🌸 春季(9-11月) 🍂 秋季(3-5月)：換毛高峰</div></div>
+<div class="cd"><div class="ct-t">記錄掉毛</div>
+<div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:11px;color:var(--tl)">少</span><span style="font-size:11px;color:var(--tl)">多</span></div>
+<div class="sb" id="sBar"></div>
+<div class="fr" style="margin-top:8px"><input type="date" id="sDate" class="fh"><input type="text" id="sNote" placeholder="備註" class="fh"></div>
+<button class="btn" onclick="addShed()" style="width:100%">記錄</button></div>
+<div class="cd"><div class="ct-t">掉毛紀錄</div><div id="sList"></div></div>
+</div>
+
+<!-- EXPORT -->
+<div class="tc" id="tab-exp">
+<div class="cd"><div class="ct-t">📤 匯出分析報告</div>
+<p style="font-size:12px;color:var(--tl);margin-bottom:10px">產生報告複製到 Claude 分析，或帶去給獸醫</p>
+<div class="fr"><button class="btn" onclick="expR('all')">完整報告</button><button class="bo" onclick="expR('vomit')">嘔吐分析</button><button class="bo" onclick="expR('csv')">CSV</button></div></div>
+<div class="cd"><div class="ct-t">🗑️ 資料管理</div>
+<p style="font-size:12px;color:var(--tl);margin-bottom:8px">清除本機資料（無法復原）</p>
+<button class="bd2 btn bs" onclick="if(confirm('確定清除所有資料？'))resetAll()">清除所有資料</button></div>
+</div>
+</div>
+
+<div class="mo" id="exMo"><div class="ml"><div class="ml-t" id="moT"></div><pre id="moC"></pre>
+<div style="margin-top:12px;display:flex;gap:8px"><button class="btn" onclick="cpR()">複製</button><button class="bo" onclick="clMo()">關閉</button></div>
+<div id="cpMsg" style="font-size:11px;color:var(--green);margin-top:6px;display:none">已複製！</div></div></div>
+
+<div class="ft2">Mia 咪啊 Health Tracker v2.0</div>
 
 <script>
-// ===== DATA =====
-const TABS = [
-  {id:'profile',label:'基本資料',icon:'🐱'},
-  {id:'diet',label:'飲食',icon:'🍽️'},
-  {id:'weight',label:'體重',icon:'⚖️'},
-  {id:'health',label:'健康',icon:'📋'},
-  {id:'vaccines',label:'疫苗',icon:'💉'},
-  {id:'shedding',label:'掉毛',icon:'✨'},
-  {id:'export',label:'匯出',icon:'📤'},
-];
+const TABS=[
+{id:'profile',l:'基本',i:'🐱'},{id:'favs',l:'常用',i:'⭐'},{id:'diet',l:'飲食',i:'🍽️'},
+{id:'weight',l:'體重',i:'⚖️'},{id:'health',l:'健康',i:'📋'},{id:'vax',l:'疫苗',i:'💉'},
+{id:'shed',l:'掉毛',i:'✨'},{id:'exp',l:'匯出',i:'📤'}];
+const HT={vomit:'嘔吐',stool:'排便',urine:'排尿',appetite:'食慾',energy:'精神',other:'其他'};
+const HO={stool:['正常','偏軟','腹瀉','便秘','未排便'],urine:['正常','頻繁','減少','血尿','未排尿'],appetite:['正常','增加','減少','不吃'],energy:['正常(BAR)','嗜睡','過度興奮','虛弱']};
+const DL={main:'主食',treat:'零食',supplement:'保健品',human:'人類食物',other:'其他'};
+const VAX=[{n:'FVRCP/F3 (3yr)',d:'2025-08-06',nx:'2028-08-05'},{n:'FeLV (3yr)',d:'2023-07-06',nx:'2026-07-06'},{n:'Rabies (3yr)',d:'2024-12-21',nx:'澳洲不需要'}];
+const DW=[{date:'2022-09-01',weight:6.35},{date:'2022-11-15',weight:6.45},{date:'2023-07-06',weight:6.60},{date:'2024-05-04',weight:6.55},{date:'2024-12-21',weight:7.03},{date:'2025-01-15',weight:6.90},{date:'2025-08-06',weight:6.80}];
 
-const HEALTH_TYPES = {vomit:'嘔吐',stool:'排便',urine:'排尿',appetite:'食慾',energy:'精神',other:'其他'};
-const HEALTH_OPTIONS = {
-  stool:['正常','偏軟','腹瀉','便秘','未排便'],
-  urine:['正常','頻繁','減少','血尿','未排尿'],
-  appetite:['正常','增加','減少','不吃'],
-  energy:['正常 (BAR)','嗜睡','過度興奮','虛弱'],
-};
-const DIET_LABELS = {main:'主食',treat:'零食',supplement:'保健品',human:'人類食物',other:'其他'};
+let S={weights:[],dietLogs:[],healthLogs:[],sheddingLogs:[],favorites:[],staple:'I/D diet (dry & canned) + GI moderate kibble',stapleHistory:[],med:{name:'',cycle:0,last:''},medHistory:[],tab:'profile',hType:'vomit',dType:'main',sLv:3,gasUrl:''};
+let hVal='';
 
-const VACCINES = [
-  {name:'FVRCP / F3 (3yr)',date:'2025-08-06',next:'2028-08-05'},
-  {name:'FeLV (3yr)',date:'2023-07-06',next:'2026-07-06'},
-  {name:'Rabies (Defensor 3yr)',date:'2024-12-21',next:'澳洲境內不需要'},
-];
+function sv(){localStorage.setItem('mia-tracker',JSON.stringify(S))}
+function ld(){try{const s=JSON.parse(localStorage.getItem('mia-tracker'));if(s){S={...S,...s};if(!S.favorites)S.favorites=[];if(!S.staple)S.staple='I/D diet + GI moderate kibble';if(!S.stapleHistory)S.stapleHistory=[];if(!S.med)S.med={name:'',cycle:0,last:''};if(!S.medHistory)S.medHistory=[]}if(!S.weights.length)S.weights=[...DW]}catch(e){S.weights=[...DW]}}
+function fd(d){if(!d)return'';const t=new Date(d);return t.getFullYear()+'/'+String(t.getMonth()+1).padStart(2,'0')+'/'+String(t.getDate()).padStart(2,'0')}
+function fdt(d,t){return fd(d)+(t?' '+t:'')}
+function db(a,b){return Math.floor((new Date(b)-new Date(a))/864e5)}
+function age(){const n=new Date(),b=new Date('2014-07-01');let y=n.getFullYear()-b.getFullYear(),m=n.getMonth()-b.getMonth();if(m<0){y--;m+=12}return y+'歲'+m+'個月'}
+function td(){return new Date().toISOString().slice(0,10)}
+function nt(){return new Date().toTimeString().slice(0,5)}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 
-const DEFAULT_WEIGHTS = [
-  {date:'2022-09-01',weight:6.35},{date:'2022-11-15',weight:6.45},
-  {date:'2023-07-06',weight:6.60},{date:'2024-05-04',weight:6.55},
-  {date:'2024-12-21',weight:7.03},{date:'2025-01-15',weight:6.90},
-  {date:'2025-08-06',weight:6.80},
-];
+// TABS
+function initTb(){document.getElementById('tabBar').innerHTML=TABS.map(t=>`<button class="${t.id===S.tab?'on':''}" onclick="sw('${t.id}')"><span>${t.i}</span>${t.l}</button>`).join('')}
+function sw(id){S.tab=id;document.querySelectorAll('.tb button').forEach((b,i)=>b.classList.toggle('on',TABS[i].id===id));document.querySelectorAll('.tc').forEach(c=>c.classList.toggle('on',c.id==='tab-'+id));sv()}
 
-// ===== STATE =====
-let state = {
-  weights: [], dietLogs: [], healthLogs: [], sheddingLogs: [],
-  currentTab: 'profile', healthType: 'vomit', dietType: 'main', sheddingLevel: 3, gasUrl: ''
-};
-
-// ===== STORAGE =====
-function save() { localStorage.setItem('mia-tracker', JSON.stringify(state)); }
-function load() {
-  try {
-    const s = JSON.parse(localStorage.getItem('mia-tracker'));
-    if (s) { state = {...state, ...s}; }
-    if (!state.weights.length) state.weights = [...DEFAULT_WEIGHTS];
-    if (!state.gasUrl) state.gasUrl = '';
-  } catch(e) { state.weights = [...DEFAULT_WEIGHTS]; }
+// STAPLE
+function rStaple(){
+const el=document.getElementById('stapleDisplay');
+let h=`<div style="font-size:13px;font-weight:500;margin-bottom:6px">${S.staple}</div>`;
+if(S.stapleHistory.length){h+=`<div style="font-size:11px;color:var(--tl)">更換紀錄：</div>`;
+S.stapleHistory.slice(-5).reverse().forEach(s=>{h+=`<div style="font-size:11px;color:var(--tl);padding:2px 0">${fd(s.date)}: ${s.from} → ${s.to}</div>`})}
+el.innerHTML=h;
 }
+function changeStaple(){const nv=document.getElementById('sNew').value.trim();if(!nv)return;S.stapleHistory.push({date:td(),from:S.staple,to:nv});S.staple=nv;sv();rStaple();document.getElementById('sNew').value=''}
 
-// ===== HELPERS =====
-function fmtDate(d) { if(!d)return''; const dt=new Date(d); return dt.getFullYear()+'/'+String(dt.getMonth()+1).padStart(2,'0')+'/'+String(dt.getDate()).padStart(2,'0'); }
-function fmtDateTime(d,t) { return fmtDate(d) + (t ? ' '+t : ''); }
-function daysBetween(a,b) { return Math.floor((new Date(b)-new Date(a))/864e5); }
-function getAge() { const n=new Date(),b=new Date('2014-07-01'); let y=n.getFullYear()-b.getFullYear(),m=n.getMonth()-b.getMonth(); if(m<0){y--;m+=12;} return y+'歲'+m+'個月'; }
-function today() { return new Date().toISOString().slice(0,10); }
-function nowTime() { return new Date().toTimeString().slice(0,5); }
-function uid() { return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+// MED
+function rMed(){
+const el=document.getElementById('medDisplay');
+if(!S.med.name){el.innerHTML='<div class="emp">尚未設定預防用藥，到「⭐常用」分頁設定</div>';return}
+const next=new Date(new Date(S.med.last).getTime()+S.med.cycle*864e5);
+const daysLeft=db(td(),next.toISOString().slice(0,10));
+const pct=Math.max(0,Math.min(100,((S.med.cycle-Math.max(0,daysLeft))/S.med.cycle)*100));
+const clr=daysLeft<=7?'var(--orange)':daysLeft<=14?'var(--yellow)':'var(--green)';
+let h=`<div class="med-card">
+<div class="med-name">${S.med.name}</div>
+<div class="med-info">週期：每 ${S.med.cycle} 天 | 上次：${fd(S.med.last)}</div>
+<div class="med-info" style="font-weight:600;color:${clr}">下次用藥：${fd(next.toISOString().slice(0,10))}（${daysLeft>0?daysLeft+' 天後':'已到期！'}）</div>
+<div class="med-bar"><div class="med-fill" style="width:${pct}%;background:${clr}"></div></div>
+<button class="btn bs" style="margin-top:8px" onclick="markMed()">✅ 今天已用藥</button>
+</div>`;
+if(S.medHistory.length){h+='<div style="margin-top:8px;font-size:11px;color:var(--tl)"><b>用藥紀錄：</b></div>';
+S.medHistory.slice(-10).reverse().forEach(m=>{h+=`<div style="font-size:11px;color:var(--tl);padding:2px 0">${fd(m.date)} — ${m.name}</div>`})}
+el.innerHTML=h;
+}
+function markMed(){S.medHistory.push({date:td(),name:S.med.name});S.med.last=td();sv();rMed()}
+function saveMed(){
+const n=document.getElementById('mName').value.trim(),c=parseInt(document.getElementById('mCycle').value),l=document.getElementById('mLast').value||td();
+if(!n||!c)return;
+if(S.med.name&&S.med.name!==n){S.medHistory.push({date:td(),name:'換藥：'+S.med.name+' → '+n})}
+S.med={name:n,cycle:c,last:l};sv();rMed()}
 
-// ===== TABS =====
-function initTabs() {
-  const bar = document.getElementById('tabBar');
-  bar.innerHTML = TABS.map(t => `<button class="tab-btn${t.id===state.currentTab?' active':''}" onclick="switchTab('${t.id}')"><span>${t.icon}</span>${t.label}</button>`).join('');
-}
-function switchTab(id) {
-  state.currentTab = id;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.textContent.includes(TABS.find(t=>t.id===id).label)));
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === 'tab-'+id));
-  save();
-}
-
-// ===== DIET =====
-function setDietType(el, type) {
-  state.dietType = type;
-  document.querySelectorAll('[data-diet]').forEach(c => c.classList.toggle('active', c.dataset.diet===type));
-}
-function addDiet() {
-  const d = {
-    id: uid(), type: state.dietType,
-    date: document.getElementById('dietDate').value || today(),
-    time: document.getElementById('dietTime').value || '',
-    brand: document.getElementById('dietBrand').value.trim(),
-    flavor: document.getElementById('dietFlavor').value.trim(),
-    amount: document.getElementById('dietAmount').value.trim(),
-    note: document.getElementById('dietNote').value.trim(),
-  };
-  if (!d.brand && !d.flavor && !d.note) return;
-  state.dietLogs.unshift(d);
-  state.dietLogs.sort((a,b) => (b.date+b.time).localeCompare(a.date+a.time));
-  save(); renderDiet();
-  ['dietBrand','dietFlavor','dietAmount','dietNote'].forEach(id => document.getElementById(id).value='');
-}
-function deleteDiet(id) { state.dietLogs = state.dietLogs.filter(d=>d.id!==id); save(); renderDiet(); }
-function renderDiet() {
-  const el = document.getElementById('dietList');
-  if (!state.dietLogs.length) { el.innerHTML='<div class="empty">開始記錄咪啊的飲食吧！</div>'; return; }
-  el.innerHTML = state.dietLogs.slice(0,50).map(d => `
-    <div class="log-item">
-      <div class="log-tag">${DIET_LABELS[d.type]||d.type}</div>
-      <div class="log-body">
-        <div class="log-date">${fmtDateTime(d.date,d.time)}</div>
-        <div class="log-text">${[d.brand,d.flavor].filter(Boolean).join(' · ')}</div>
-        ${d.amount?`<div class="log-note">份量：${d.amount}</div>`:''}
-        ${d.note?`<div class="log-note">${d.note}</div>`:''}
-      </div>
-      <button class="log-del" onclick="deleteDiet('${d.id}')">✕</button>
-    </div>
-  `).join('');
+// FAVORITES
+function addFav(){
+const f={id:uid(),type:document.getElementById('fType').value,brand:document.getElementById('fBrand').value.trim(),flavor:document.getElementById('fFlavor').value.trim(),amount:document.getElementById('fAmt').value.trim()};
+if(!f.brand&&!f.flavor)return;S.favorites.push(f);sv();rFavs();rFavBtns();
+['fBrand','fFlavor','fAmt'].forEach(i=>document.getElementById(i).value='')}
+function delFav(id){S.favorites=S.favorites.filter(f=>f.id!==id);sv();rFavs();rFavBtns()}
+function rFavs(){
+const el=document.getElementById('favList');
+if(!S.favorites.length){el.innerHTML='<div class="emp">尚無常用食物，在上方新增</div>';return}
+el.innerHTML=S.favorites.map(f=>`<div class="li">
+<div class="lt">${DL[f.type]||f.type}</div>
+<div class="lb"><div class="lx">${[f.brand,f.flavor].filter(Boolean).join(' · ')}</div>${f.amount?`<div class="ln">預設份量：${f.amount}</div>`:''}</div>
+<button class="ld2" onclick="delFav('${f.id}')">✕</button></div>`).join('')}
+function rFavBtns(){
+const el=document.getElementById('favBtns');
+if(!S.favorites.length){el.innerHTML='<div class="emp">到「⭐常用」分頁新增常用食物</div>';return}
+el.innerHTML=S.favorites.map(f=>`<button class="qb" onclick="quickDiet('${f.id}')">${DL[f.type]?'<span style=font-size:10px;opacity:.6>'+DL[f.type]+'</span> ':''}${[f.brand,f.flavor].filter(Boolean).join(' ')}</button>`).join('')}
+function quickDiet(id){
+const f=S.favorites.find(x=>x.id===id);if(!f)return;
+const d={id:uid(),type:f.type,date:td(),time:nt(),brand:f.brand||'',flavor:f.flavor||'',amount:f.amount||'',note:''};
+const amt=prompt('份量'+(f.amount?' (預設: '+f.amount+')':''),f.amount||'');
+if(amt===null)return;d.amount=amt||f.amount||'';
+S.dietLogs.unshift(d);S.dietLogs.sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));sv();rDiet();
 }
 
-// ===== WEIGHT =====
-function addWeight() {
-  const w = parseFloat(document.getElementById('weightVal').value);
-  const d = document.getElementById('weightDate').value || today();
-  if (isNaN(w)||w<=0) return;
-  state.weights.push({date:d, weight:w});
-  state.weights.sort((a,b) => a.date.localeCompare(b.date));
-  save(); renderWeight();
-  document.getElementById('weightVal').value='';
-}
-function renderWeight() {
-  const ws = state.weights;
-  if (!ws.length) return;
-  const last = ws[ws.length-1], prev = ws.length>1?ws[ws.length-2]:null;
-  const diff = prev ? (last.weight-prev.weight).toFixed(2) : null;
-  const minW = Math.min(...ws.map(w=>w.weight))-0.3, maxW = Math.max(...ws.map(w=>w.weight))+0.3;
-  const cw = Math.max((ws.length-1)*70+80, 300);
+// DIET
+function setDT(t){S.dType=t;document.querySelectorAll('#dietChips .ch').forEach(c=>c.classList.toggle('on',c.dataset.t===t))}
+function initDC(){document.getElementById('dietChips').innerHTML=Object.entries(DL).map(([k,v])=>`<button class="ch${k===S.dType?' on':''}" data-t="${k}" onclick="setDT('${k}')">${v}</button>`).join('')}
+function addDiet(){
+const d={id:uid(),type:S.dType,date:document.getElementById('dDate').value||td(),time:document.getElementById('dTime').value||'',brand:document.getElementById('dBrand').value.trim(),flavor:document.getElementById('dFlavor').value.trim(),amount:document.getElementById('dAmt').value.trim(),note:document.getElementById('dNote').value.trim()};
+if(!d.brand&&!d.flavor&&!d.note)return;
+S.dietLogs.unshift(d);S.dietLogs.sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));sv();rDiet();
+['dBrand','dFlavor','dAmt','dNote'].forEach(i=>document.getElementById(i).value='')}
+function delDiet(id){S.dietLogs=S.dietLogs.filter(d=>d.id!==id);sv();rDiet()}
+function rDiet(){
+const el=document.getElementById('dietList');
+if(!S.dietLogs.length){el.innerHTML='<div class="emp">開始記錄飲食吧！</div>';return}
+el.innerHTML=S.dietLogs.slice(0,50).map(d=>`<div class="li">
+<div class="lt">${DL[d.type]||d.type}</div>
+<div class="lb"><div class="ld">${fdt(d.date,d.time)}</div><div class="lx">${[d.brand,d.flavor].filter(Boolean).join(' · ')}</div>
+${d.amount?`<div class="ln">份量：${d.amount}</div>`:''}${d.note?`<div class="ln">${d.note}</div>`:''}</div>
+<button class="ld2" onclick="delDiet('${d.id}')">✕</button></div>`).join('')}
 
-  let svg = `<svg viewBox="0 0 ${cw} 180" style="width:100%;height:100%;overflow:visible">`;
-  [0,.25,.5,.75,1].forEach(f => {
-    const y=160-f*140, v=(minW+f*(maxW-minW)).toFixed(1);
-    svg += `<line x1="35" y1="${y}" x2="${cw-10}" y2="${y}" stroke="#e8e0d6" stroke-width="1"/>`;
-    svg += `<text x="32" y="${y+4}" text-anchor="end" font-size="9" fill="#a09890">${v}</text>`;
-  });
-  if (ws.length>1) {
-    const pts = ws.map((w,i) => `${i*70+45},${160-((w.weight-minW)/(maxW-minW))*140}`).join(' ');
-    svg += `<polygon fill="url(#wg2)" opacity=".2" points="45,160 ${pts} ${(ws.length-1)*70+45},160"/>`;
-    svg += `<polyline fill="none" stroke="#8b7355" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${pts}"/>`;
-  }
-  svg += `<defs><linearGradient id="wg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b7355"/><stop offset="100%" stop-color="#8b7355" stop-opacity="0"/></linearGradient></defs>`;
-  ws.forEach((w,i) => {
-    const x=i*70+45, y=160-((w.weight-minW)/(maxW-minW))*140;
-    svg += `<circle cx="${x}" cy="${y}" r="3.5" fill="#fff" stroke="#8b7355" stroke-width="2"/>`;
-    svg += `<text x="${x}" y="${y-8}" text-anchor="middle" font-size="9" font-weight="600" fill="#6b5b4e">${w.weight}</text>`;
-    svg += `<text x="${x}" y="${174}" text-anchor="middle" font-size="7" fill="#a09890">${fmtDate(w.date).slice(2)}</text>`;
-  });
-  svg += '</svg>';
-  document.getElementById('weightChart').innerHTML = svg;
-  document.getElementById('weightBadges').innerHTML = `
-    <div class="badge"><div class="badge-label">目前</div><div class="badge-value">${last.weight} kg</div></div>
-    ${diff!==null?`<div class="badge"><div class="badge-label">變化</div><div class="badge-value" style="color:${Math.abs(diff)>.3?'var(--orange)':'var(--green)'}">${diff>0?'+':''}${diff} kg</div></div>`:''}
-    <div class="badge"><div class="badge-label">理想</div><div class="badge-value">5.5-6.5 kg</div></div>
-  `;
-}
+// WEIGHT
+function addW(){const w=parseFloat(document.getElementById('wVal').value),d=document.getElementById('wDate').value||td();if(isNaN(w)||w<=0)return;S.weights.push({date:d,weight:w});S.weights.sort((a,b)=>a.date.localeCompare(b.date));sv();rW();document.getElementById('wVal').value=''}
+function rW(){
+const ws=S.weights;if(!ws.length)return;
+const last=ws[ws.length-1],prev=ws.length>1?ws[ws.length-2]:null,diff=prev?(last.weight-prev.weight).toFixed(2):null;
+const mn=Math.min(...ws.map(w=>w.weight))-.3,mx=Math.max(...ws.map(w=>w.weight))+.3,cw=Math.max((ws.length-1)*70+80,300);
+let svg=`<svg viewBox="0 0 ${cw} 180" style="width:100%;height:100%;overflow:visible">`;
+[0,.25,.5,.75,1].forEach(f=>{const y=160-f*140,v=(mn+f*(mx-mn)).toFixed(1);svg+=`<line x1="35" y1="${y}" x2="${cw-10}" y2="${y}" stroke="#e8e0d6" stroke-width="1"/><text x="32" y="${y+4}" text-anchor="end" font-size="9" fill="#a09890">${v}</text>`});
+if(ws.length>1){const pts=ws.map((w,i)=>`${i*70+45},${160-((w.weight-mn)/(mx-mn))*140}`).join(' ');svg+=`<polygon fill="url(#wg2)" opacity=".2" points="45,160 ${pts} ${(ws.length-1)*70+45},160"/><polyline fill="none" stroke="#8b7355" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${pts}"/>`}
+svg+=`<defs><linearGradient id="wg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b7355"/><stop offset="100%" stop-color="#8b7355" stop-opacity="0"/></linearGradient></defs>`;
+ws.forEach((w,i)=>{const x=i*70+45,y=160-((w.weight-mn)/(mx-mn))*140;svg+=`<circle cx="${x}" cy="${y}" r="3.5" fill="#fff" stroke="#8b7355" stroke-width="2"/><text x="${x}" y="${y-8}" text-anchor="middle" font-size="9" font-weight="600" fill="#6b5b4e">${w.weight}</text><text x="${x}" y="${174}" text-anchor="middle" font-size="7" fill="#a09890">${fd(w.date).slice(2)}</text>`});
+svg+='</svg>';document.getElementById('wChart').innerHTML=svg;
+document.getElementById('wBadge').innerHTML=`<div class="bd"><div class="bl">目前</div><div class="bv">${last.weight} kg</div></div>${diff!==null?`<div class="bd"><div class="bl">變化</div><div class="bv" style="color:${Math.abs(diff)>.3?'var(--orange)':'var(--green)'}">${diff>0?'+':''}${diff} kg</div></div>`:''}<div class="bd"><div class="bl">理想</div><div class="bv">5.5-6.5 kg</div></div>`}
 
-// ===== HEALTH =====
-let healthValue = '';
-function initHealthChips() {
-  document.getElementById('healthChips').innerHTML = Object.entries(HEALTH_TYPES).map(([k,v]) =>
-    `<button class="chip${k===state.healthType?' active':''}" onclick="setHealthType('${k}')">${v}</button>`
-  ).join('');
-  renderHealthOptions();
-}
-function setHealthType(t) {
-  state.healthType = t; healthValue = '';
-  document.querySelectorAll('#healthChips .chip').forEach(c => c.classList.toggle('active', c.textContent===HEALTH_TYPES[t]));
-  renderHealthOptions();
-}
-function renderHealthOptions() {
-  const el = document.getElementById('healthOptions');
-  const t = state.healthType;
-  if (HEALTH_OPTIONS[t]) {
-    el.innerHTML = `<div class="chip-row">${HEALTH_OPTIONS[t].map(o => `<button class="chip${healthValue===o?' green':''}" onclick="pickHealthVal(this,'${o}')">${o}</button>`).join('')}</div>`;
-  } else if (t==='vomit') {
-    el.innerHTML = `<input type="text" id="healthValInput" placeholder="嘔吐物描述（食物/液體/毛球/草...）" style="margin-bottom:8px" onchange="healthValue=this.value">`;
-  } else {
-    el.innerHTML = `<input type="text" id="healthValInput" placeholder="狀況描述" style="margin-bottom:8px" onchange="healthValue=this.value">`;
-  }
-}
-function pickHealthVal(el, v) { healthValue=v; el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.toggle('green',c.textContent===v)); }
-function addHealth() {
-  const vi = document.getElementById('healthValInput');
-  const val = vi ? vi.value.trim() : healthValue;
-  const entry = {
-    id: uid(), type: state.healthType, value: val,
-    date: document.getElementById('healthDate').value || today(),
-    time: document.getElementById('healthTime').value || '',
-    note: document.getElementById('healthNote').value.trim(),
-  };
-  state.healthLogs.unshift(entry);
-  state.healthLogs.sort((a,b) => (b.date+b.time).localeCompare(a.date+a.time));
-  save(); renderHealth(); renderCrossAnalysis();
-  healthValue=''; document.getElementById('healthNote').value='';
-  if(vi) vi.value='';
-  renderHealthOptions();
-}
-function deleteHealth(id) { state.healthLogs=state.healthLogs.filter(h=>h.id!==id); save(); renderHealth(); renderCrossAnalysis(); }
-function renderHealth() {
-  const el = document.getElementById('healthList');
-  if (!state.healthLogs.length) { el.innerHTML='<div class="empty">尚無紀錄</div>'; return; }
-  el.innerHTML = state.healthLogs.slice(0,40).map(h => `
-    <div class="log-item">
-      <div class="log-tag">${HEALTH_TYPES[h.type]||h.type}</div>
-      <div class="log-body">
-        <div class="log-date">${fmtDateTime(h.date,h.time)}</div>
-        ${h.value?`<div class="log-text">${h.value}</div>`:''}
-        ${h.note?`<div class="log-note">${h.note}</div>`:''}
-      </div>
-      <button class="log-del" onclick="deleteHealth('${h.id}')">✕</button>
-    </div>
-  `).join('');
-}
+// HEALTH
+function initHC(){document.getElementById('hChips').innerHTML=Object.entries(HT).map(([k,v])=>`<button class="ch${k===S.hType?' on':''}" onclick="setHT('${k}')">${v}</button>`).join('');rHO()}
+function setHT(t){S.hType=t;hVal='';document.querySelectorAll('#hChips .ch').forEach(c=>c.classList.toggle('on',c.textContent===HT[t]));rHO()}
+function rHO(){
+const el=document.getElementById('hOpts'),t=S.hType;
+if(HO[t])el.innerHTML=`<div class="cr">${HO[t].map(o=>`<button class="ch${hVal===o?' gn':''}" onclick="phv(this,'${o}')">${o}</button>`).join('')}</div>`;
+else if(t==='vomit')el.innerHTML=`<input type="text" id="hvi" placeholder="嘔吐物描述（食物/液體/毛球/草...）" style="margin-bottom:8px" oninput="hVal=this.value">`;
+else el.innerHTML=`<input type="text" id="hvi" placeholder="描述" style="margin-bottom:8px" oninput="hVal=this.value">`}
+function phv(el,v){hVal=v;el.parentElement.querySelectorAll('.ch').forEach(c=>c.classList.toggle('gn',c.textContent===v))}
+function addH(){
+const vi=document.getElementById('hvi'),val=vi?vi.value.trim():hVal;
+const e={id:uid(),type:S.hType,value:val,date:document.getElementById('hDate').value||td(),time:document.getElementById('hTime').value||'',note:document.getElementById('hNote').value.trim()};
+S.healthLogs.unshift(e);S.healthLogs.sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));sv();rH();rXA();hVal='';document.getElementById('hNote').value='';if(vi)vi.value='';rHO()}
+function delH(id){S.healthLogs=S.healthLogs.filter(h=>h.id!==id);sv();rH();rXA()}
+function rH(){
+const el=document.getElementById('hList');
+if(!S.healthLogs.length){el.innerHTML='<div class="emp">尚無紀錄</div>';return}
+el.innerHTML=S.healthLogs.slice(0,40).map(h=>`<div class="li"><div class="lt">${HT[h.type]||h.type}</div><div class="lb"><div class="ld">${fdt(h.date,h.time)}</div>${h.value?`<div class="lx">${h.value}</div>`:''}${h.note?`<div class="ln">${h.note}</div>`:''}</div><button class="ld2" onclick="delH('${h.id}')">✕</button></div>`).join('')}
 
-// ===== CROSS ANALYSIS =====
-function renderCrossAnalysis() {
-  const el = document.getElementById('crossAnalysis');
-  const vomits = state.healthLogs.filter(h => h.type==='vomit');
-  const td = today();
-  const v30 = vomits.filter(h => daysBetween(h.date,td)>=0 && daysBetween(h.date,td)<=30);
-  const v90 = vomits.filter(h => daysBetween(h.date,td)>=0 && daysBetween(h.date,td)<=90);
+// CROSS ANALYSIS
+function rXA(){
+const el=document.getElementById('xAnal'),vs=S.healthLogs.filter(h=>h.type==='vomit'),t=td();
+const v30=vs.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=30),v90=vs.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=90);
+let h=`<div class="br" style="margin-bottom:10px"><div class="bd"><div class="bl">30天</div><div class="bv" style="color:${v30.length>3?'var(--orange)':'var(--green)'}">${v30.length} 次</div></div><div class="bd"><div class="bl">90天</div><div class="bv">${v90.length} 次</div></div></div>`;
+if(vs.length&&S.dietLogs.length){
+const sp={};vs.forEach(v=>{S.dietLogs.forEach(d=>{const dh=(new Date(v.date)-new Date(d.date))/36e5;if(dh>=0&&dh<=72){const k=[d.brand,d.flavor].filter(Boolean).join(' ')||d.note||DL[d.type];if(!sp[k])sp[k]={c:0,t:d.type};sp[k].c++}})});
+const sr=Object.entries(sp).sort((a,b)=>b[1].c-a[1].c);
+if(sr.length){h+=`<div class="cb"><div class="cbt">⚠️ 嘔吐前72h飲食關聯</div>`;sr.slice(0,10).forEach(([f,i])=>{h+=`<div class="cbi"><b>${f}</b>（${DL[i.t]||i.t}）— ${i.c} 次</div>`});h+=`<div style="font-size:11px;color:var(--tl);margin-top:6px">※ 相關性分析，非因果</div></div>`}}
+else if(!vs.length)h+=`<div class="ht">📝 開始記錄嘔吐和飲食後自動分析</div>`;
+else h+=`<div class="ht">📝 請同時記錄飲食才能交叉比對</div>`;
+el.innerHTML=h}
 
-  let html = `<div class="badge-row" style="margin-bottom:10px">
-    <div class="badge"><div class="badge-label">30天嘔吐</div><div class="badge-value" style="color:${v30.length>3?'var(--orange)':'var(--green)'}">${v30.length} 次</div></div>
-    <div class="badge"><div class="badge-label">90天嘔吐</div><div class="badge-value">${v90.length} 次</div></div>
-  </div>`;
+// VACCINES
+function rV(){
+const el=document.getElementById('vList'),t=td();
+el.innerHTML=VAX.map((v,i)=>{let st,clr,lb;
+if(v.nx.includes('不')){st='i';clr='#a0a0a0';lb='澳洲不需要'}
+else{const d=db(t,v.nx);if(d<0){st='o';clr='var(--orange)';lb='已過期 '+Math.abs(d)+' 天'}else if(d<=90){st='s';clr='var(--yellow)';lb=d+' 天後到期'}else{st='k';clr='var(--green)';lb=d+' 天後'}}
+return `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;${i<VAX.length-1?'border-bottom:1px solid var(--bl)':''}"><div style="width:9px;height:9px;border-radius:50%;background:${clr};flex-shrink:0"></div><div style="flex:1"><div style="font-weight:600;font-size:13px">${v.n}</div><div style="font-size:11px;color:var(--tl)">上次：${fd(v.d)}</div></div><div style="text-align:right"><div style="font-size:11px;font-weight:600;color:${clr}">${lb}</div><div style="font-size:10px;color:#bbb">${v.nx}</div></div></div>`}).join('')}
 
-  // Cross-reference: for each vomit, find food eaten 0-72h before
-  if (vomits.length && state.dietLogs.length) {
-    const suspects = {};
-    vomits.forEach(v => {
-      const vDate = new Date(v.date);
-      state.dietLogs.forEach(d => {
-        const dDate = new Date(d.date);
-        const diffH = (vDate - dDate) / 36e5;
-        if (diffH >= 0 && diffH <= 72) {
-          const key = [d.brand, d.flavor].filter(Boolean).join(' ') || d.note || DIET_LABELS[d.type];
-          if (!suspects[key]) suspects[key] = { count: 0, type: d.type };
-          suspects[key].count++;
-        }
-      });
-    });
-    const sorted = Object.entries(suspects).sort((a,b) => b[1].count - a[1].count);
-    if (sorted.length) {
-      html += `<div class="cross-box"><div class="cross-title">⚠️ 嘔吐前 72 小時內的飲食關聯</div>`;
-      sorted.slice(0,10).forEach(([food, info]) => {
-        html += `<div class="cross-item"><b>${food}</b>（${DIET_LABELS[info.type]||info.type}）— 出現 ${info.count} 次關聯</div>`;
-      });
-      html += `<div style="font-size:11px;color:var(--text-light);margin-top:6px">※ 此為相關性分析，非因果關係。多次出現的食物值得留意。</div></div>`;
-    }
-  } else if (!vomits.length) {
-    html += `<div class="hint">📝 開始記錄嘔吐和飲食後，系統會自動交叉分析找出可能關聯。</div>`;
-  } else {
-    html += `<div class="hint">📝 請同時記錄飲食內容，才能進行交叉比對。</div>`;
-  }
-  el.innerHTML = html;
-}
+// SHEDDING
+let sLv=3;
+function initSB(){document.getElementById('sBar').innerHTML=[1,2,3,4,5].map(n=>`<button onclick="sLv=${n};initSB()" style="${n<=sLv?`background:hsl(${35-n*5},${50+n*8}%,${70-n*8}%);color:#fff`:''}">${n}</button>`).join('')}
+function addShed(){S.sheddingLogs.unshift({id:uid(),date:document.getElementById('sDate').value||td(),level:sLv,note:document.getElementById('sNote').value.trim()});S.sheddingLogs.sort((a,b)=>b.date.localeCompare(a.date));sv();rShed();document.getElementById('sNote').value=''}
+function delShed(id){S.sheddingLogs=S.sheddingLogs.filter(s=>s.id!==id);sv();rShed()}
+function rShed(){
+const el=document.getElementById('sList');
+if(!S.sheddingLogs.length){el.innerHTML='<div class="emp">開始記錄！</div>';return}
+el.innerHTML=S.sheddingLogs.slice(0,30).map(s=>{const bars=[1,2,3,4,5].map(n=>`<div style="width:7px;height:14px;border-radius:2px;background:${n<=s.level?`hsl(${35-n*5},${50+n*8}%,${70-n*8}%)`:'#eee'}"></div>`).join('');return `<div class="li"><div style="display:flex;gap:2px">${bars}</div><div class="lb"><div class="ld">${fd(s.date)}</div>${s.note?`<div class="ln">${s.note}</div>`:''}</div><button class="ld2" onclick="delShed('${s.id}')">✕</button></div>`}).join('');
+const m=new Date().getMonth(),hi=[2,3,4,8,9,10].includes(m);
+document.getElementById('shedStat').innerHTML=`<div style="display:flex;align-items:center;gap:10px"><div style="width:44px;height:44px;border-radius:10px;background:${hi?'linear-gradient(135deg,var(--yellow),var(--orange))':'linear-gradient(135deg,var(--green),#8bb07a)'};display:flex;align-items:center;justify-content:center;font-size:22px">${hi?'🔥':'✨'}</div><div><div style="font-weight:600;font-size:14px">${hi?'掉毛高峰期':'一般掉毛期'}</div><div style="font-size:11px;color:var(--tl)">${hi?'建議每天刷毛':'每週 1-2 次'}</div></div></div>`}
 
-// ===== VACCINES =====
-function renderVaccines() {
-  const el = document.getElementById('vaccineList');
-  const td = today();
-  el.innerHTML = VACCINES.map((v,i) => {
-    let status, color, label;
-    if (v.next.includes('不需')) { status='info'; color='#a0a0a0'; label='澳洲不需要'; }
-    else {
-      const days = daysBetween(td, v.next);
-      if (days<0) { status='overdue'; color='var(--orange)'; label='已過期 '+Math.abs(days)+' 天'; }
-      else if (days<=90) { status='soon'; color='var(--yellow)'; label=days+' 天後到期'; }
-      else { status='ok'; color='var(--green)'; label=days+' 天後'; }
-    }
-    return `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;${i<VACCINES.length-1?'border-bottom:1px solid var(--border-light)':''}">
-      <div style="width:9px;height:9px;border-radius:50%;background:${color};flex-shrink:0"></div>
-      <div style="flex:1"><div style="font-weight:600;font-size:13px">${v.name}</div><div style="font-size:11px;color:var(--text-light)">上次：${fmtDate(v.date)}</div></div>
-      <div style="text-align:right"><div style="font-size:11px;font-weight:600;color:${color}">${label}</div><div style="font-size:10px;color:#bbb">${v.next}</div></div>
-    </div>`;
-  }).join('');
-}
+// EXPORT
+function expR(type){
+let t='';const ln=s=>t+=s+'\n';
+if(type==='all'||type==='vomit'){ln('=== Mia 咪啊 健康報告 ===');ln('產生：'+new Date().toLocaleString('zh-TW'));ln('主食：'+S.staple);if(S.med.name)ln('預防用藥：'+S.med.name+' 每'+S.med.cycle+'天');ln('');
+if(type==='all'){ln('【體重】');S.weights.forEach(w=>ln(fd(w.date)+' → '+w.weight+' kg'));ln('')}
+ln('【嘔吐】');S.healthLogs.filter(h=>h.type==='vomit').forEach(h=>ln(fdt(h.date,h.time)+' | '+(h.value||'')+(h.note?' ('+h.note+')':'')));ln('');
+ln('【飲食（近30筆）】');S.dietLogs.slice(0,30).forEach(d=>ln(fdt(d.date,d.time)+' | '+(DL[d.type]||d.type)+' | '+[d.brand,d.flavor].filter(Boolean).join(' ')+(d.amount?' | '+d.amount:'')+(d.note?' | '+d.note:'')));ln('');
+const vs=S.healthLogs.filter(h=>h.type==='vomit');
+if(vs.length&&S.dietLogs.length){ln('【嘔吐×飲食交叉】');vs.forEach(v=>{ln('嘔吐：'+fdt(v.date,v.time)+' '+(v.value||''));const fs=S.dietLogs.filter(d=>{const dh=(new Date(v.date)-new Date(d.date))/36e5;return dh>=0&&dh<=72});fs.forEach(d=>ln('  ← '+fdt(d.date,d.time)+' '+[d.brand,d.flavor].filter(Boolean).join(' ')));if(!fs.length)ln('  （無對應紀錄）')})}
+if(type==='all'){ln('');ln('【其他健康】');S.healthLogs.filter(h=>h.type!=='vomit').forEach(h=>ln(fdt(h.date,h.time)+' | '+(HT[h.type]||h.type)+' | '+(h.value||'')));ln('');ln('【掉毛】');S.sheddingLogs.forEach(s=>ln(fd(s.date)+' | Lv'+s.level+'/5'+(s.note?' | '+s.note:'')));if(S.stapleHistory.length){ln('');ln('【主食更換紀錄】');S.stapleHistory.forEach(s=>ln(fd(s.date)+': '+s.from+' → '+s.to))}}}
+else if(type==='csv'){ln('type,date,time,d1,d2,amount,note');S.dietLogs.forEach(d=>ln(['diet-'+d.type,d.date,d.time,d.brand,d.flavor,d.amount,d.note].map(s=>'"'+(s||'')+'"').join(',')));S.healthLogs.forEach(h=>ln(['health-'+h.type,h.date,h.time,h.value,'','',h.note].map(s=>'"'+(s||'')+'"').join(',')));S.weights.forEach(w=>ln(['weight',w.date,'',w.weight,'','',''].map(s=>'"'+(s||'')+'"').join(',')))}
+document.getElementById('moT').textContent=type==='csv'?'CSV':type==='vomit'?'嘔吐分析':'完整報告';document.getElementById('moC').textContent=t;document.getElementById('exMo').classList.add('sh')}
+function cpR(){const t=document.getElementById('moC').textContent;navigator.clipboard.writeText(t).then(()=>{const m=document.getElementById('cpMsg');m.style.display='block';setTimeout(()=>m.style.display='none',2000)}).catch(()=>{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);const m=document.getElementById('cpMsg');m.style.display='block';setTimeout(()=>m.style.display='none',2000)})}
+function clMo(){document.getElementById('exMo').classList.remove('sh')}
 
-// ===== SHEDDING =====
-let sheddingLevel = 3;
-function initSheddingBar() {
-  const bar = document.getElementById('sheddingBar');
-  bar.innerHTML = [1,2,3,4,5].map(n => `<button onclick="pickShedding(${n})" ${n<=sheddingLevel?'class="on"':''} style="${n<=sheddingLevel?`background:hsl(${35-n*5},${50+n*8}%,${70-n*8}%)`:''}"">${n}</button>`).join('');
-}
-function pickShedding(n) { sheddingLevel=n; initSheddingBar(); }
-function addShedding() {
-  state.sheddingLogs.unshift({
-    id:uid(), date:document.getElementById('sheddingDate').value||today(),
-    level:sheddingLevel, note:document.getElementById('sheddingNote').value.trim()
-  });
-  state.sheddingLogs.sort((a,b) => b.date.localeCompare(a.date));
-  save(); renderShedding();
-  document.getElementById('sheddingNote').value='';
-}
-function deleteShedding(id) { state.sheddingLogs=state.sheddingLogs.filter(s=>s.id!==id); save(); renderShedding(); }
-function renderShedding() {
-  const el = document.getElementById('sheddingList');
-  if (!state.sheddingLogs.length) { el.innerHTML='<div class="empty">開始記錄掉毛狀況！</div>'; return; }
-  el.innerHTML = state.sheddingLogs.slice(0,30).map(s => {
-    const bars = [1,2,3,4,5].map(n => `<div style="width:7px;height:14px;border-radius:2px;background:${n<=s.level?`hsl(${35-n*5},${50+n*8}%,${70-n*8}%)`:'#eee'}"></div>`).join('');
-    return `<div class="log-item">
-      <div style="display:flex;gap:2px">${bars}</div>
-      <div class="log-body"><div class="log-date">${fmtDate(s.date)}</div>${s.note?`<div class="log-note">${s.note}</div>`:''}</div>
-      <button class="log-del" onclick="deleteShedding('${s.id}')">✕</button>
-    </div>`;
-  }).join('');
-  // status
-  const m = new Date().getMonth();
-  const high = [2,3,4,8,9,10].includes(m);
-  document.getElementById('sheddingStatus').innerHTML = `
-    <div style="display:flex;align-items:center;gap:10px">
-      <div style="width:44px;height:44px;border-radius:10px;background:${high?'linear-gradient(135deg,var(--yellow),var(--orange))':'linear-gradient(135deg,var(--green),#8bb07a)'};display:flex;align-items:center;justify-content:center;font-size:22px">${high?'🔥':'✨'}</div>
-      <div><div style="font-weight:600;font-size:14px">${high?'掉毛高峰期':'一般掉毛期'}</div><div style="font-size:11px;color:var(--text-light)">${high?'建議每天刷毛':'建議每週 1-2 次刷毛'}</div></div>
-    </div>`;
-}
+// GAS
+function saveGas(){S.gasUrl=document.getElementById('gasUrl').value.trim();sv();document.getElementById('gasMsg').textContent='✅ 已儲存'}
+function testGas(){if(!S.gasUrl){document.getElementById('gasMsg').textContent='❌ 請先輸入 URL';return}document.getElementById('gasMsg').textContent='⏳ 測試中...';fetch(S.gasUrl+'?action=ping').then(r=>r.json()).then(d=>{document.getElementById('gasMsg').textContent=d.status==='ok'?'✅ 連線成功！':'❌ 回應異常'}).catch(e=>{document.getElementById('gasMsg').textContent='❌ '+e.message})}
+function syncGas(){if(!S.gasUrl){document.getElementById('gasMsg').textContent='❌ 請先設定';return}document.getElementById('gasMsg').textContent='⏳ 同步中...';fetch(S.gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({weights:S.weights,dietLogs:S.dietLogs,healthLogs:S.healthLogs,sheddingLogs:S.sheddingLogs,favorites:S.favorites,staple:S.staple,stapleHistory:S.stapleHistory,med:S.med,medHistory:S.medHistory})}).then(()=>{document.getElementById('gasMsg').textContent='✅ 已送出'}).catch(e=>{document.getElementById('gasMsg').textContent='❌ '+e.message})}
+function resetAll(){localStorage.removeItem('mia-tracker');location.reload()}
 
-// ===== EXPORT =====
-function exportReport(type) {
-  let text = '';
-  const line = s => text += s + '\n';
-  if (type==='all' || type==='vomit') {
-    line('=== Mia 咪啊 健康報告 ===');
-    line('產生時間：' + new Date().toLocaleString('zh-TW'));
-    line('');
-    if (type==='all') {
-      line('【體重紀錄】');
-      state.weights.forEach(w => line(fmtDate(w.date) + ' → ' + w.weight + ' kg'));
-      line('');
-    }
-    line('【嘔吐紀錄】');
-    state.healthLogs.filter(h=>h.type==='vomit').forEach(h => line(fmtDateTime(h.date,h.time) + ' | ' + (h.value||'') + (h.note?' ('+h.note+')':'')));
-    line('');
-    line('【飲食紀錄（近30筆）】');
-    state.dietLogs.slice(0,30).forEach(d => line(fmtDateTime(d.date,d.time) + ' | ' + (DIET_LABELS[d.type]||d.type) + ' | ' + [d.brand,d.flavor].filter(Boolean).join(' ') + (d.amount?' | 份量:'+d.amount:'') + (d.note?' | '+d.note:'')));
-    line('');
-    // Cross analysis
-    const vomits = state.healthLogs.filter(h=>h.type==='vomit');
-    if (vomits.length && state.dietLogs.length) {
-      line('【嘔吐×飲食 交叉分析】');
-      line('（列出每次嘔吐前72小時內的飲食）');
-      vomits.forEach(v => {
-        line('嘔吐：' + fmtDateTime(v.date,v.time) + ' ' + (v.value||''));
-        const foods = state.dietLogs.filter(d => {
-          const diffH = (new Date(v.date)-new Date(d.date))/36e5;
-          return diffH>=0 && diffH<=72;
-        });
-        foods.forEach(d => line('  ← ' + fmtDateTime(d.date,d.time) + ' ' + [d.brand,d.flavor].filter(Boolean).join(' ') + ' (' + (DIET_LABELS[d.type]||d.type) + ')'));
-        if(!foods.length) line('  （無對應飲食紀錄）');
-      });
-    }
-    if (type==='all') {
-      line('');
-      line('【其他健康紀錄】');
-      state.healthLogs.filter(h=>h.type!=='vomit').forEach(h => line(fmtDateTime(h.date,h.time) + ' | ' + (HEALTH_TYPES[h.type]||h.type) + ' | ' + (h.value||'') + (h.note?' ('+h.note+')':'')));
-      line('');
-      line('【掉毛紀錄】');
-      state.sheddingLogs.forEach(s => line(fmtDate(s.date) + ' | Level ' + s.level + '/5' + (s.note?' | '+s.note:'')));
-    }
-  } else if (type==='csv') {
-    line('type,date,time,detail1,detail2,amount,note');
-    state.dietLogs.forEach(d => line(['diet-'+d.type,d.date,d.time,d.brand,d.flavor,d.amount,d.note].map(s=>'"'+(s||'')+'"').join(',')));
-    state.healthLogs.forEach(h => line(['health-'+h.type,h.date,h.time,h.value,'','',h.note].map(s=>'"'+(s||'')+'"').join(',')));
-    state.weights.forEach(w => line(['weight',w.date,'',w.weight,'','',''].map(s=>'"'+(s||'')+'"').join(',')));
-    state.sheddingLogs.forEach(s => line(['shedding',s.date,'',s.level,'','',s.note].map(s=>'"'+(s||'')+'"').join(',')));
-  }
-  document.getElementById('modalTitle').textContent = type==='csv' ? 'CSV 匯出' : type==='vomit' ? '嘔吐×飲食分析報告' : '完整報告';
-  document.getElementById('modalContent').textContent = text;
-  document.getElementById('exportModal').classList.add('show');
-}
-function copyReport() {
-  const t = document.getElementById('modalContent').textContent;
-  navigator.clipboard.writeText(t).then(() => {
-    const m = document.getElementById('copyMsg'); m.style.display='block'; setTimeout(()=>m.style.display='none',2000);
-  }).catch(() => { /* fallback */ const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); const m=document.getElementById('copyMsg');m.style.display='block';setTimeout(()=>m.style.display='none',2000);});
-}
-function closeModal() { document.getElementById('exportModal').classList.remove('show'); }
-
-// ===== GOOGLE APPS SCRIPT =====
-function saveGasUrl() {
-  state.gasUrl = document.getElementById('gasUrl').value.trim();
-  save();
-  document.getElementById('gasStatus').textContent = '✅ URL 已儲存';
-}
-function testConnection() {
-  if (!state.gasUrl) { document.getElementById('gasStatus').textContent='❌ 請先輸入 URL'; return; }
-  document.getElementById('gasStatus').textContent = '⏳ 測試中...';
-  fetch(state.gasUrl + '?action=ping').then(r=>r.json()).then(d => {
-    document.getElementById('gasStatus').textContent = d.status==='ok' ? '✅ 連線成功！' : '❌ 回應異常';
-  }).catch(e => { document.getElementById('gasStatus').textContent = '❌ 連線失敗：'+e.message; });
-}
-function syncToSheet() {
-  if (!state.gasUrl) { document.getElementById('gasStatus').textContent='❌ 請先設定 URL'; return; }
-  document.getElementById('gasStatus').textContent = '⏳ 同步中...';
-  const payload = {
-    weights: state.weights,
-    dietLogs: state.dietLogs,
-    healthLogs: state.healthLogs,
-    sheddingLogs: state.sheddingLogs,
-  };
-  fetch(state.gasUrl, {
-    method: 'POST', mode: 'no-cors',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify(payload)
-  }).then(() => {
-    document.getElementById('gasStatus').textContent = '✅ 已送出同步請求（請檢查 Google Sheet）';
-  }).catch(e => { document.getElementById('gasStatus').textContent = '❌ 同步失敗：'+e.message; });
-}
-
-// ===== RESET =====
-function resetAll() { localStorage.removeItem('mia-tracker'); location.reload(); }
-
-// ===== INIT =====
-function init() {
-  load();
-  document.getElementById('age').textContent = getAge();
-  document.getElementById('ageDetail').textContent = getAge();
-  document.getElementById('dietDate').value = today();
-  document.getElementById('dietTime').value = nowTime();
-  document.getElementById('weightDate').value = today();
-  document.getElementById('healthDate').value = today();
-  document.getElementById('healthTime').value = nowTime();
-  document.getElementById('sheddingDate').value = today();
-  if (state.gasUrl) document.getElementById('gasUrl').value = state.gasUrl;
-  initTabs();
-  renderDiet(); renderWeight(); initHealthChips(); renderHealth(); renderCrossAnalysis();
-  renderVaccines(); initSheddingBar(); renderShedding();
-  switchTab(state.currentTab);
-}
+// INIT
+function init(){
+ld();
+document.getElementById('age').textContent=age();
+document.getElementById('ageD').textContent=age();
+document.getElementById('dDate').value=td();document.getElementById('dTime').value=nt();
+document.getElementById('wDate').value=td();
+document.getElementById('hDate').value=td();document.getElementById('hTime').value=nt();
+document.getElementById('sDate').value=td();document.getElementById('mLast').value=S.med.last||td();
+if(S.gasUrl)document.getElementById('gasUrl').value=S.gasUrl;
+if(S.med.name){document.getElementById('mName').value=S.med.name;document.getElementById('mCycle').value=S.med.cycle;document.getElementById('mLast').value=S.med.last}
+initTb();initDC();rStaple();rMed();rFavs();rFavBtns();rDiet();rW();initHC();rH();rXA();rV();initSB();rShed();sw(S.tab)}
 init();
 </script>
 </body>
