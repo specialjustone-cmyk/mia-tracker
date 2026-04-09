@@ -1,125 +1,412 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Morning Secretary">
-<title>Morning Secretary</title>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;1,400&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="咪啊健康">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236b5b4e' width='100' height='100' rx='20'/><text y='70' x='50' text-anchor='middle' font-size='60'>🐱</text></svg>">
+<title>Mia 咪啊 Health Tracker v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root,[data-theme="sakura"]{--bg:#FAF6F2;--card:#FFFDF9;--text:#3E3229;--sub:#9B8E82;--accent:#C4727F;--accent-light:#F8E8EB;--accent-dark:#96424F;--green:#7A9033;--green-light:#EEF2E1;--green-dark:#5A6D22;--blue:#1F4E8C;--blue-light:#E4EBF4;--warm:#C07847;--warm-light:#F5EBE3;--indigo:#1F4E8C;--indigo-light:#E4EBF4;--border:rgba(62,50,41,0.07);--radius:14px;--paper:#F5F0E8}
-[data-theme="sumi"]{--bg:#1C1C1E;--card:#2C2C2E;--text:#E8E4DF;--sub:#8A847C;--accent:#D4A574;--accent-light:rgba(212,165,116,0.12);--accent-dark:#B8894E;--green:#8BA86A;--green-light:rgba(139,168,106,0.12);--green-dark:#6E8A4E;--blue:#6AABD2;--blue-light:rgba(106,171,210,0.12);--warm:#D4845A;--warm-light:rgba(212,132,90,0.12);--indigo:#6AABD2;--indigo-light:rgba(106,171,210,0.12);--border:rgba(255,255,255,0.06);--radius:14px;--paper:#2C2C2E}
-[data-theme="matcha"]{--bg:#F4F1EC;--card:#FAFAF7;--text:#2C3325;--sub:#7A8270;--accent:#6B7F3A;--accent-light:#EDF1E3;--accent-dark:#4E5E28;--green:#6B7F3A;--green-light:#EDF1E3;--green-dark:#4E5E28;--blue:#4A7A8C;--blue-light:#E2EEF1;--warm:#A67C52;--warm-light:#F2EBE3;--indigo:#4A7A8C;--indigo-light:#E2EEF1;--border:rgba(44,51,37,0.07);--radius:14px;--paper:#EDE8DF}
-[data-theme="ai"]{--bg:#F0F2F5;--card:#FFFFFF;--text:#1A1A2E;--sub:#6B7280;--accent:#1F4E8C;--accent-light:#DBEAFE;--accent-dark:#163B6B;--green:#059669;--green-light:#D1FAE5;--green-dark:#047857;--blue:#1F4E8C;--blue-light:#DBEAFE;--warm:#DC6B2F;--warm-light:#FDE8D8;--indigo:#4338CA;--indigo-light:#E0E7FF;--border:rgba(0,0,0,0.06);--radius:14px;--paper:#E8ECF1}
-[data-theme="fuji"]{--bg:#F5F0F6;--card:#FDFBFE;--text:#2E2438;--sub:#8A7E94;--accent:#7B5EA7;--accent-light:#EDE7F3;--accent-dark:#5C4280;--green:#6B8C5A;--green-light:#E8F0E4;--green-dark:#4E6B40;--blue:#5A7B9E;--blue-light:#E2ECF3;--warm:#B07A4F;--warm-light:#F3EAE1;--indigo:#7B5EA7;--indigo-light:#EDE7F3;--border:rgba(46,36,56,0.07);--radius:14px;--paper:#ECE6EF}
-body{font-family:'Zen Maru Gothic','Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:90px;transition:all .4s}
-.ctn{max-width:460px;margin:0 auto;padding:16px}
-.hdr{text-align:center;padding:32px 16px 20px}
-.greet{font-family:'Playfair Display',serif;font-size:30px;font-style:italic}
-.date{font-size:12px;color:var(--sub);letter-spacing:.5px;margin-top:6px}
-.time{font-size:56px;font-weight:300;color:var(--accent);margin:8px 0;letter-spacing:-3px}
-.cd{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:24px;background:var(--accent-light);color:var(--accent-dark);font-size:13px;font-weight:500;margin-top:4px}
-.cd.urg{background:var(--warm-light);color:var(--warm)}
-.pbtn{display:flex;align-items:center;justify-content:center;gap:10px;margin:20px auto 0;padding:13px 32px;background:var(--accent);color:#fff;border:none;border-radius:32px;font-size:14px;font-family:inherit;font-weight:500;cursor:pointer;transition:all .3s;box-shadow:0 3px 16px rgba(0,0,0,.1)}
-.pbtn:active{transform:scale(.97)}.pbtn.on{background:var(--warm)}.pbtn.ld{opacity:.7;pointer-events:none}
-.pbtn svg{width:18px;height:18px;fill:currentColor}
-.sec{margin-top:24px}.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 2px}
-.sl{font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--sub)}
-.sb{font-size:10px;padding:3px 10px;border-radius:12px}
-.crd{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:18px;margin-bottom:10px}
-.wt{display:flex;align-items:center;gap:14px}.wi{font-size:44px;line-height:1}.wtp{font-size:40px;font-weight:300;letter-spacing:-2px}.wds{font-size:13px;color:var(--sub);margin-top:1px}
-.wg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
-.ws{text-align:center}.wsv{font-size:14px;font-weight:500}.wsl{font-size:10px;color:var(--sub);margin-top:1px}
-.wtip{margin-top:14px;padding:10px 14px;border-radius:10px;background:var(--accent-light);color:var(--accent-dark);font-size:12px;line-height:1.7}
-.pbar{margin-top:10px;padding:10px 14px;border-radius:10px;background:var(--warm-light);color:var(--warm);font-size:12px;line-height:1.6}
-.wr{display:flex;justify-content:space-between;padding:0 4px}.wd{text-align:center;flex:1}.wdn{font-size:10px;color:var(--sub)}.wdi{font-size:20px;margin:4px 0}.wdt{font-size:11px;font-weight:500}
-.dtg{display:flex;background:var(--paper);border-radius:10px;padding:3px;margin-bottom:14px}
-.db{flex:1;padding:8px;text-align:center;border-radius:8px;border:none;font-family:inherit;font-size:12px;cursor:pointer;transition:all .2s;background:transparent;color:var(--sub)}
-.db.a{background:var(--card);color:var(--text);font-weight:500;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.ti{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}.ti:last-child{border-bottom:none}
-.tb{display:inline-flex;align-items:center;justify-content:center;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:600;min-width:32px}
-.tb1{background:var(--blue-light);color:var(--blue)}.tb2{background:var(--indigo-light);color:var(--indigo)}.tb3{background:var(--warm-light);color:var(--warm)}.tb4{background:var(--paper);color:var(--sub)}
-.tf{flex:1}.tn{font-size:13px;font-weight:500}.ts{font-size:11px;margin-top:1px}.tok{color:var(--green)}.tdl{color:var(--warm)}.tt{font-size:12px;color:var(--sub)}
-.tsum{padding:10px 14px;border-radius:10px;font-size:12px;line-height:1.6;margin-top:10px}
-.tsok{background:var(--green-light);color:var(--green-dark)}.tsdl{background:var(--warm-light);color:var(--warm)}
-.tsrc{font-size:10px;color:var(--sub);text-align:center;margin-top:8px;font-style:italic}
-.ei{padding:14px 0;border-bottom:1px solid var(--border)}.ei:last-child{border-bottom:none}
-.et{display:inline-block;padding:2px 8px;border-radius:12px;font-size:9px;font-weight:600;margin-bottom:6px}
-.en{font-size:14px;font-weight:500;margin-bottom:3px}.em{font-size:11px;color:var(--sub)}.es{font-size:10px;color:var(--sub);margin-top:6px;font-style:italic}
-.sbox{font-size:13px;line-height:1.8;white-space:pre-wrap;padding:4px 0}
-.sov{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.35);z-index:100;display:none;align-items:flex-end;justify-content:center}.sov.open{display:flex}
-.sp{background:var(--bg);border-radius:20px 20px 0 0;width:100%;max-width:460px;max-height:82vh;overflow-y:auto;padding:20px 18px 36px}
-.shandle{width:36px;height:4px;background:var(--sub);opacity:.25;border-radius:2px;margin:0 auto 18px}
-.stitle{font-size:16px;font-weight:500;margin-bottom:20px}
-.sg{margin-bottom:18px}.sgl{font-size:12px;font-weight:500;color:var(--sub);margin-bottom:6px}
-.sgi{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-family:inherit;font-size:13px;background:var(--card);color:var(--text);outline:none}.sgi:focus{border-color:var(--accent)}
-.cps{display:flex;flex-wrap:wrap;gap:6px}
-.cp{padding:7px 14px;border-radius:16px;font-size:12px;border:1px solid var(--border);background:var(--card);cursor:pointer;transition:all .2s;user-select:none;color:var(--text)}.cp.a{background:var(--accent);color:#fff;border-color:var(--accent)}
-.tr{display:flex;gap:10px;justify-content:center}.to{text-align:center;cursor:pointer}
-.tc{width:38px;height:38px;border-radius:50%;border:3px solid transparent;margin:0 auto 4px;transition:all .2s}.tc.a{border-color:var(--accent);transform:scale(1.1)}
-.tcn{font-size:9px;color:var(--sub)}
-.svb{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;margin-top:20px}
-.bn{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);display:flex;justify-content:center;gap:56px;padding:10px 0 26px;z-index:50}
-.nb{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9px;color:var(--sub);font-family:inherit}.nb.a{color:var(--accent)}.nb svg{width:20px;height:20px;fill:currentColor}
-.fd{animation:fu .5s ease forwards;opacity:0;transform:translateY(8px)}@keyframes fu{to{opacity:1;transform:translateY(0)}}
-.fd:nth-child(2){animation-delay:.1s}.fd:nth-child(3){animation-delay:.2s}.fd:nth-child(4){animation-delay:.3s}.fd:nth-child(5){animation-delay:.4s}.fd:nth-child(6){animation-delay:.5s}.fd:nth-child(7){animation-delay:.6s}
-.ld{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--accent);margin:0 2px;animation:bl 1.2s infinite}.ld:nth-child(2){animation-delay:.2s}.ld:nth-child(3){animation-delay:.4s}@keyframes bl{0%,80%,100%{opacity:.2}40%{opacity:1}}
+:root{--bg:#fdf6ee;--bg2:#f5ebe0;--bg3:#edede9;--card:#fff;--border:#e8e0d6;--bl:#f0ebe4;--brown:#6b5b4e;--bm:#8b7355;--blt:#a39171;--gold:#c9a96e;--green:#7a9b6d;--orange:#c47a5a;--yellow:#d4a843;--text:#3d3229;--tl:#a09890;--tm:#6b5b4e}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Noto Sans TC','DM Sans',sans-serif;background:linear-gradient(160deg,var(--bg),var(--bg2) 40%,var(--bg3));color:var(--text);min-height:100vh;padding-bottom:80px}
+.hdr{background:linear-gradient(135deg,var(--brown),var(--bm) 50%,var(--blt));padding:max(env(safe-area-inset-top),20px) 20px 18px;color:var(--bg);position:relative;overflow:hidden}
+.hdr::after{content:'🐾';position:absolute;top:-30px;right:-20px;font-size:120px;opacity:.07}
+.hdr-sub{font-size:11px;letter-spacing:3px;text-transform:uppercase;opacity:.65;margin-bottom:4px}
+.hdr-t{font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:2px}
+.hdr-i{font-size:12px;opacity:.7}
+.tb{display:flex;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;overflow-x:auto}
+.tb button{flex:1;min-width:50px;padding:10px 2px 8px;border:none;background:transparent;border-bottom:3px solid transparent;color:var(--tl);font-family:inherit;font-size:9px;font-weight:500;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .2s}
+.tb button.on{background:var(--bg);border-bottom-color:var(--bm);color:var(--brown)}
+.tb button span{font-size:16px}
+.ct{padding:14px;max-width:600px;margin:0 auto}
+.tc{display:none;flex-direction:column;gap:14px}
+.tc.on{display:flex}
+.cd{background:var(--card);border-radius:14px;padding:14px 16px;box-shadow:0 1px 4px rgba(107,91,78,.06)}
+.ct-t{font-weight:700;font-size:14px;color:var(--tm);margin-bottom:10px;border-bottom:2px solid var(--bl);padding-bottom:7px}
+.ir{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f8f4ef;gap:10px;flex-wrap:wrap}
+.il{font-size:12px;color:var(--tl);flex-shrink:0}.iv{font-size:12px;font-weight:500;text-align:right;word-break:break-all}
+.br{display:flex;gap:8px;flex-wrap:wrap}
+.bd{background:var(--bg);border-radius:10px;padding:7px 10px;flex:1 1 85px}
+.bl{font-size:10px;color:var(--tl)}.bv{font-size:14px;font-weight:700;margin-top:2px}
+input[type=text],input[type=number],input[type=date],input[type=time],select,textarea{border:1px solid #e0d8ce;border-radius:8px;padding:8px 10px;font-size:13px;font-family:inherit;color:var(--text);background:var(--bg);outline:none;width:100%}
+textarea{resize:vertical;min-height:60px}
+.fr{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}.fr>*{flex:1;min-width:0}
+.fh{flex:1 1 45%!important}.ft{flex:1 1 30%!important}
+.btn{background:linear-gradient(135deg,var(--bm),var(--brown));color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap}
+.bo{background:transparent;border:1.5px solid var(--bm);color:var(--bm);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:500;font-family:inherit;cursor:pointer}
+.bd2{background:#e8c4b8;color:var(--orange)}.bs{padding:6px 12px;font-size:11px}
+.cr{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+.ch{border:none;border-radius:18px;padding:5px 12px;font-size:12px;font-weight:500;font-family:inherit;cursor:pointer;background:var(--bl);color:var(--tm);transition:all .15s}
+.ch.on{background:var(--bm);color:#fff}.ch.gn{background:var(--green);color:#fff}
+.li{display:flex;align-items:flex-start;gap:8px;padding:9px 0;border-bottom:1px solid var(--bl)}
+.lt{background:var(--bl);border-radius:6px;padding:3px 7px;font-size:10px;font-weight:600;color:var(--bm);white-space:nowrap;flex-shrink:0}
+.lb{flex:1;min-width:0}.ld{font-size:11px;color:var(--tl)}.lx{font-size:12px;font-weight:500;margin-top:1px}.ln{font-size:11px;color:var(--tm);margin-top:1px}
+.ld2{border:none;background:none;color:#ccc;cursor:pointer;font-size:13px;padding:4px;flex-shrink:0}
+.emp{font-size:12px;color:var(--tl);text-align:center;padding:20px}
+.ht{font-size:12px;line-height:1.6;color:var(--bm);margin-top:6px}
+.sl{font-size:13px;font-weight:700;color:var(--bm);margin:8px 0 3px}
+.hb{background:var(--bg);border-radius:10px;padding:10px;border:1px solid var(--border);margin-top:6px;font-size:12px;line-height:1.7}
+.sb{display:flex;gap:5px}.sb button{flex:1;height:34px;border-radius:8px;border:none;cursor:pointer;font-weight:600;font-size:13px;color:#bbb;background:var(--bl);transition:all .15s}
+.cb{background:#fef9f0;border:1.5px solid var(--gold);border-radius:12px;padding:12px;margin-top:8px}
+.cbt{font-size:13px;font-weight:700;color:var(--orange);margin-bottom:6px}
+.cbi{font-size:12px;line-height:1.6;color:var(--text);padding:4px 0;border-bottom:1px solid #f5efe5}
+.ft2{text-align:center;padding:20px 16px 40px;font-size:10px;color:#ccc}
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;justify-content:center;align-items:center}
+.mo.sh{display:flex}.ml{background:var(--card);border-radius:16px;padding:20px;width:90%;max-width:420px;max-height:80vh;overflow-y:auto}
+.ml-t{font-size:16px;font-weight:700;color:var(--brown);margin-bottom:12px}
+.ml pre{background:var(--bg);border-radius:8px;padding:10px;font-size:11px;overflow-x:auto;white-space:pre-wrap;word-break:break-all;max-height:50vh}
+.qb{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:6px 12px;margin:3px;cursor:pointer;font-size:12px;font-family:inherit;color:var(--text);transition:all .15s}
+.qb:active{background:var(--bm);color:#fff;border-color:var(--bm)}
+.med-card{background:linear-gradient(135deg,#f8f4ef,#f0ebe4);border-radius:12px;padding:12px;margin-bottom:8px;border:1px solid var(--border)}
+.med-name{font-weight:600;font-size:13px;color:var(--brown)}.med-info{font-size:11px;color:var(--tl);margin-top:2px}
+.med-bar{height:6px;border-radius:3px;background:#e8e0d6;margin-top:6px;overflow:hidden}
+.med-fill{height:100%;border-radius:3px;transition:width .3s}
 </style>
 </head>
-<body data-theme="sakura">
-<div class="ctn">
-  <div class="hdr fd"><div class="greet" id="G"></div><div class="date" id="D"></div><div class="time" id="T"></div><div class="cd" id="CD" style="display:none"></div></div>
-  <button class="pbtn fd" id="PB" onclick="play()"><svg viewBox="0 0 24 24" id="PI"><polygon points="5,3 19,12 5,21"/></svg><span id="PL">Play brief</span></button>
-  <div class="sec fd"><div class="sh"><span class="sl">Your brief</span><span class="sb" id="SB" style="background:var(--indigo-light);color:var(--indigo)">AI</span></div><div class="crd"><div class="sbox" id="SC">Generating<span class="ld"></span><span class="ld"></span><span class="ld"></span></div></div></div>
-  <div class="sec fd"><div class="sh"><span class="sl">Weather</span></div><div class="crd" id="WC"><span class="ld"></span><span class="ld"></span><span class="ld"></span></div></div>
-  <div class="sec fd" id="WS" style="display:none"><div class="sh"><span class="sl">This week</span></div><div class="crd"><div class="wr" id="WR"></div></div></div>
-  <div class="sec fd"><div class="sh"><span class="sl">Commute</span><span class="sb" id="TB" style="background:var(--green-light);color:var(--green-dark)">Live</span></div><div class="crd"><div class="dtg"><button class="db a" id="DW" onclick="sd('to_work')">Parramatta → SCG</button><button class="db" id="DH" onclick="sd('to_home')">SCG → Parramatta</button></div><div id="TC"><span class="ld"></span><span class="ld"></span><span class="ld"></span></div><div class="tsrc">Live from Transport for NSW</div></div></div>
-  <div class="sec fd"><div class="sh"><span class="sl">This week's picks</span><span class="sb" style="background:var(--warm-light);color:var(--warm)">Sample</span></div><div class="crd" id="EC"></div></div>
+<body>
+<div class="hdr"><div class="hdr-sub">Pet Health Tracker v2</div><div class="hdr-t">Mia 咪啊</div><div class="hdr-i">Tuxedo DSH · <span id="age"></span> · Sydney</div></div>
+<div class="tb" id="tabBar"></div>
+<div class="ct">
+<!-- PROFILE -->
+<div class="tc" id="tab-profile">
+<div class="cd"><div class="ct-t">基本資料</div>
+<div class="ir"><span class="il">名字</span><span class="iv">Mia 咪啊</span></div>
+<div class="ir"><span class="il">品種</span><span class="iv">DSH (Tuxedo)</span></div>
+<div class="ir"><span class="il">性別</span><span class="iv">已結紮母貓</span></div>
+<div class="ir"><span class="il">出生</span><span class="iv">2014/07/01（<span id="ageD"></span>）</span></div>
+<div class="ir"><span class="il">晶片</span><span class="iv">982000356220576</span></div>
+<div class="ir"><span class="il">飼主</span><span class="iv">Emma Shih</span></div>
+<div class="ir"><span class="il">所在地</span><span class="iv">Sydney, NSW</span></div></div>
+<div class="cd"><div class="ct-t">🛡️ 保險資訊</div>
+<div class="ir"><span class="il">保險公司</span><span class="iv">Trupanion Australia</span></div>
+<div class="ir"><span class="il">保單號碼</span><span class="iv">TA0000028910</span></div>
+<div class="ir"><span class="il">保期</span><span class="iv">2025/09/08 - 2026/09/08</span></div>
+<div class="ir"><span class="il">月繳保費</span><span class="iv">$83.13 AUD</span></div>
+<div class="ir"><span class="il">Excess</span><span class="iv">$1,000 / per illness or injury</span></div>
+<div class="ir"><span class="il">Co-Pay</span><span class="iv">90% Trupanion / 10% 自付</span></div>
+<div class="ir"><span class="il">理賠上限</span><span class="iv">No Limit</span></div>
+<div class="ir"><span class="il">等待期</span><span class="iv">意外 5 天 / 疾病 30 天</span></div>
+<div class="ir"><span class="il">客服</span><span class="iv">1300 328 042 (24/7)</span></div>
+<div class="ir"><span class="il">Claim</span><span class="iv">trupanion.com.au/claim</span></div></div>
+<div class="cd"><div class="ct-t">病史摘要</div>
+<div style="font-size:12px;line-height:1.6">
+<div style="padding:4px 0;border-bottom:1px solid var(--bl)"><span style="color:var(--gold)">●</span> Pancreatitis history (prior to adoption)</div>
+<div style="padding:4px 0;border-bottom:1px solid var(--bl)"><span style="color:var(--gold)">●</span> 嘔吐發作 ~2次/年，每次持續2-3週</div>
+<div style="padding:4px 0;border-bottom:1px solid var(--bl)"><span style="color:var(--gold)">●</span> T4 grey zone (45→23) — 持續監控</div>
+<div style="padding:4px 0;border-bottom:1px solid var(--bl)"><span style="color:var(--gold)">●</span> Mild eosinophilia (May 2024)</div>
+<div style="padding:4px 0"><span style="color:var(--gold)">●</span> 微微過重 (BCS 5-6/9)</div></div></div>
+<div class="cd"><div class="ct-t">最近體檢 (2025/01/15)</div>
+<div class="ir"><span class="il">體重</span><span class="iv">6.90 kg（BCS 5/9）</span></div>
+<div class="ir"><span class="il">體溫</span><span class="iv">37.6°C</span></div>
+<div class="ir"><span class="il">血檢</span><span class="iv">WNL（全數正常）</span></div>
+<div class="ir"><span class="il">FAVN</span><span class="iv">≥ 4.56 IU/mL（通過）</span></div></div>
+<div class="cd"><div class="ct-t">⚙️ Google Sheets 連線</div>
+<div style="margin-bottom:8px"><input type="text" id="gasUrl" placeholder="貼上 Google Apps Script URL" style="font-size:11px"></div>
+<div class="fr"><button class="btn bs" onclick="saveGas()">儲存</button><button class="bo bs" onclick="testGas()">測試</button><button class="bo bs" onclick="syncGas()">同步</button></div>
+<div id="gasMsg" style="font-size:11px;color:var(--tl);margin-top:6px"></div></div>
 </div>
-<div class="bn"><button class="nb a"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span>Brief</span></button><button class="nb" onclick="oS()"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg><span>Settings</span></button></div>
-<div class="sov" id="SO" onclick="cS(event)"><div class="sp" onclick="event.stopPropagation()"><div class="shandle"></div><div class="stitle">Settings</div>
-  <div class="sg"><div class="sgl">Your name</div><input type="text" class="sgi" id="iN" value="Emma"></div>
-  <div class="sg"><div class="sgl">Work start time</div><input type="time" class="sgi" id="iW" value="09:00"></div>
-  <div class="sg"><div class="sgl">Interests</div><div class="cps"><div class="cp a" onclick="this.classList.toggle('a')">Food</div><div class="cp a" onclick="this.classList.toggle('a')">Music</div><div class="cp" onclick="this.classList.toggle('a')">Art</div><div class="cp a" onclick="this.classList.toggle('a')">Outdoors</div><div class="cp" onclick="this.classList.toggle('a')">Sports</div><div class="cp a" onclick="this.classList.toggle('a')">Markets</div><div class="cp" onclick="this.classList.toggle('a')">Festivals</div></div></div>
-  <div class="sg"><div class="sgl">Theme</div><div class="tr"><div class="to" onclick="sT('sakura',this)"><div class="tc a" style="background:linear-gradient(135deg,#C4727F,#F8E8EB)"></div><div class="tcn">Sakura</div></div><div class="to" onclick="sT('matcha',this)"><div class="tc" style="background:linear-gradient(135deg,#6B7F3A,#EDF1E3)"></div><div class="tcn">Matcha</div></div><div class="to" onclick="sT('fuji',this)"><div class="tc" style="background:linear-gradient(135deg,#7B5EA7,#EDE7F3)"></div><div class="tcn">Fuji</div></div><div class="to" onclick="sT('ai',this)"><div class="tc" style="background:linear-gradient(135deg,#1F4E8C,#DBEAFE)"></div><div class="tcn">Indigo</div></div><div class="to" onclick="sT('sumi',this)"><div class="tc" style="background:linear-gradient(135deg,#D4A574,#1C1C1E)"></div><div class="tcn">Sumi</div></div></div></div>
-  <div class="sg"><div class="sgl">AI Voice</div><div class="cps"><div class="cp a" onclick="sV(this,'onyx')">Onyx (deep)</div><div class="cp" onclick="sV(this,'echo')">Echo (young)</div><div class="cp" onclick="sV(this,'nova')">Nova (female)</div><div class="cp" onclick="sV(this,'ash')">Ash (warm)</div></div></div>
-  <button class="svb" onclick="svS()">Save</button>
-</div></div>
+
+<!-- DIET -->
+<div class="tc" id="tab-diet">
+<div class="cd"><div class="ct-t">🍽️ 目前主食設定</div><div id="stapleDisplay"></div></div>
+<div class="cd"><div class="ct-t">💊 預防用藥</div><div id="medDisplay"></div></div>
+<div class="cd"><div class="ct-t">⚡ 快速記錄</div><div id="favBtns"></div>
+<div style="margin-top:8px;font-size:11px;color:var(--tl)">點選常用食物快速記錄，或用下方手動輸入</div></div>
+<div class="cd"><div class="ct-t">手動輸入飲食</div>
+<div class="cr" id="dietChips"></div>
+<div class="fr"><input type="date" id="dDate" class="fh"><input type="time" id="dTime" class="fh"></div>
+<div class="fr"><input type="text" id="dBrand" placeholder="品牌" class="fh"><input type="text" id="dFlavor" placeholder="口味/品項" class="fh"></div>
+<div class="fr"><input type="text" id="dAmt" placeholder="份量" class="fh"><input type="text" id="dNote" placeholder="備註" class="fh"></div>
+<button class="btn" onclick="addDiet()" style="width:100%">記錄</button></div>
+<div class="cd"><div class="ct-t">飲食日誌</div><div id="dietList"></div></div>
+</div>
+
+<!-- FAV MANAGER -->
+<div class="tc" id="tab-favs">
+<div class="cd"><div class="ct-t">⭐ 常用食物清單管理</div>
+<p style="font-size:12px;color:var(--tl);margin-bottom:10px">新增常用食物，之後在「飲食」分頁可快速一鍵記錄</p>
+<div class="fr"><select id="fType"><option value="treat">零食</option><option value="supplement">保健品</option><option value="human">人類食物</option><option value="main">主食</option><option value="other">其他</option></select></div>
+<div class="fr"><input type="text" id="fBrand" placeholder="品牌" class="fh"><input type="text" id="fFlavor" placeholder="品項名稱" class="fh"></div>
+<div class="fr"><input type="text" id="fAmt" placeholder="預設份量（選填）" class="fh"></div>
+<button class="btn" onclick="addFav()" style="width:100%">新增到常用清單</button></div>
+<div class="cd"><div class="ct-t">目前清單</div><div id="favList"></div></div>
+<div class="cd"><div class="ct-t">更換主食</div>
+<p style="font-size:12px;color:var(--tl);margin-bottom:8px">更換主食時使用，系統會自動記錄更換日期</p>
+<div class="fr"><input type="text" id="sNew" placeholder="新主食（如 Hill's I/D 雞肉罐 + GI kibble）"></div>
+<button class="btn" onclick="changeStaple()" style="width:100%">確認更換主食</button></div>
+<div class="cd"><div class="ct-t">新增/更換預防用藥</div>
+<p style="font-size:12px;color:var(--tl);margin-bottom:8px">跳蚤/蜱蟲/驅蟲藥等週期性用藥</p>
+<div class="fr"><input type="text" id="mName" placeholder="藥品名稱" class="fh"><input type="number" id="mCycle" placeholder="週期（天）" class="fh"></div>
+<div class="fr"><input type="date" id="mLast" class="fh"><span style="font-size:11px;color:var(--tl);display:flex;align-items:center">上次用藥日</span></div>
+<button class="btn" onclick="saveMed()" style="width:100%">儲存用藥設定</button></div>
+</div>
+
+<!-- WEIGHT -->
+<div class="tc" id="tab-weight">
+<div class="cd"><div class="ct-t">體重趨勢</div><div id="wChart" style="height:180px;overflow-x:auto;margin-bottom:8px"></div><div class="br" id="wBadge"></div></div>
+<div class="cd"><div class="ct-t">新增體重</div><div class="fr"><input type="date" id="wDate" class="fh"><input type="number" step="0.01" id="wVal" placeholder="kg" class="ft"><button class="btn" onclick="addW()">儲存</button></div></div>
+</div>
+
+<!-- HEALTH -->
+<div class="tc" id="tab-health">
+<div class="cd"><div class="ct-t">新增健康紀錄</div><div class="cr" id="hChips"></div><div id="hOpts"></div>
+<div class="fr"><input type="date" id="hDate" class="ft"><input type="time" id="hTime" class="ft"><input type="text" id="hNote" placeholder="備註" class="ft"></div>
+<button class="btn" onclick="addH()" style="width:100%">記錄</button></div>
+<div class="cd"><div class="ct-t">嘔吐 × 飲食 交叉分析</div><div id="xAnal"></div></div>
+<div class="cd"><div class="ct-t">健康日誌</div><div id="hList"></div></div>
+</div>
+
+<!-- VACCINES -->
+<div class="tc" id="tab-vax">
+<div class="cd"><div class="ct-t">疫苗狀態</div><div id="vList"></div></div>
+<div class="cd"><div class="ct-t">🇦🇺 澳洲疫苗建議</div>
+<div style="font-size:12px;line-height:1.7">
+<div class="sl">F3 / FVRCP</div><p style="margin:3px 0 10px">已於 <b>2025/08/06</b> 施打 3年疫苗。<b>下次 2028/08/05</b>。</p>
+<div class="sl">FeLV</div><p style="margin:3px 0 10px">2023/07 施打 3yr，<b>2026/07 到期</b>。室內貓可與獸醫討論。</p>
+<div class="sl">FIV</div><p style="margin:3px 0 10px">NSW 盛行率 ~15%。若外出建議討論。</p>
+<div class="sl">Rabies</div><p style="margin:3px 0 10px">澳洲不需要。已有 FAVN 通過。</p></div></div>
+</div>
+
+<!-- SHEDDING -->
+<div class="tc" id="tab-shed">
+<div class="cd"><div class="ct-t">掉毛狀態</div><div id="shedStat"></div>
+<div style="font-size:12px;line-height:1.6;color:var(--tm);margin-top:8px">🌸 春季(9-11月) 🍂 秋季(3-5月)：換毛高峰</div></div>
+<div class="cd"><div class="ct-t">記錄掉毛</div>
+<div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:11px;color:var(--tl)">少</span><span style="font-size:11px;color:var(--tl)">多</span></div>
+<div class="sb" id="sBar"></div>
+<div class="fr" style="margin-top:8px"><input type="date" id="sDate" class="fh"><input type="text" id="sNote" placeholder="備註" class="fh"></div>
+<button class="btn" onclick="addShed()" style="width:100%">記錄</button></div>
+<div class="cd"><div class="ct-t">掉毛紀錄</div><div id="sList"></div></div>
+</div>
+
+<!-- EXPORT -->
+<div class="tc" id="tab-exp">
+<div class="cd"><div class="ct-t">📤 匯出分析報告</div>
+<p style="font-size:12px;color:var(--tl);margin-bottom:10px">產生報告複製到 Claude 分析，或帶去給獸醫</p>
+<div class="fr"><button class="btn" onclick="expR('all')">完整報告</button><button class="bo" onclick="expR('vomit')">嘔吐分析</button><button class="bo" onclick="expR('csv')">CSV</button></div></div>
+<div class="cd"><div class="ct-t">🗑️ 資料管理</div>
+<p style="font-size:12px;color:var(--tl);margin-bottom:8px">清除本機資料（無法復原）</p>
+<button class="bd2 btn bs" onclick="if(confirm('確定清除所有資料？'))resetAll()">清除所有資料</button></div>
+</div>
+</div>
+
+<div class="mo" id="exMo"><div class="ml"><div class="ml-t" id="moT"></div><pre id="moC"></pre>
+<div style="margin-top:12px;display:flex;gap:8px"><button class="btn" onclick="cpR()">複製</button><button class="bo" onclick="clMo()">關閉</button></div>
+<div id="cpMsg" style="font-size:11px;color:var(--green);margin-top:6px;display:none">已複製！</div></div></div>
+
+<div class="ft2">Mia 咪啊 Health Tracker v2.0</div>
+
 <script>
-const K='https://tfnsw-proxy.m9djxmy7nf.workers.dev';
-let W=null,PD=null,TI=null,DR='auto',VO='onyx',WT=9,UN='Emma',au=null,pl=false;
-try{const s=JSON.parse(localStorage.getItem('ms6'));if(s){VO=s.v||VO;WT=s.wt||WT;UN=s.n||UN;if(s.t)document.body.setAttribute('data-theme',s.t)}}catch(e){}
-function uT(){const n=new Date(),h=n.getHours(),m=String(n.getMinutes()).padStart(2,'0');document.getElementById('T').textContent=h+':'+m;const D=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];document.getElementById('D').textContent=D[n.getDay()]+', '+n.getDate()+' '+M[n.getMonth()]+' '+n.getFullYear();document.getElementById('G').textContent=(h<12?'Good morning':h<18?'Good afternoon':'Good evening')+(UN?', '+UN:'');uCD();if(DR==='auto'){document.getElementById('DW').classList.toggle('a',h<13);document.getElementById('DH').classList.toggle('a',h>=13)}}
-function uCD(){const n=new Date(),h=n.getHours(),el=document.getElementById('CD');if(h>=WT||h<5){el.style.display='none';return}const d=WT*60-55-h*60-n.getMinutes();if(d<=0||d>180){el.style.display='none';return}el.style.display='inline-flex';el.className=d<=15?'cd urg':'cd';el.textContent=d<=15?'\u23F0 Leave in '+d+' min!':d+' min until you should leave'}
-uT();setInterval(uT,30000);
-function sd(d){DR=d;document.getElementById('DW').classList.toggle('a',d==='to_work');document.getElementById('DH').classList.toggle('a',d==='to_home');lT(d)}
-function wI(c){if(c<=1)return'\u2600\uFE0F';if(c<=3)return'\u26C5';if(c<=48)return'\u2601\uFE0F';if(c<=57)return'\uD83C\uDF26';if(c<=67)return'\uD83C\uDF27';if(c<=77)return'\uD83C\uDF28';if(c<=82)return'\uD83C\uDF27';if(c>=95)return'\u26C8';return'\uD83C\uDF24'}
-function wD(c){return['Clear','Clear','Partly cloudy','Overcast'][Math.min(c,3)]||(['','','','','Fog','Fog','Drizzle','Drizzle','Rain','Rain','Snow','Snow','Showers','Showers'][Math.min(c-44,13)]||(c>=95?'Thunderstorm':'Clear'))}
-function cT(t,r,u){let a=[];if(t<=10)a.push('Bundle up');else if(t<=18)a.push('Bring a jacket');else if(t<=25)a.push('Light layers');else a.push('Dress light');if(r>50)a.push('Grab an umbrella');else if(r>30)a.push('Maybe an umbrella');if(u>=8)a.push('Sunscreen+hat essential');else if(u>=5)a.push('Sunscreen recommended');return a.join('. ')+'.'}
-async function lW(){try{const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=-33.8151&longitude=151.0017&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,uv_index_max,weather_code&timezone=Australia%2FSydney&forecast_days=7');const d=await r.json();W={c:d.current,d:d.daily};rW();rWk();lP()}catch(e){document.getElementById('WC').innerHTML='<p style="color:var(--sub);font-size:13px">Unable to load weather</p>'}}
-function wDsc(c){if(c<=1)return'Clear';if(c===2)return'Partly cloudy';if(c===3)return'Overcast';if(c<=48)return'Fog';if(c<=57)return'Drizzle';if(c<=67)return'Rain';if(c<=77)return'Snow';if(c<=82)return'Showers';if(c>=95)return'Thunderstorm';return'Clear'}
-function rW(){const c=W.c,d=W.d,t=Math.round(c.temperature_2m),f=Math.round(c.apparent_temperature),hi=Math.round(d.temperature_2m_max[0]),lo=Math.round(d.temperature_2m_min[0]),rn=d.precipitation_probability_max[0],uv=Math.round(d.uv_index_max[0]);document.getElementById('WC').innerHTML='<div class="wt"><div class="wi">'+wI(c.weather_code)+'</div><div><div class="wtp">'+t+'\u00B0</div><div class="wds">'+wDsc(c.weather_code)+' \u00B7 Feels '+f+'\u00B0</div></div></div><div class="wg"><div class="ws"><div class="wsv">'+lo+'\u00B0/'+hi+'\u00B0</div><div class="wsl">Low/High</div></div><div class="ws"><div class="wsv">'+rn+'%</div><div class="wsl">Rain</div></div><div class="ws"><div class="wsv">UV '+uv+'</div><div class="wsl">UV Index</div></div><div class="ws"><div class="wsv" id="PV">\u2014</div><div class="wsl">Pollen</div></div></div><div class="wtip">'+cT(t,rn,uv)+'</div><div id="PA"></div>'}
-function rWk(){const d=W.d,D=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];let h='';for(let i=1;i<Math.min(6,d.temperature_2m_max.length);i++){const dt=new Date(d.time?.[i]||Date.now()+i*864e5);h+='<div class="wd"><div class="wdn">'+D[dt.getDay()]+'</div><div class="wdi">'+wI(d.weather_code[i])+'</div><div class="wdt">'+Math.round(d.temperature_2m_min[i])+'\u00B0/'+Math.round(d.temperature_2m_max[i])+'\u00B0</div></div>'}document.getElementById('WR').innerHTML=h;document.getElementById('WS').style.display='block'}
-async function lP(){try{const r=await fetch('https://air-quality-api.open-meteo.com/v1/air-quality?latitude=-33.8151&longitude=151.0017&current=grass_pollen,birch_pollen,alder_pollen&timezone=Australia%2FSydney');const d=await r.json(),g=d.current?.grass_pollen||0,b=d.current?.birch_pollen||0,tot=g+b;PD={g:Math.round(g),b:Math.round(b),tot:Math.round(tot)};let lv='Low',co='var(--green)';if(tot>50){lv='High';co='var(--warm)'}else if(tot>20){lv='Moderate';co='var(--warm)'}const pv=document.getElementById('PV');if(pv){pv.textContent=lv;pv.style.color=co}if(tot>15){const pa=document.getElementById('PA');if(pa)pa.innerHTML='<div class="pbar">'+(tot>50?'\u26A0\uFE0F':'\uD83C\uDF3E')+' Pollen: '+lv+' (Grass: '+PD.g+', Tree: '+PD.b+'). '+(tot>30?'Consider antihistamine before heading out.':'Mild \u2014 manageable.')+'</div>'}}catch(e){PD={g:0,b:0,tot:0}}}
-lW();
-async function lT(dir){const d=dir||(new Date().getHours()<13?'to_work':'to_home');const el=document.getElementById('TC');el.innerHTML='<span class="ld"></span><span class="ld"></span><span class="ld"></span>';try{const r=await fetch(K+'/trip?direction='+d),data=await r.json();if(data.journeys?.length>0)rT(data);else{el.innerHTML='<p style="font-size:13px;color:var(--sub)">No trips found</p>';TI=null}}catch(e){el.innerHTML='<p style="font-size:13px;color:var(--sub)">Could not connect</p>';TI=null}gB()}
-function rT(data){const j=data.journeys[0];let h='',tot=0,dl=false,legs=[];j.legs.forEach(l=>{const tp=l.transportation,isW=!tp||tp.product?.class===100,dur=Math.round((l.duration||0)/60);if(dur<1&&isW)return;tot+=dur;if(isW){h+='<div class="ti"><span class="tb tb4">Walk</span><div class="tf"><div class="tn">'+(l.origin?.disassembledName||'')+'</div><div class="ts tok">to '+(l.destination?.disassembledName||'')+'</div></div><div class="tt">'+dur+'m</div></div>';legs.push({m:'walk',dur});return}const ln=tp.disassembledName||tp.number||'',pn=tp.product?.name||'';let c='tb1';if(pn.includes('Light Rail')||tp.product?.class===4)c='tb2';else if(pn.includes('Bus')||tp.product?.class===5||tp.product?.class===7)c='tb3';let dm=0;if(l.origin?.departureTimePlanned&&l.origin?.departureTimeEstimated)dm=Math.round((new Date(l.origin.departureTimeEstimated)-new Date(l.origin.departureTimePlanned))/6e4);if(dm>2)dl=true;const fr=l.origin?.parent?.disassembledName||l.origin?.disassembledName||'',to=l.destination?.parent?.disassembledName||l.destination?.disassembledName||'';h+='<div class="ti"><span class="tb '+c+'">'+ln+'</span><div class="tf"><div class="tn">'+fr+' \u2192 '+to+'</div><div class="ts '+(dm>2?'tdl':'tok')+'">'+(dm>2?'Delayed ~'+dm+'m':'On time')+'</div></div><div class="tt">'+dur+'m</div></div>';legs.push({m:ln,fr,to,dm,dur})});document.getElementById('TC').innerHTML=h+(dl?'<div class="tsum tsdl">\u26A0\uFE0F Delays. ~'+tot+' min total.</div>':'<div class="tsum tsok">\u2705 All on time. ~'+tot+' min.</div>');TI={tot,dl,legs}}
-lT();
-!function(){const ev=[{t:'Market',c:'et-market',n:'Parramatta Farmers Market',m:'Sat 8AM \u2014 Centenary Sq'},{t:'Music',c:'et-music',n:'Sydney Symphony in the Park',m:'Sat 7:30PM \u2014 The Domain'},{t:'Food',c:'et-food',n:'Night Noodle Markets',m:'Fri\u2013Sun \u2014 Hyde Park'},{t:'Outdoors',c:'et-outdoor',n:'Kayaking Parramatta River',m:'Sun 9AM \u2014 Barry Wilde Bridge'},{t:'Festival',c:'et-fest',n:'Parramasala Festival',m:'Weekend \u2014 Prince Alfred Sq'}];let h='';ev.forEach(e=>{h+='<div class="ei"><span class="et '+e.c+'">'+e.t+'</span><div class="en">'+e.n+'</div><div class="em">'+e.m+'</div><div class="es">Sample data</div></div>'});document.getElementById('EC').innerHTML=h;window.eB=ev.slice(0,2).map(e=>e.n+', '+e.m).join('. ')}();
-async function gB(){const el=document.getElementById('SC'),sb=document.getElementById('SB');const h=new Date().getHours(),tod=h<12?'morning':h<18?'afternoon':'evening';let ws='N/A';if(W){const c=W.c,d=W.d;ws=wDsc(c.weather_code)+', '+Math.round(c.temperature_2m)+'C feels '+Math.round(c.apparent_temperature)+'C. High '+Math.round(d.temperature_2m_max[0])+' Low '+Math.round(d.temperature_2m_min[0])+'. Rain '+d.precipitation_probability_max[0]+'%. UV '+Math.round(d.uv_index_max[0])+'.'}let ts='N/A';if(TI){const dl=TI.legs.filter(l=>l.dm>2).map(l=>l.m+' delayed '+l.dm+'min').join(', ');ts=TI.dl?'Delays: '+dl+'. ~'+TI.tot+'min.':'All on time. ~'+TI.tot+'min.'}let ps='N/A';if(PD){ps=(PD.tot>50?'HIGH':PD.tot>20?'MODERATE':'LOW')+' (Grass:'+PD.g+' Tree:'+PD.b+'). User has hay fever.'}try{const r=await fetch(K+'/brief',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({weather:ws,transit:ts,pollen:ps,events:window.eB||'None',timeOfDay:tod,name:UN})});const d=await r.json();if(d.script){window.bf=d.script;el.textContent=d.script;sb.textContent='AI';sb.style.background='var(--indigo-light)';sb.style.color='var(--indigo)'}else throw 0}catch(e){const fb=fB();window.bf=fb;el.textContent=fb;sb.textContent='Template';sb.style.background='var(--warm-light)';sb.style.color='var(--warm)'}}
-function fB(){const h=new Date().getHours();let s=(h<12?'Morning':h<18?'Afternoon':'Evening')+', '+UN+'. ';if(W){const t=Math.round(W.c.temperature_2m),f=Math.round(W.c.apparent_temperature),r=W.d.precipitation_probability_max[0];s+=t+' degrees, feels '+f+'. '+(r>50?'Umbrella essential.':r>25?'Might drizzle.':'Dry day. ')}if(PD&&PD.tot>20)s+='Pollen\'s '+(PD.tot>50?'high':'moderate')+' \u2014 antihistamine time. ';if(TI)s+=TI.dl?'Delays on the line, ~'+TI.tot+'min. ':'Commute clear, ~'+TI.tot+'min. ';s+=['Have a good one.','You got this.','Go crush it.'][Math.floor(Math.random()*3)];return s}
-async function play(){if(pl){stp();return}if(!window.bf)return;const b=document.getElementById('PB');b.classList.add('ld');document.getElementById('PL').textContent='Loading voice...';try{const r=await fetch(K+'/speak',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:window.bf,voice:VO})});if(!r.ok)throw 0;const bl=await r.blob(),u=URL.createObjectURL(bl);au=new Audio(u);au.onended=()=>{stp();URL.revokeObjectURL(u)};au.onerror=()=>{stp();fbT(window.bf)};au.play();pl=true;b.classList.remove('ld');b.classList.add('on');document.getElementById('PL').textContent='Stop';document.getElementById('PI').innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'}catch(e){b.classList.remove('ld');fbT(window.bf)}}
-function fbT(t){const u=new SpeechSynthesisUtterance(t);u.lang='en-AU';u.rate=.93;u.pitch=.92;const v=speechSynthesis.getVoices(),vo=v.find(x=>x.lang==='en-AU')||v.find(x=>x.lang.startsWith('en'))||v[0];if(vo)u.voice=vo;u.onend=()=>stp();pl=true;document.getElementById('PB').classList.add('on');document.getElementById('PL').textContent='Stop';document.getElementById('PI').innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';speechSynthesis.speak(u)}
-function stp(){if(au){au.pause();au=null}speechSynthesis.cancel();pl=false;document.getElementById('PB').classList.remove('on','ld');document.getElementById('PL').textContent='Play brief';document.getElementById('PI').innerHTML='<polygon points="5,3 19,12 5,21"/>'}
-speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices();
-function oS(){document.getElementById('SO').classList.add('open');document.getElementById('iN').value=UN;document.getElementById('iW').value=String(WT).padStart(2,'0')+':00'}
-function cS(e){if(e.target===document.getElementById('SO'))document.getElementById('SO').classList.remove('open')}
-function sT(t,el){document.body.setAttribute('data-theme',t);document.querySelectorAll('.tc').forEach(c=>c.classList.remove('a'));el.querySelector('.tc').classList.add('a');ss({t})}
-function sV(el,v){el.parentElement.querySelectorAll('.cp').forEach(c=>c.classList.remove('a'));el.classList.add('a');VO=v}
-function svS(){UN=document.getElementById('iN').value||'Emma';WT=parseInt(document.getElementById('iW').value.split(':')[0])||9;ss({n:UN,wt:WT,v:VO,t:document.body.getAttribute('data-theme')});document.getElementById('SO').classList.remove('open');const b=document.querySelector('.svb');b.textContent='\u2713 Saved';setTimeout(()=>b.textContent='Save',1200);uT();gB()}
-function ss(d){try{const c=JSON.parse(localStorage.getItem('ms6')||'{}');localStorage.setItem('ms6',JSON.stringify({...c,...d}))}catch(e){}}
+const TABS=[
+{id:'profile',l:'基本',i:'🐱'},{id:'favs',l:'常用',i:'⭐'},{id:'diet',l:'飲食',i:'🍽️'},
+{id:'weight',l:'體重',i:'⚖️'},{id:'health',l:'健康',i:'📋'},{id:'vax',l:'疫苗',i:'💉'},
+{id:'shed',l:'掉毛',i:'✨'},{id:'exp',l:'匯出',i:'📤'}];
+const HT={vomit:'嘔吐',stool:'排便',urine:'排尿',appetite:'食慾',energy:'精神',other:'其他'};
+const HO={stool:['正常','偏軟','腹瀉','便秘','未排便'],urine:['正常','頻繁','減少','血尿','未排尿'],appetite:['正常','增加','減少','不吃'],energy:['正常(BAR)','嗜睡','過度興奮','虛弱']};
+const DL={main:'主食',treat:'零食',supplement:'保健品',human:'人類食物',other:'其他'};
+const VAX=[{n:'FVRCP/F3 (3yr)',d:'2025-08-06',nx:'2028-08-05'},{n:'FeLV (3yr)',d:'2023-07-06',nx:'2026-07-06'},{n:'Rabies (3yr)',d:'2024-12-21',nx:'澳洲不需要'}];
+const DW=[{date:'2022-09-01',weight:6.35},{date:'2022-11-15',weight:6.45},{date:'2023-07-06',weight:6.60},{date:'2024-05-04',weight:6.55},{date:'2024-12-21',weight:7.03},{date:'2025-01-15',weight:6.90},{date:'2025-08-06',weight:6.80}];
+
+let S={weights:[],dietLogs:[],healthLogs:[],sheddingLogs:[],favorites:[],staple:'I/D diet (dry & canned) + GI moderate kibble',stapleHistory:[],med:{name:'',cycle:0,last:''},medHistory:[],tab:'profile',hType:'vomit',dType:'main',sLv:3,gasUrl:''};
+let hVal='';
+
+function sv(){localStorage.setItem('mia-tracker',JSON.stringify(S))}
+function ld(){try{const s=JSON.parse(localStorage.getItem('mia-tracker'));if(s){S={...S,...s};if(!S.favorites)S.favorites=[];if(!S.staple)S.staple='I/D diet + GI moderate kibble';if(!S.stapleHistory)S.stapleHistory=[];if(!S.med)S.med={name:'',cycle:0,last:''};if(!S.medHistory)S.medHistory=[]}if(!S.weights.length)S.weights=[...DW]}catch(e){S.weights=[...DW]}}
+function fd(d){if(!d)return'';const t=new Date(d);return t.getFullYear()+'/'+String(t.getMonth()+1).padStart(2,'0')+'/'+String(t.getDate()).padStart(2,'0')}
+function fdt(d,t){return fd(d)+(t?' '+t:'')}
+function db(a,b){return Math.floor((new Date(b)-new Date(a))/864e5)}
+function age(){const n=new Date(),b=new Date('2014-07-01');let y=n.getFullYear()-b.getFullYear(),m=n.getMonth()-b.getMonth();if(m<0){y--;m+=12}return y+'歲'+m+'個月'}
+function td(){return new Date().toISOString().slice(0,10)}
+function nt(){return new Date().toTimeString().slice(0,5)}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+
+// TABS
+function initTb(){document.getElementById('tabBar').innerHTML=TABS.map(t=>`<button class="${t.id===S.tab?'on':''}" onclick="sw('${t.id}')"><span>${t.i}</span>${t.l}</button>`).join('')}
+function sw(id){S.tab=id;document.querySelectorAll('.tb button').forEach((b,i)=>b.classList.toggle('on',TABS[i].id===id));document.querySelectorAll('.tc').forEach(c=>c.classList.toggle('on',c.id==='tab-'+id));sv()}
+
+// STAPLE
+function rStaple(){
+const el=document.getElementById('stapleDisplay');
+let h=`<div style="font-size:13px;font-weight:500;margin-bottom:6px">${S.staple}</div>`;
+if(S.stapleHistory.length){h+=`<div style="font-size:11px;color:var(--tl)">更換紀錄：</div>`;
+S.stapleHistory.slice(-5).reverse().forEach(s=>{h+=`<div style="font-size:11px;color:var(--tl);padding:2px 0">${fd(s.date)}: ${s.from} → ${s.to}</div>`})}
+el.innerHTML=h;
+}
+function changeStaple(){const nv=document.getElementById('sNew').value.trim();if(!nv)return;S.stapleHistory.push({date:td(),from:S.staple,to:nv});S.staple=nv;sv();rStaple();document.getElementById('sNew').value=''}
+
+// MED
+function rMed(){
+const el=document.getElementById('medDisplay');
+if(!S.med.name){el.innerHTML='<div class="emp">尚未設定預防用藥，到「⭐常用」分頁設定</div>';return}
+const next=new Date(new Date(S.med.last).getTime()+S.med.cycle*864e5);
+const daysLeft=db(td(),next.toISOString().slice(0,10));
+const pct=Math.max(0,Math.min(100,((S.med.cycle-Math.max(0,daysLeft))/S.med.cycle)*100));
+const clr=daysLeft<=7?'var(--orange)':daysLeft<=14?'var(--yellow)':'var(--green)';
+let h=`<div class="med-card">
+<div class="med-name">${S.med.name}</div>
+<div class="med-info">週期：每 ${S.med.cycle} 天 | 上次：${fd(S.med.last)}</div>
+<div class="med-info" style="font-weight:600;color:${clr}">下次用藥：${fd(next.toISOString().slice(0,10))}（${daysLeft>0?daysLeft+' 天後':'已到期！'}）</div>
+<div class="med-bar"><div class="med-fill" style="width:${pct}%;background:${clr}"></div></div>
+<button class="btn bs" style="margin-top:8px" onclick="markMed()">✅ 今天已用藥</button>
+</div>`;
+if(S.medHistory.length){h+='<div style="margin-top:8px;font-size:11px;color:var(--tl)"><b>用藥紀錄：</b></div>';
+S.medHistory.slice(-10).reverse().forEach(m=>{h+=`<div style="font-size:11px;color:var(--tl);padding:2px 0">${fd(m.date)} — ${m.name}</div>`})}
+el.innerHTML=h;
+}
+function markMed(){S.medHistory.push({date:td(),name:S.med.name});S.med.last=td();sv();rMed()}
+function saveMed(){
+const n=document.getElementById('mName').value.trim(),c=parseInt(document.getElementById('mCycle').value),l=document.getElementById('mLast').value||td();
+if(!n||!c)return;
+if(S.med.name&&S.med.name!==n){S.medHistory.push({date:td(),name:'換藥：'+S.med.name+' → '+n})}
+S.med={name:n,cycle:c,last:l};sv();rMed()}
+
+// FAVORITES
+function addFav(){
+const f={id:uid(),type:document.getElementById('fType').value,brand:document.getElementById('fBrand').value.trim(),flavor:document.getElementById('fFlavor').value.trim(),amount:document.getElementById('fAmt').value.trim()};
+if(!f.brand&&!f.flavor)return;S.favorites.push(f);sv();rFavs();rFavBtns();
+['fBrand','fFlavor','fAmt'].forEach(i=>document.getElementById(i).value='')}
+function delFav(id){S.favorites=S.favorites.filter(f=>f.id!==id);sv();rFavs();rFavBtns()}
+function rFavs(){
+const el=document.getElementById('favList');
+if(!S.favorites.length){el.innerHTML='<div class="emp">尚無常用食物，在上方新增</div>';return}
+el.innerHTML=S.favorites.map(f=>`<div class="li">
+<div class="lt">${DL[f.type]||f.type}</div>
+<div class="lb"><div class="lx">${[f.brand,f.flavor].filter(Boolean).join(' · ')}</div>${f.amount?`<div class="ln">預設份量：${f.amount}</div>`:''}</div>
+<button class="ld2" onclick="delFav('${f.id}')">✕</button></div>`).join('')}
+function rFavBtns(){
+const el=document.getElementById('favBtns');
+if(!S.favorites.length){el.innerHTML='<div class="emp">到「⭐常用」分頁新增常用食物</div>';return}
+el.innerHTML=S.favorites.map(f=>`<button class="qb" onclick="quickDiet('${f.id}')">${DL[f.type]?'<span style=font-size:10px;opacity:.6>'+DL[f.type]+'</span> ':''}${[f.brand,f.flavor].filter(Boolean).join(' ')}</button>`).join('')}
+function quickDiet(id){
+const f=S.favorites.find(x=>x.id===id);if(!f)return;
+const d={id:uid(),type:f.type,date:td(),time:nt(),brand:f.brand||'',flavor:f.flavor||'',amount:f.amount||'',note:''};
+const amt=prompt('份量'+(f.amount?' (預設: '+f.amount+')':''),f.amount||'');
+if(amt===null)return;d.amount=amt||f.amount||'';
+S.dietLogs.unshift(d);S.dietLogs.sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));sv();rDiet();
+}
+
+// DIET
+function setDT(t){S.dType=t;document.querySelectorAll('#dietChips .ch').forEach(c=>c.classList.toggle('on',c.dataset.t===t))}
+function initDC(){document.getElementById('dietChips').innerHTML=Object.entries(DL).map(([k,v])=>`<button class="ch${k===S.dType?' on':''}" data-t="${k}" onclick="setDT('${k}')">${v}</button>`).join('')}
+function addDiet(){
+const d={id:uid(),type:S.dType,date:document.getElementById('dDate').value||td(),time:document.getElementById('dTime').value||'',brand:document.getElementById('dBrand').value.trim(),flavor:document.getElementById('dFlavor').value.trim(),amount:document.getElementById('dAmt').value.trim(),note:document.getElementById('dNote').value.trim()};
+if(!d.brand&&!d.flavor&&!d.note)return;
+S.dietLogs.unshift(d);S.dietLogs.sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));sv();rDiet();
+['dBrand','dFlavor','dAmt','dNote'].forEach(i=>document.getElementById(i).value='')}
+function delDiet(id){S.dietLogs=S.dietLogs.filter(d=>d.id!==id);sv();rDiet()}
+function rDiet(){
+const el=document.getElementById('dietList');
+if(!S.dietLogs.length){el.innerHTML='<div class="emp">開始記錄飲食吧！</div>';return}
+el.innerHTML=S.dietLogs.slice(0,50).map(d=>`<div class="li">
+<div class="lt">${DL[d.type]||d.type}</div>
+<div class="lb"><div class="ld">${fdt(d.date,d.time)}</div><div class="lx">${[d.brand,d.flavor].filter(Boolean).join(' · ')}</div>
+${d.amount?`<div class="ln">份量：${d.amount}</div>`:''}${d.note?`<div class="ln">${d.note}</div>`:''}</div>
+<button class="ld2" onclick="delDiet('${d.id}')">✕</button></div>`).join('')}
+
+// WEIGHT
+function addW(){const w=parseFloat(document.getElementById('wVal').value),d=document.getElementById('wDate').value||td();if(isNaN(w)||w<=0)return;S.weights.push({date:d,weight:w});S.weights.sort((a,b)=>a.date.localeCompare(b.date));sv();rW();document.getElementById('wVal').value=''}
+function rW(){
+const ws=S.weights;if(!ws.length)return;
+const last=ws[ws.length-1],prev=ws.length>1?ws[ws.length-2]:null,diff=prev?(last.weight-prev.weight).toFixed(2):null;
+const mn=Math.min(...ws.map(w=>w.weight))-.3,mx=Math.max(...ws.map(w=>w.weight))+.3,cw=Math.max((ws.length-1)*70+80,300);
+let svg=`<svg viewBox="0 0 ${cw} 180" style="width:100%;height:100%;overflow:visible">`;
+[0,.25,.5,.75,1].forEach(f=>{const y=160-f*140,v=(mn+f*(mx-mn)).toFixed(1);svg+=`<line x1="35" y1="${y}" x2="${cw-10}" y2="${y}" stroke="#e8e0d6" stroke-width="1"/><text x="32" y="${y+4}" text-anchor="end" font-size="9" fill="#a09890">${v}</text>`});
+if(ws.length>1){const pts=ws.map((w,i)=>`${i*70+45},${160-((w.weight-mn)/(mx-mn))*140}`).join(' ');svg+=`<polygon fill="url(#wg2)" opacity=".2" points="45,160 ${pts} ${(ws.length-1)*70+45},160"/><polyline fill="none" stroke="#8b7355" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${pts}"/>`}
+svg+=`<defs><linearGradient id="wg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b7355"/><stop offset="100%" stop-color="#8b7355" stop-opacity="0"/></linearGradient></defs>`;
+ws.forEach((w,i)=>{const x=i*70+45,y=160-((w.weight-mn)/(mx-mn))*140;svg+=`<circle cx="${x}" cy="${y}" r="3.5" fill="#fff" stroke="#8b7355" stroke-width="2"/><text x="${x}" y="${y-8}" text-anchor="middle" font-size="9" font-weight="600" fill="#6b5b4e">${w.weight}</text><text x="${x}" y="${174}" text-anchor="middle" font-size="7" fill="#a09890">${fd(w.date).slice(2)}</text>`});
+svg+='</svg>';document.getElementById('wChart').innerHTML=svg;
+document.getElementById('wBadge').innerHTML=`<div class="bd"><div class="bl">目前</div><div class="bv">${last.weight} kg</div></div>${diff!==null?`<div class="bd"><div class="bl">變化</div><div class="bv" style="color:${Math.abs(diff)>.3?'var(--orange)':'var(--green)'}">${diff>0?'+':''}${diff} kg</div></div>`:''}<div class="bd"><div class="bl">理想</div><div class="bv">5.5-6.5 kg</div></div>`}
+
+// HEALTH
+function initHC(){document.getElementById('hChips').innerHTML=Object.entries(HT).map(([k,v])=>`<button class="ch${k===S.hType?' on':''}" onclick="setHT('${k}')">${v}</button>`).join('');rHO()}
+function setHT(t){S.hType=t;hVal='';document.querySelectorAll('#hChips .ch').forEach(c=>c.classList.toggle('on',c.textContent===HT[t]));rHO()}
+function rHO(){
+const el=document.getElementById('hOpts'),t=S.hType;
+if(HO[t])el.innerHTML=`<div class="cr">${HO[t].map(o=>`<button class="ch${hVal===o?' gn':''}" onclick="phv(this,'${o}')">${o}</button>`).join('')}</div>`;
+else if(t==='vomit')el.innerHTML=`<input type="text" id="hvi" placeholder="嘔吐物描述（食物/液體/毛球/草...）" style="margin-bottom:8px" oninput="hVal=this.value">`;
+else el.innerHTML=`<input type="text" id="hvi" placeholder="描述" style="margin-bottom:8px" oninput="hVal=this.value">`}
+function phv(el,v){hVal=v;el.parentElement.querySelectorAll('.ch').forEach(c=>c.classList.toggle('gn',c.textContent===v))}
+function addH(){
+const vi=document.getElementById('hvi'),val=vi?vi.value.trim():hVal;
+const e={id:uid(),type:S.hType,value:val,date:document.getElementById('hDate').value||td(),time:document.getElementById('hTime').value||'',note:document.getElementById('hNote').value.trim()};
+S.healthLogs.unshift(e);S.healthLogs.sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));sv();rH();rXA();hVal='';document.getElementById('hNote').value='';if(vi)vi.value='';rHO()}
+function delH(id){S.healthLogs=S.healthLogs.filter(h=>h.id!==id);sv();rH();rXA()}
+function rH(){
+const el=document.getElementById('hList');
+if(!S.healthLogs.length){el.innerHTML='<div class="emp">尚無紀錄</div>';return}
+el.innerHTML=S.healthLogs.slice(0,40).map(h=>`<div class="li"><div class="lt">${HT[h.type]||h.type}</div><div class="lb"><div class="ld">${fdt(h.date,h.time)}</div>${h.value?`<div class="lx">${h.value}</div>`:''}${h.note?`<div class="ln">${h.note}</div>`:''}</div><button class="ld2" onclick="delH('${h.id}')">✕</button></div>`).join('')}
+
+// CROSS ANALYSIS
+function rXA(){
+const el=document.getElementById('xAnal'),vs=S.healthLogs.filter(h=>h.type==='vomit'),t=td();
+const v30=vs.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=30),v90=vs.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=90);
+let h=`<div class="br" style="margin-bottom:10px"><div class="bd"><div class="bl">30天</div><div class="bv" style="color:${v30.length>3?'var(--orange)':'var(--green)'}">${v30.length} 次</div></div><div class="bd"><div class="bl">90天</div><div class="bv">${v90.length} 次</div></div></div>`;
+if(vs.length&&S.dietLogs.length){
+const sp={};vs.forEach(v=>{S.dietLogs.forEach(d=>{const dh=(new Date(v.date)-new Date(d.date))/36e5;if(dh>=0&&dh<=72){const k=[d.brand,d.flavor].filter(Boolean).join(' ')||d.note||DL[d.type];if(!sp[k])sp[k]={c:0,t:d.type};sp[k].c++}})});
+const sr=Object.entries(sp).sort((a,b)=>b[1].c-a[1].c);
+if(sr.length){h+=`<div class="cb"><div class="cbt">⚠️ 嘔吐前72h飲食關聯</div>`;sr.slice(0,10).forEach(([f,i])=>{h+=`<div class="cbi"><b>${f}</b>（${DL[i.t]||i.t}）— ${i.c} 次</div>`});h+=`<div style="font-size:11px;color:var(--tl);margin-top:6px">※ 相關性分析，非因果</div></div>`}}
+else if(!vs.length)h+=`<div class="ht">📝 開始記錄嘔吐和飲食後自動分析</div>`;
+else h+=`<div class="ht">📝 請同時記錄飲食才能交叉比對</div>`;
+el.innerHTML=h}
+
+// VACCINES
+function rV(){
+const el=document.getElementById('vList'),t=td();
+el.innerHTML=VAX.map((v,i)=>{let st,clr,lb;
+if(v.nx.includes('不')){st='i';clr='#a0a0a0';lb='澳洲不需要'}
+else{const d=db(t,v.nx);if(d<0){st='o';clr='var(--orange)';lb='已過期 '+Math.abs(d)+' 天'}else if(d<=90){st='s';clr='var(--yellow)';lb=d+' 天後到期'}else{st='k';clr='var(--green)';lb=d+' 天後'}}
+return `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;${i<VAX.length-1?'border-bottom:1px solid var(--bl)':''}"><div style="width:9px;height:9px;border-radius:50%;background:${clr};flex-shrink:0"></div><div style="flex:1"><div style="font-weight:600;font-size:13px">${v.n}</div><div style="font-size:11px;color:var(--tl)">上次：${fd(v.d)}</div></div><div style="text-align:right"><div style="font-size:11px;font-weight:600;color:${clr}">${lb}</div><div style="font-size:10px;color:#bbb">${v.nx}</div></div></div>`}).join('')}
+
+// SHEDDING
+let sLv=3;
+function initSB(){document.getElementById('sBar').innerHTML=[1,2,3,4,5].map(n=>`<button onclick="sLv=${n};initSB()" style="${n<=sLv?`background:hsl(${35-n*5},${50+n*8}%,${70-n*8}%);color:#fff`:''}">${n}</button>`).join('')}
+function addShed(){S.sheddingLogs.unshift({id:uid(),date:document.getElementById('sDate').value||td(),level:sLv,note:document.getElementById('sNote').value.trim()});S.sheddingLogs.sort((a,b)=>b.date.localeCompare(a.date));sv();rShed();document.getElementById('sNote').value=''}
+function delShed(id){S.sheddingLogs=S.sheddingLogs.filter(s=>s.id!==id);sv();rShed()}
+function rShed(){
+const el=document.getElementById('sList');
+if(!S.sheddingLogs.length){el.innerHTML='<div class="emp">開始記錄！</div>';return}
+el.innerHTML=S.sheddingLogs.slice(0,30).map(s=>{const bars=[1,2,3,4,5].map(n=>`<div style="width:7px;height:14px;border-radius:2px;background:${n<=s.level?`hsl(${35-n*5},${50+n*8}%,${70-n*8}%)`:'#eee'}"></div>`).join('');return `<div class="li"><div style="display:flex;gap:2px">${bars}</div><div class="lb"><div class="ld">${fd(s.date)}</div>${s.note?`<div class="ln">${s.note}</div>`:''}</div><button class="ld2" onclick="delShed('${s.id}')">✕</button></div>`}).join('');
+const m=new Date().getMonth(),hi=[2,3,4,8,9,10].includes(m);
+document.getElementById('shedStat').innerHTML=`<div style="display:flex;align-items:center;gap:10px"><div style="width:44px;height:44px;border-radius:10px;background:${hi?'linear-gradient(135deg,var(--yellow),var(--orange))':'linear-gradient(135deg,var(--green),#8bb07a)'};display:flex;align-items:center;justify-content:center;font-size:22px">${hi?'🔥':'✨'}</div><div><div style="font-weight:600;font-size:14px">${hi?'掉毛高峰期':'一般掉毛期'}</div><div style="font-size:11px;color:var(--tl)">${hi?'建議每天刷毛':'每週 1-2 次'}</div></div></div>`}
+
+// EXPORT
+function expR(type){
+let t='';const ln=s=>t+=s+'\n';
+if(type==='all'||type==='vomit'){ln('=== Mia 咪啊 健康報告 ===');ln('產生：'+new Date().toLocaleString('zh-TW'));ln('主食：'+S.staple);if(S.med.name)ln('預防用藥：'+S.med.name+' 每'+S.med.cycle+'天');ln('');
+if(type==='all'){ln('【體重】');S.weights.forEach(w=>ln(fd(w.date)+' → '+w.weight+' kg'));ln('')}
+ln('【嘔吐】');S.healthLogs.filter(h=>h.type==='vomit').forEach(h=>ln(fdt(h.date,h.time)+' | '+(h.value||'')+(h.note?' ('+h.note+')':'')));ln('');
+ln('【飲食（近30筆）】');S.dietLogs.slice(0,30).forEach(d=>ln(fdt(d.date,d.time)+' | '+(DL[d.type]||d.type)+' | '+[d.brand,d.flavor].filter(Boolean).join(' ')+(d.amount?' | '+d.amount:'')+(d.note?' | '+d.note:'')));ln('');
+const vs=S.healthLogs.filter(h=>h.type==='vomit');
+if(vs.length&&S.dietLogs.length){ln('【嘔吐×飲食交叉】');vs.forEach(v=>{ln('嘔吐：'+fdt(v.date,v.time)+' '+(v.value||''));const fs=S.dietLogs.filter(d=>{const dh=(new Date(v.date)-new Date(d.date))/36e5;return dh>=0&&dh<=72});fs.forEach(d=>ln('  ← '+fdt(d.date,d.time)+' '+[d.brand,d.flavor].filter(Boolean).join(' ')));if(!fs.length)ln('  （無對應紀錄）')})}
+if(type==='all'){ln('');ln('【其他健康】');S.healthLogs.filter(h=>h.type!=='vomit').forEach(h=>ln(fdt(h.date,h.time)+' | '+(HT[h.type]||h.type)+' | '+(h.value||'')));ln('');ln('【掉毛】');S.sheddingLogs.forEach(s=>ln(fd(s.date)+' | Lv'+s.level+'/5'+(s.note?' | '+s.note:'')));if(S.stapleHistory.length){ln('');ln('【主食更換紀錄】');S.stapleHistory.forEach(s=>ln(fd(s.date)+': '+s.from+' → '+s.to))}}}
+else if(type==='csv'){ln('type,date,time,d1,d2,amount,note');S.dietLogs.forEach(d=>ln(['diet-'+d.type,d.date,d.time,d.brand,d.flavor,d.amount,d.note].map(s=>'"'+(s||'')+'"').join(',')));S.healthLogs.forEach(h=>ln(['health-'+h.type,h.date,h.time,h.value,'','',h.note].map(s=>'"'+(s||'')+'"').join(',')));S.weights.forEach(w=>ln(['weight',w.date,'',w.weight,'','',''].map(s=>'"'+(s||'')+'"').join(',')))}
+document.getElementById('moT').textContent=type==='csv'?'CSV':type==='vomit'?'嘔吐分析':'完整報告';document.getElementById('moC').textContent=t;document.getElementById('exMo').classList.add('sh')}
+function cpR(){const t=document.getElementById('moC').textContent;navigator.clipboard.writeText(t).then(()=>{const m=document.getElementById('cpMsg');m.style.display='block';setTimeout(()=>m.style.display='none',2000)}).catch(()=>{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);const m=document.getElementById('cpMsg');m.style.display='block';setTimeout(()=>m.style.display='none',2000)})}
+function clMo(){document.getElementById('exMo').classList.remove('sh')}
+
+// GAS
+function saveGas(){S.gasUrl=document.getElementById('gasUrl').value.trim();sv();document.getElementById('gasMsg').textContent='✅ 已儲存'}
+function testGas(){if(!S.gasUrl){document.getElementById('gasMsg').textContent='❌ 請先輸入 URL';return}document.getElementById('gasMsg').textContent='⏳ 測試中...';fetch(S.gasUrl+'?action=ping').then(r=>r.json()).then(d=>{document.getElementById('gasMsg').textContent=d.status==='ok'?'✅ 連線成功！':'❌ 回應異常'}).catch(e=>{document.getElementById('gasMsg').textContent='❌ '+e.message})}
+function syncGas(){if(!S.gasUrl){document.getElementById('gasMsg').textContent='❌ 請先設定';return}document.getElementById('gasMsg').textContent='⏳ 同步中...';fetch(S.gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({weights:S.weights,dietLogs:S.dietLogs,healthLogs:S.healthLogs,sheddingLogs:S.sheddingLogs,favorites:S.favorites,staple:S.staple,stapleHistory:S.stapleHistory,med:S.med,medHistory:S.medHistory})}).then(()=>{document.getElementById('gasMsg').textContent='✅ 已送出'}).catch(e=>{document.getElementById('gasMsg').textContent='❌ '+e.message})}
+function resetAll(){localStorage.removeItem('mia-tracker');location.reload()}
+
+// INIT
+function init(){
+ld();
+document.getElementById('age').textContent=age();
+document.getElementById('ageD').textContent=age();
+document.getElementById('dDate').value=td();document.getElementById('dTime').value=nt();
+document.getElementById('wDate').value=td();
+document.getElementById('hDate').value=td();document.getElementById('hTime').value=nt();
+document.getElementById('sDate').value=td();document.getElementById('mLast').value=S.med.last||td();
+if(S.gasUrl)document.getElementById('gasUrl').value=S.gasUrl;
+if(S.med.name){document.getElementById('mName').value=S.med.name;document.getElementById('mCycle').value=S.med.cycle;document.getElementById('mLast').value=S.med.last}
+initTb();initDC();rStaple();rMed();rFavs();rFavBtns();rDiet();rW();initHC();rH();rXA();rV();initSB();rShed();sw(S.tab)}
+init();
 </script>
 </body>
 </html>
