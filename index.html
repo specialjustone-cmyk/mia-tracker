@@ -376,26 +376,32 @@ function addDiet(){const d={id:uid(),type:dType,date:document.getElementById('dD
 if(!d.brand&&!d.flavor&&!d.note)return;S.dietLogs.unshift(d);S.dietLogs.sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));svLocal();cloudAppend('diet',d);rDiet();['dBrand','dFlav','dAmt','dNote'].forEach(i=>document.getElementById(i).value='')}
 function delDiet(id){S.dietLogs=S.dietLogs.filter(d=>d.id!==id);svLocal();cloudDelete('diet',id);rDiet()}
 function rDiet(){const el=document.getElementById('dietList');if(!S.dietLogs.length){el.innerHTML=`<div class="em">${L.startLog}</div>`;return}
-el.innerHTML=S.dietLogs.slice(0,50).map(d=>`<div class="li"><div class="lt">${dl(d.type)}</div><div class="lb"><div class="ld">${fdt(d.date,d.time)}</div><div class="lx">${[d.brand,d.flavor].filter(Boolean).join(' · ')}</div>${d.amount?`<div class="ln">${d.amount}</div>`:''}${d.note?`<div class="ln">${d.note}</div>`:''}</div><button class="dx" onclick="delDiet('${d.id}')">✕</button></div>`).join('')}
+el.innerHTML=S.dietLogs.slice(0,50).map(d=>{const timeStr=d.time?d.time.substring(0,5):'';return`<div class="li"><div class="lt">${dl(d.type)}</div><div class="lb"><div class="ld">${fd(d.date)}${timeStr?' '+timeStr:''}</div><div class="lx">${[d.brand,d.flavor].filter(Boolean).join(' · ')}</div>${d.amount?`<div class="ln">${d.amount}</div>`:''}${d.note?`<div class="ln">${d.note}</div>`:''}</div><button class="dx" onclick="delDiet('${d.id}')">✕</button></div>`}).join('')}
 
 // ========== WEIGHT ==========
 function addWt(){const w=parseFloat(document.getElementById('wVal').value),d=document.getElementById('wDate').value||localDate();if(isNaN(w)||w<=0)return;
 const rec={date:d,weight:w};S.weights.push(rec);S.weights.sort((a,b)=>a.date.localeCompare(b.date));svLocal();cloudAppend('weight',rec);rWt();document.getElementById('wVal').value=''}
 function rWtR(){document.getElementById('wtRange').innerHTML=['all','y1','m6','m3','m1'].map(k=>`<button class="ch${S.wtRange===k?' on':''}" onclick="S.wtRange='${k}';rWt()">${L[k]}</button>`).join('')}
 function rWt(){
-  rWtR();let ws=[...S.weights];const t=localDate();
+  rWtR();const allW=[...S.weights];const t=localDate();
+  // Always use global latest for badge
+  const gLast=allW.length?allW[allW.length-1]:null;
+  const gPrev=allW.length>1?allW[allW.length-2]:null;
+  const gDiff=gLast&&gPrev?(gLast.weight-gPrev.weight).toFixed(2):null;
+  // Filter for chart only
+  let ws=[...allW];
   if(S.wtRange==='y1')ws=ws.filter(w=>db(w.date,t)<=365);else if(S.wtRange==='m6')ws=ws.filter(w=>db(w.date,t)<=183);
   else if(S.wtRange==='m3')ws=ws.filter(w=>db(w.date,t)<=91);else if(S.wtRange==='m1')ws=ws.filter(w=>db(w.date,t)<=31);
-  if(!ws.length){document.getElementById('wtChart').innerHTML=`<div class="em">${L.noLog}</div>`;document.getElementById('wtBdg').innerHTML='';return}
-  const last=ws[ws.length-1],prev=ws.length>1?ws[ws.length-2]:null,diff=prev?(last.weight-prev.weight).toFixed(2):null;
+  if(!ws.length){document.getElementById('wtChart').innerHTML=`<div class="em">${L.noLog}</div>`}else{
   const mn=Math.min(...ws.map(w=>w.weight))-.3,mx=Math.max(...ws.map(w=>w.weight))+.3,cw=Math.max((ws.length-1)*65+75,280);
   let svg=`<svg viewBox="0 0 ${cw} 170" style="width:100%;height:100%;overflow:visible">`;
   [0,.25,.5,.75,1].forEach(f=>{const y=150-f*130,v=(mn+f*(mx-mn)).toFixed(1);svg+=`<line x1="32" y1="${y}" x2="${cw-8}" y2="${y}" stroke="#e8e0d6" stroke-width="1"/><text x="29" y="${y+3}" text-anchor="end" font-size="8" fill="#a09890">${v}</text>`});
   if(ws.length>1){const pts=ws.map((w,i)=>`${i*65+40},${150-((w.weight-mn)/(mx-mn))*130}`).join(' ');svg+=`<polygon fill="url(#wg)" opacity=".2" points="40,150 ${pts} ${(ws.length-1)*65+40},150"/><polyline fill="none" stroke="#8b7355" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="${pts}"/>`}
   svg+=`<defs><linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b7355"/><stop offset="100%" stop-color="#8b7355" stop-opacity="0"/></linearGradient></defs>`;
   ws.forEach((w,i)=>{const x=i*65+40,y=150-((w.weight-mn)/(mx-mn))*130;svg+=`<circle cx="${x}" cy="${y}" r="3" fill="#fff" stroke="#8b7355" stroke-width="2"/><text x="${x}" y="${y-7}" text-anchor="middle" font-size="8" font-weight="600" fill="#6b5b4e">${w.weight}</text><text x="${x}" y="${164}" text-anchor="middle" font-size="7" fill="#a09890">${fd(w.date).slice(2)}</text>`});
-  svg+='</svg>';document.getElementById('wtChart').innerHTML=svg;
-  document.getElementById('wtBdg').innerHTML=`<div class="bg"><div class="bg-l">${lang==='zh'?'目前':'Now'}</div><div class="bg-v">${last.weight}kg</div></div>${diff!==null?`<div class="bg"><div class="bg-l">${lang==='zh'?'變化':'Δ'}</div><div class="bg-v" style="color:${Math.abs(diff)>.3?'var(--or)':'var(--gn)'}">${diff>0?'+':''}${diff}kg</div></div>`:''}<div class="bg"><div class="bg-l">${lang==='zh'?'理想':'Ideal'}</div><div class="bg-v">5.5-6.5</div></div>`}
+  svg+='</svg>';document.getElementById('wtChart').innerHTML=svg}
+  // Badge always shows global latest
+  document.getElementById('wtBdg').innerHTML=gLast?`<div class="bg"><div class="bg-l">${lang==='zh'?'目前':'Now'}</div><div class="bg-v">${gLast.weight}kg</div></div>${gDiff!==null?`<div class="bg"><div class="bg-l">${lang==='zh'?'變化':'Δ'}</div><div class="bg-v" style="color:${Math.abs(gDiff)>.3?'var(--or)':'var(--gn)'}">${gDiff>0?'+':''}${gDiff}kg</div></div>`:''}<div class="bg"><div class="bg-l">${lang==='zh'?'理想':'Ideal'}</div><div class="bg-v">5.5-6.5</div></div>`:''}
 
 // ========== HEALTH ==========
 function initHC(){document.getElementById('hChips').innerHTML=['vomit','stool','urine','appetite','energy','other'].map(k=>`<button class="ch${k===hType?' on':''}" onclick="hType='${k}';hVal='';initHC();rHO()">${dl(k)}</button>`).join('');rHO()}
@@ -407,8 +413,11 @@ const e={id:uid(),type:hType,value:val,date:document.getElementById('hDate').val
 S.healthLogs.unshift(e);S.healthLogs.sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));svLocal();cloudAppend('health',e);rH();rAnal();hVal='';document.getElementById('hNote').value='';if(vi)vi.value='';rHO()}
 function delH(id){S.healthLogs=S.healthLogs.filter(h=>h.id!==id);svLocal();cloudDelete('health',id);rH();rAnal()}
 function rH(){const el=document.getElementById('hList');if(!S.healthLogs.length){el.innerHTML=`<div class="em">${L.noLog}</div>`;return}
+const tagClr={vomit:'#e8c4b8;color:#b5563a',stool:'#e6ddd4;color:#7a6552',urine:'#d6e5f0;color:#4a7a9b',appetite:'#dce8d6;color:#5a7a4e',energy:'#e2d8ec;color:#7a5a8e',other:'#e8e0d6;color:#6b5b4e'};
 el.innerHTML=S.healthLogs.slice(0,40).map(h=>{const v=h.value?(lang==='zh'?h.value.split('/')[0]:h.value.split('/')[1]||h.value):'';
-return`<div class="li"><div class="lt">${dl(h.type)}</div><div class="lb"><div class="ld">${fdt(h.date,h.time)}</div>${v?`<div class="lx">${v}</div>`:''}${h.note?`<div class="ln">${h.note}</div>`:''}</div><button class="dx" onclick="delH('${h.id}')">✕</button></div>`}).join('')}
+const tc=tagClr[h.type]||tagClr.other;
+const timeStr=h.time?h.time.substring(0,5):'';
+return`<div class="li"><div class="lt" style="background:${tc}">${dl(h.type)}</div><div class="lb"><div class="ld">${fd(h.date)}${timeStr?' '+timeStr:''}</div>${v?`<div class="lx">${v}</div>`:''}${h.note?`<div class="ln">${h.note}</div>`:''}</div><button class="dx" onclick="delH('${h.id}')">✕</button></div>`}).join('')}
 
 // ========== GI ANALYSIS ==========
 function rAnalW(){document.getElementById('analWin').innerHTML=[24,48,72].map(h=>`<button class="ch${S.analWin===h?' on':''}" onclick="S.analWin=${h};rAnal()">${h}h</button>`).join('')}
