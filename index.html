@@ -229,8 +229,7 @@ let curTab='profile';
 function initTb(){document.getElementById('tabBar').innerHTML=TABS.map(t=>`<button class="${t.id===curTab?'on':''}" onclick="sw('${t.id}')"><span>${t.i}</span>${L[t.k]}</button>`).join('')}
 function sw(id){curTab=id;document.querySelectorAll('.tb button').forEach((b,i)=>b.classList.toggle('on',TABS[i].id===id));document.querySelectorAll('.tc').forEach(c=>c.classList.toggle('on',c.id==='tab-'+id))}
 
-let S={weights:[],dietLogs:[],healthLogs:[],sheddingLogs:[],favorites:[],staple:'I/D diet (dry & canned) + GI moderate kibble',stapleHistory:[],med:{name:'',cycle:0,last:''},medHistory:[],gasUrl:'',analWin:72,wtRange:'all'};
-const DW=[{date:'2022-09-01',weight:6.35},{date:'2022-11-15',weight:6.45},{date:'2023-07-06',weight:6.60},{date:'2024-05-04',weight:6.55},{date:'2024-12-21',weight:7.03},{date:'2025-01-15',weight:6.90},{date:'2025-08-06',weight:6.80}];
+let S={weights:[],dietLogs:[],healthLogs:[],sheddingLogs:[],favorites:[],staple:'',stapleHistory:[],med:{name:'',cycle:0,last:''},medHistory:[],gasUrl:'',analWin:72,wtRange:'all'};
 const HO={stool:['正常/Normal','偏軟/Soft','腹瀉/Diarrhea','便秘/Constipated','未排便/None'],urine:['正常/Normal','頻繁/Frequent','減少/Less','血尿/Blood','未排尿/None'],appetite:['正常/Normal','增加/Increased','減少/Decreased','不吃/None'],energy:['正常(BAR)/Normal','嗜睡/Lethargic','過度興奮/Hyperactive','虛弱/Weak']};
 const VAX=[{n:'FVRCP/F3(3yr)',d:'2025-08-06',nx:'2028-08-05'},{n:'FeLV(3yr)',d:'2023-07-06',nx:'2026-07-06'},{n:'Rabies(3yr)',d:'2024-12-21',nx:'N/A'}];
 let hType='vomit',dType='main',hVal='',sLv=3;
@@ -244,6 +243,8 @@ function db(a,b){return Math.floor((new Date(b)-new Date(a))/864e5)}
 function age(){const n=new Date(),b=new Date('2014-07-01');let y=n.getFullYear()-b.getFullYear(),m=n.getMonth()-b.getMonth();if(m<0){y--;m+=12}return y+(lang==='zh'?'歲':'y ')+m+(lang==='zh'?'個月':'m')}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 function dl(t){return L[t]||t}
+// Sort logs: newest first by date+time combined
+function sortLogs(arr){arr.sort((a,b)=>{const ka=(a.date||'')+' '+(a.time||'00:00'),kb=(b.date||'')+' '+(b.time||'00:00');return kb.localeCompare(ka)})}
 
 // ========== LOCAL STORAGE ==========
 function svLocal(){localStorage.setItem('mia-tracker',JSON.stringify(S))}
@@ -255,8 +256,8 @@ function ldLocal(){
     if(!S.stapleHistory)S.stapleHistory=[];
     if(!S.medHistory)S.medHistory=[];
     if(!S.med||typeof S.med!=='object')S.med={name:'',cycle:0,last:''};
-    if(!S.weights.length)S.weights=[...DW];
-  }catch(e){S.weights=[...DW]}
+    if(!S.weights)S.weights=[];
+  }catch(e){S.weights=[]}
 }
 
 // ========== CLOUD SYNC (FIXED: merge, not overwrite) ==========
@@ -270,13 +271,16 @@ async function cloudDelete(type,id){
 }
 async function cloudSettings(){
   if(!S.gasUrl)return;
-  // Only send settings if there's actual content
-  const hasContent=S.favorites.length>0||S.stapleHistory.length>0||S.medHistory.length>0||(S.med&&S.med.name)||S.staple!=='I/D diet (dry & canned) + GI moderate kibble';
-  if(!hasContent)return;
+  // Only called from user actions. Always write current state.
   try{await fetch(S.gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'settings',settings:{staple:S.staple,stapleHistory:S.stapleHistory,med:S.med,medHistory:S.medHistory,favorites:S.favorites}})})}catch(e){}
 }
 
-// FIXED cloudLoad: MERGE cloud data with local, keep whichever has MORE records
+// Normalize date to YYYY-MM-DD, time to HH:MM
+function cleanDate(d){if(!d)return'';const s=String(d);if(s.length>=10)return s.substring(0,10);return s}
+function cleanTime(t){if(!t)return'';const s=String(t);const m=s.match(/(\d{1,2}):(\d{2})/);if(m)return m[1].padStart(2,'0')+':'+m[2];return''}
+function cleanRec(r){const c={...r};if(c.date)c.date=cleanDate(c.date);if(c.time!==undefined)c.time=cleanTime(c.time);return c}
+
+// FIXED cloudLoad: MERGE cloud data with local, normalize all date/time formats
 async function cloudLoad(){
   if(!S.gasUrl)return false;
   try{
@@ -284,19 +288,19 @@ async function cloudLoad(){
     const d=await r.json();
     if(d.status!=='ok')return false;
 
-    // Merge arrays: keep the version with more records, or combine by id
-    if(d.dietLogs&&d.dietLogs.length){S.dietLogs=mergeById(S.dietLogs,d.dietLogs)}
-    if(d.healthLogs&&d.healthLogs.length){S.healthLogs=mergeById(S.healthLogs,d.healthLogs)}
-    if(d.weights&&d.weights.length){S.weights=mergeByDate(S.weights,d.weights)}
-    if(d.sheddingLogs&&d.sheddingLogs.length){S.sheddingLogs=mergeById(S.sheddingLogs,d.sheddingLogs)}
+    // Clean and merge
+    if(d.dietLogs)S.dietLogs=mergeById(S.dietLogs,d.dietLogs.map(cleanRec));
+    if(d.healthLogs)S.healthLogs=mergeById(S.healthLogs,d.healthLogs.map(cleanRec));
+    if(d.weights)S.weights=mergeByDate(S.weights,d.weights.map(cleanRec));
+    if(d.sheddingLogs)S.sheddingLogs=mergeById(S.sheddingLogs,d.sheddingLogs.map(cleanRec));
 
-    // Settings: only apply cloud settings if they have content
+    // Settings: cloud is source of truth for these on load
     if(d.settings){
-      if(d.settings.staple&&d.settings.staple!=='I/D diet (dry & canned) + GI moderate kibble')S.staple=d.settings.staple;
-      if(d.settings.stapleHistory&&d.settings.stapleHistory.length)S.stapleHistory=d.settings.stapleHistory;
-      if(d.settings.med&&d.settings.med.name)S.med=d.settings.med;
-      if(d.settings.medHistory&&d.settings.medHistory.length)S.medHistory=d.settings.medHistory;
-      if(d.settings.favorites&&d.settings.favorites.length)S.favorites=d.settings.favorites;
+      if(d.settings.staple!==undefined)S.staple=d.settings.staple||'';
+      if(d.settings.stapleHistory)S.stapleHistory=d.settings.stapleHistory;
+      if(d.settings.med)S.med=d.settings.med;
+      if(d.settings.medHistory)S.medHistory=d.settings.medHistory;
+      if(d.settings.favorites)S.favorites=d.settings.favorites;
     }
     svLocal();
     return true;
@@ -305,20 +309,26 @@ async function cloudLoad(){
 
 function mergeById(local,cloud){
   const map={};
+  // Local takes precedence (newer user-entered data)
+  cloud.forEach(r=>{if(r.id)map[r.id]=r});
   local.forEach(r=>{if(r.id)map[r.id]=r});
-  cloud.forEach(r=>{if(r.id&&!map[r.id])map[r.id]=r});
-  return Object.values(map).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  return Object.values(map).sort((a,b)=>{
+    const da=(a.date||'')+(a.time||''), db2=(b.date||'')+(b.time||'');
+    return db2.localeCompare(da);
+  });
 }
 function mergeByDate(local,cloud){
   const map={};
-  local.forEach(r=>{map[r.date]=r});
-  cloud.forEach(r=>{if(r.date&&!map[r.date.substring(0,10)])map[r.date.substring(0,10)]=r});
+  // Local takes precedence on same date
+  cloud.forEach(r=>{if(r.date)map[r.date]=r});
+  local.forEach(r=>{if(r.date)map[r.date]=r});
   return Object.values(map).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
 }
 
 async function fullSync(){
   if(!S.gasUrl)return;
-  try{await fetch(S.gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'fullSync',dietLogs:S.dietLogs,healthLogs:S.healthLogs,weights:S.weights,sheddingLogs:S.sheddingLogs,settings:{staple:S.staple,stapleHistory:S.stapleHistory,med:S.med,medHistory:S.medHistory,favorites:S.favorites}})})}catch(e){}
+  // NOTE: Does NOT sync settings - those are only written via user actions
+  try{await fetch(S.gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'fullSync',dietLogs:S.dietLogs,healthLogs:S.healthLogs,weights:S.weights,sheddingLogs:S.sheddingLogs})})}catch(e){}
 }
 
 function saveGas(){S.gasUrl=document.getElementById('gasUrl').value.trim();svLocal();showMsg('✅');fullSync()}
@@ -329,13 +339,14 @@ function showMsg(m){document.getElementById('gasMsg').textContent=m}
 // ========== STAPLE ==========
 function rStaple(){
   const el=document.getElementById('stapleBox');
+  if(!S.staple){el.innerHTML=`<div class="em">${lang==='zh'?'尚未設定主食，點下方「更換主食」設定':'Not set. Use "Change Staple Food" below'}</div>`;return}
   let obs='';const lc=S.stapleHistory.length?S.stapleHistory[S.stapleHistory.length-1]:null;
   if(lc){const days=db(lc.date,localDate());if(days>=0&&days<=30)obs=`<div style="background:#fff3e0;border-radius:8px;padding:6px 8px;margin-top:5px;font-size:11px;color:var(--or);font-weight:500">${L.analObs} — ${L.analObsDay}${days}${L.analObsDay2}/30</div>`}
   let h=`<div style="font-size:12px;font-weight:500;margin-bottom:4px">${S.staple}</div>${obs}`;
-  if(S.stapleHistory.length){h+=`<div style="font-size:10px;color:var(--t2);margin-top:4px">`;S.stapleHistory.slice(-5).reverse().forEach(s=>{h+=`<div style="padding:1px 0">${fd(s.date)}: ${s.from} → ${s.to}</div>`});h+='</div>'}
+  if(S.stapleHistory.length){h+=`<div style="font-size:10px;color:var(--t2);margin-top:4px">`;S.stapleHistory.slice(-5).reverse().forEach(s=>{h+=`<div style="padding:1px 0">${fd(s.date)}: ${s.from||'—'} → ${s.to}</div>`});h+='</div>'}
   el.innerHTML=h;
 }
-function chgStaple(){const nv=document.getElementById('sNew').value.trim();if(!nv)return;S.stapleHistory.push({date:localDate(),from:S.staple,to:nv});S.staple=nv;svLocal();cloudSettings();rStaple();document.getElementById('sNew').value=''}
+function chgStaple(){const nv=document.getElementById('sNew').value.trim();if(!nv)return;if(S.staple)S.stapleHistory.push({date:localDate(),from:S.staple,to:nv});S.staple=nv;svLocal();cloudSettings();rStaple();document.getElementById('sNew').value=''}
 
 // ========== MED ==========
 function rMed(){
@@ -368,19 +379,23 @@ el.innerHTML=S.favorites.map(f=>`<button class="qb" onclick="qDiet('${f.id}')"><
 function qDiet(id){const f=S.favorites.find(x=>x.id===id);if(!f)return;
 const amt=prompt((lang==='zh'?'份量':'Amount')+(f.amount?' ('+f.amount+')':''),f.amount||'');if(amt===null)return;
 const d={id:uid(),type:f.type,date:localDate(),time:localTime(),brand:f.brand||'',flavor:f.flavor||'',amount:amt||f.amount||'',note:''};
-S.dietLogs.unshift(d);S.dietLogs.sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));svLocal();cloudAppend('diet',d);rDiet()}
+S.dietLogs.unshift(d);sortLogs(S.dietLogs);svLocal();cloudAppend('diet',d);rDiet()}
 
 // ========== DIET ==========
 function initDC(){document.getElementById('dChips').innerHTML=['main','treat','supplement','human','other'].map(k=>`<button class="ch${k===dType?' on':''}" data-t="${k}" onclick="dType='${k}';initDC()">${dl(k)}</button>`).join('')}
 function addDiet(){const d={id:uid(),type:dType,date:document.getElementById('dDate').value||localDate(),time:document.getElementById('dTime').value||'',brand:document.getElementById('dBrand').value.trim(),flavor:document.getElementById('dFlav').value.trim(),amount:document.getElementById('dAmt').value.trim(),note:document.getElementById('dNote').value.trim()};
-if(!d.brand&&!d.flavor&&!d.note)return;S.dietLogs.unshift(d);S.dietLogs.sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));svLocal();cloudAppend('diet',d);rDiet();['dBrand','dFlav','dAmt','dNote'].forEach(i=>document.getElementById(i).value='')}
+if(!d.brand&&!d.flavor&&!d.note)return;S.dietLogs.unshift(d);sortLogs(S.dietLogs);svLocal();cloudAppend('diet',d);rDiet();['dBrand','dFlav','dAmt','dNote'].forEach(i=>document.getElementById(i).value='')}
 function delDiet(id){S.dietLogs=S.dietLogs.filter(d=>d.id!==id);svLocal();cloudDelete('diet',id);rDiet()}
 function rDiet(){const el=document.getElementById('dietList');if(!S.dietLogs.length){el.innerHTML=`<div class="em">${L.startLog}</div>`;return}
+sortLogs(S.dietLogs);
 el.innerHTML=S.dietLogs.slice(0,50).map(d=>{const timeStr=d.time?d.time.substring(0,5):'';return`<div class="li"><div class="lt">${dl(d.type)}</div><div class="lb"><div class="ld">${fd(d.date)}${timeStr?' '+timeStr:''}</div><div class="lx">${[d.brand,d.flavor].filter(Boolean).join(' · ')}</div>${d.amount?`<div class="ln">${d.amount}</div>`:''}${d.note?`<div class="ln">${d.note}</div>`:''}</div><button class="dx" onclick="delDiet('${d.id}')">✕</button></div>`}).join('')}
 
 // ========== WEIGHT ==========
 function addWt(){const w=parseFloat(document.getElementById('wVal').value),d=document.getElementById('wDate').value||localDate();if(isNaN(w)||w<=0)return;
-const rec={date:d,weight:w};S.weights.push(rec);S.weights.sort((a,b)=>a.date.localeCompare(b.date));svLocal();cloudAppend('weight',rec);rWt();document.getElementById('wVal').value=''}
+const rec={date:d,weight:w};
+// Remove existing entry for same date
+S.weights=S.weights.filter(x=>x.date!==d);
+S.weights.push(rec);S.weights.sort((a,b)=>a.date.localeCompare(b.date));svLocal();cloudAppend('weight',rec);rWt();document.getElementById('wVal').value=''}
 function rWtR(){document.getElementById('wtRange').innerHTML=['all','y1','m6','m3','m1'].map(k=>`<button class="ch${S.wtRange===k?' on':''}" onclick="S.wtRange='${k}';rWt()">${L[k]}</button>`).join('')}
 function rWt(){
   rWtR();const allW=[...S.weights];const t=localDate();
@@ -410,9 +425,10 @@ if(HO[hType])el.innerHTML=`<div class="cr">${HO[hType].map(o=>{const lbl=lang===
 else el.innerHTML=`<input type="text" id="hvi" placeholder="${hType==='vomit'?(lang==='zh'?'嘔吐物描述':'Describe vomit'):(lang==='zh'?'描述':'Describe')}" style="margin-bottom:6px" oninput="hVal=this.value">`}
 function addH(){const vi=document.getElementById('hvi'),val=vi?vi.value.trim():hVal;
 const e={id:uid(),type:hType,value:val,date:document.getElementById('hDate').value||localDate(),time:document.getElementById('hTime').value||'',note:document.getElementById('hNote').value.trim()};
-S.healthLogs.unshift(e);S.healthLogs.sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));svLocal();cloudAppend('health',e);rH();rAnal();hVal='';document.getElementById('hNote').value='';if(vi)vi.value='';rHO()}
+S.healthLogs.unshift(e);sortLogs(S.healthLogs);svLocal();cloudAppend('health',e);rH();rAnal();hVal='';document.getElementById('hNote').value='';if(vi)vi.value='';rHO()}
 function delH(id){S.healthLogs=S.healthLogs.filter(h=>h.id!==id);svLocal();cloudDelete('health',id);rH();rAnal()}
 function rH(){const el=document.getElementById('hList');if(!S.healthLogs.length){el.innerHTML=`<div class="em">${L.noLog}</div>`;return}
+sortLogs(S.healthLogs);
 const tagClr={vomit:'#e8c4b8;color:#b5563a',stool:'#e6ddd4;color:#7a6552',urine:'#d6e5f0;color:#4a7a9b',appetite:'#dce8d6;color:#5a7a4e',energy:'#e2d8ec;color:#7a5a8e',other:'#e8e0d6;color:#6b5b4e'};
 el.innerHTML=S.healthLogs.slice(0,40).map(h=>{const v=h.value?(lang==='zh'?h.value.split('/')[0]:h.value.split('/')[1]||h.value):'';
 const tc=tagClr[h.type]||tagClr.other;
@@ -474,9 +490,10 @@ document.getElementById('vaxInfo').innerHTML=`<div style="font-size:11px;line-he
 
 // ========== SHEDDING ==========
 function initSB(){document.getElementById('sBar').innerHTML=[1,2,3,4,5].map(n=>`<button onclick="sLv=${n};initSB()" style="${n<=sLv?`background:hsl(${35-n*5},${50+n*8}%,${70-n*8}%);color:#fff`:''}">${n}</button>`).join('')}
-function addSh(){const r={id:uid(),date:document.getElementById('sDate').value||localDate(),level:sLv,note:document.getElementById('sNote').value.trim()};S.sheddingLogs.unshift(r);S.sheddingLogs.sort((a,b)=>b.date.localeCompare(a.date));svLocal();cloudAppend('shedding',r);rSh();document.getElementById('sNote').value=''}
+function addSh(){const r={id:uid(),date:document.getElementById('sDate').value||localDate(),level:sLv,note:document.getElementById('sNote').value.trim()};S.sheddingLogs.unshift(r);S.sheddingLogs.sort((a,b)=>(b.date||'').localeCompare(a.date||''));svLocal();cloudAppend('shedding',r);rSh();document.getElementById('sNote').value=''}
 function delSh(id){S.sheddingLogs=S.sheddingLogs.filter(s=>s.id!==id);svLocal();cloudDelete('shedding',id);rSh()}
 function rSh(){const el=document.getElementById('shList');if(!S.sheddingLogs.length){el.innerHTML=`<div class="em">${L.startLog}</div>`;return}
+S.sheddingLogs.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
 el.innerHTML=S.sheddingLogs.slice(0,30).map(s=>{const bars=[1,2,3,4,5].map(n=>`<div style="width:6px;height:13px;border-radius:2px;background:${n<=s.level?`hsl(${35-n*5},${50+n*8}%,${70-n*8}%)`:'#eee'}"></div>`).join('');
 return`<div class="li"><div style="display:flex;gap:1px">${bars}</div><div class="lb"><div class="ld">${fd(s.date)}</div>${s.note?`<div class="ln">${s.note}</div>`:''}</div><button class="dx" onclick="delSh('${s.id}')">✕</button></div>`}).join('');
 const m=new Date().getMonth(),hi=[2,3,4,8,9,10].includes(m);
