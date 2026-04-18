@@ -292,12 +292,12 @@ function cleanRec(r){const c={...r};if(c.date)c.date=cleanDate(c.date);if(c.time
 // ========== STORAGE ==========
 function svLocal(){localStorage.setItem('mia-tracker',JSON.stringify(S))}
 function ldLocal(){
-<span class="Apple-converted-space">  </span>try{const s=JSON.parse(localStorage.getItem('mia-tracker'));
-<span class="Apple-converted-space">  </span>if(s){Object.keys(s).forEach(k=>{if(s[k]!==undefined&&s[k]!==null)S[k]=s[k]})}
-<span class="Apple-converted-space">  </span>if(!S.favorites)S.favorites=[];if(!S.stapleHistory)S.stapleHistory=[];if(!S.careItems||!S.careItems.length)S.careItems=[...DEFAULT_CARE];
-<span class="Apple-converted-space">  </span>if(!S.premiums||!S.premiums.length)S.premiums=[...DEFAULT_PREMIUM];
-<span class="Apple-converted-space">  </span>if(!S.weights)S.weights=[];if(!S.dietLogs)S.dietLogs=[];if(!S.healthLogs)S.healthLogs=[];if(!S.sheddingLogs)S.sheddingLogs=[];
-<span class="Apple-converted-space">  </span>}catch(e){S.careItems=[...DEFAULT_CARE];S.premiums=[...DEFAULT_PREMIUM]}
+  try{const s=JSON.parse(localStorage.getItem('mia-tracker'));
+  if(s){Object.keys(s).forEach(k=>{if(s[k]!==undefined&&s[k]!==null)S[k]=s[k]})}
+  if(!S.favorites)S.favorites=[];if(!S.stapleHistory)S.stapleHistory=[];if(!S.careItems||!S.careItems.length)S.careItems=[...DEFAULT_CARE];
+  if(!S.premiums||!S.premiums.length)S.premiums=[...DEFAULT_PREMIUM];
+  if(!S.weights)S.weights=[];if(!S.dietLogs)S.dietLogs=[];if(!S.healthLogs)S.healthLogs=[];if(!S.sheddingLogs)S.sheddingLogs=[];
+  }catch(e){S.careItems=[...DEFAULT_CARE];S.premiums=[...DEFAULT_PREMIUM]}
 }
 
 // ========== CLOUD ==========
@@ -305,21 +305,21 @@ async function cloudAppend(type,record){if(!S.gasUrl)return;try{await fetch(S.ga
 async function cloudDelete(type,id){if(!S.gasUrl)return;try{await fetch(S.gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'delete',type,id})})}catch(e){}}
 async function cloudSettings(){if(!S.gasUrl)return;try{await fetch(S.gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'settings',settings:{staple:S.staple,stapleHistory:S.stapleHistory,favorites:S.favorites,careItems:S.careItems,premiums:S.premiums}})})}catch(e){}}
 async function cloudLoad(){
-<span class="Apple-converted-space">  </span>if(!S.gasUrl)return false;
-<span class="Apple-converted-space">  </span>try{const r=await fetch(S.gasUrl+'?action=load');const d=await r.json();
-<span class="Apple-converted-space">  </span>if(d.status!=='ok')return false;
-<span class="Apple-converted-space">  </span>if(d.dietLogs)S.dietLogs=mergeById(S.dietLogs,d.dietLogs.map(cleanRec));
-<span class="Apple-converted-space">  </span>if(d.healthLogs)S.healthLogs=mergeById(S.healthLogs,d.healthLogs.map(cleanRec));
-<span class="Apple-converted-space">  </span>if(d.weights)S.weights=mergeByDate(S.weights,d.weights.map(cleanRec));
-<span class="Apple-converted-space">  </span>if(d.sheddingLogs)S.sheddingLogs=mergeById(S.sheddingLogs,d.sheddingLogs.map(cleanRec));
-<span class="Apple-converted-space">  </span>if(d.settings){
-<span class="Apple-converted-space">    </span>if(d.settings.staple!==undefined)S.staple=d.settings.staple||'';
-<span class="Apple-converted-space">    </span>if(d.settings.stapleHistory)S.stapleHistory=d.settings.stapleHistory;
-<span class="Apple-converted-space">    </span>if(d.settings.favorites)S.favorites=d.settings.favorites;
-<span class="Apple-converted-space">    </span>if(d.settings.careItems&&d.settings.careItems.length)S.careItems=d.settings.careItems;
-<span class="Apple-converted-space">    </span>if(d.settings.premiums&&d.settings.premiums.length)S.premiums=d.settings.premiums;
-<span class="Apple-converted-space">  </span>}
-<span class="Apple-converted-space">  </span>svLocal();return true;}catch(e){return false}
+  if(!S.gasUrl)return false;
+  try{const r=await fetch(S.gasUrl+'?action=load');const d=await r.json();
+  if(d.status!=='ok')return false;
+  if(d.dietLogs)S.dietLogs=mergeById(S.dietLogs,d.dietLogs.map(cleanRec));
+  if(d.healthLogs)S.healthLogs=mergeById(S.healthLogs,d.healthLogs.map(cleanRec));
+  if(d.weights)S.weights=mergeByDate(S.weights,d.weights.map(cleanRec));
+  if(d.sheddingLogs)S.sheddingLogs=mergeById(S.sheddingLogs,d.sheddingLogs.map(cleanRec));
+  if(d.settings){
+    if(d.settings.staple!==undefined)S.staple=d.settings.staple||'';
+    if(d.settings.stapleHistory)S.stapleHistory=d.settings.stapleHistory;
+    if(d.settings.favorites)S.favorites=d.settings.favorites;
+    if(d.settings.careItems&&d.settings.careItems.length)S.careItems=d.settings.careItems;
+    if(d.settings.premiums&&d.settings.premiums.length)S.premiums=d.settings.premiums;
+  }
+  svLocal();return true;}catch(e){return false}
 }
 function mergeById(local,cloud){const map={};cloud.forEach(r=>{if(r.id)map[r.id]=r});local.forEach(r=>{if(r.id)map[r.id]=r});return Object.values(map).sort((a,b)=>{const da=(a.date||'')+(a.time||''),db2=(b.date||'')+(b.time||'');return db2.localeCompare(da)})}
 function mergeByDate(local,cloud){const map={};cloud.forEach(r=>{if(r.date)map[r.date]=r});local.forEach(r=>{if(r.date)map[r.date]=r});return Object.values(map).sort((a,b)=>(a.date||'').localeCompare(b.date||''))}
@@ -330,28 +330,28 @@ function showMsg(m){document.getElementById('gasMsg').textContent=m}
 
 // ========== STAPLE ==========
 function rStaple(){
-<span class="Apple-converted-space">  </span>const el=document.getElementById('stapleBox');
-<span class="Apple-converted-space">  </span>if(!S.staple){el.innerHTML=`<div class="em">${lang==='zh'?'尚未設定主食，點下方「更換主食」設定':'Not set. Use "Change Staple" below'}</div>`;return}
-<span class="Apple-converted-space">  </span>let obs='';const lc=S.stapleHistory.length?S.stapleHistory[S.stapleHistory.length-1]:null;
-<span class="Apple-converted-space">  </span>if(lc){const days=db(lc.date,localDate());if(days>=0&&days<=30)obs=`<div style="background:#fff3e0;border-radius:8px;padding:6px 8px;margin-top:5px;font-size:11px;color:var(--or);font-weight:500">${L.analObs} — ${L.analObsDay}${days}${L.analObsDay2}/30</div>`}
-<span class="Apple-converted-space">  </span>let h=`<div style="font-size:12px;font-weight:500;margin-bottom:4px">${S.staple}</div>${obs}`;
-<span class="Apple-converted-space">  </span>if(S.stapleHistory.length){h+=`<div style="font-size:10px;color:var(--t2);margin-top:4px">`;S.stapleHistory.slice(-5).reverse().forEach(s=>{h+=`<div style="padding:1px 0">${fd(s.date)}: ${s.from||'—'} → ${s.to}</div>`});h+='</div>'}
-<span class="Apple-converted-space">  </span>el.innerHTML=h;
+  const el=document.getElementById('stapleBox');
+  if(!S.staple){el.innerHTML=`<div class="em">${lang==='zh'?'尚未設定主食，點下方「更換主食」設定':'Not set. Use "Change Staple" below'}</div>`;return}
+  let obs='';const lc=S.stapleHistory.length?S.stapleHistory[S.stapleHistory.length-1]:null;
+  if(lc){const days=db(lc.date,localDate());if(days>=0&&days<=30)obs=`<div style="background:#fff3e0;border-radius:8px;padding:6px 8px;margin-top:5px;font-size:11px;color:var(--or);font-weight:500">${L.analObs} — ${L.analObsDay}${days}${L.analObsDay2}/30</div>`}
+  let h=`<div style="font-size:12px;font-weight:500;margin-bottom:4px">${S.staple}</div>${obs}`;
+  if(S.stapleHistory.length){h+=`<div style="font-size:10px;color:var(--t2);margin-top:4px">`;S.stapleHistory.slice(-5).reverse().forEach(s=>{h+=`<div style="padding:1px 0">${fd(s.date)}: ${s.from||'—'} → ${s.to}</div>`});h+='</div>'}
+  el.innerHTML=h;
 }
 function chgStaple(){const nv=document.getElementById('sNew').value.trim();if(!nv)return;if(S.staple)S.stapleHistory.push({date:localDate(),from:S.staple,to:nv});S.staple=nv;svLocal();cloudSettings();rStaple();document.getElementById('sNew').value=''}
 
 // ========== PREMIUMS ==========
 function rPrem(){
-<span class="Apple-converted-space">  </span>const el=document.getElementById('premList');
-<span class="Apple-converted-space">  </span>if(!S.premiums.length){document.getElementById('curPrem').textContent='—';el.innerHTML='';return}
-<span class="Apple-converted-space">  </span>const sorted=[...S.premiums].sort((a,b)=>a.date.localeCompare(b.date));
-<span class="Apple-converted-space">  </span>const latest=sorted[sorted.length-1];
-<span class="Apple-converted-space">  </span>document.getElementById('curPrem').textContent='$'+latest.amount.toFixed(2)+' AUD';
-<span class="Apple-converted-space">  </span>let h='';sorted.slice().reverse().forEach((p,i,arr)=>{
-<span class="Apple-converted-space">    </span>const prev=arr[i+1];
-<span class="Apple-converted-space">    </span>let pct='';if(prev){const d=((p.amount-prev.amount)/prev.amount*100);if(d!==0){const clr=d>0?'var(--or)':'var(--gn)';pct=` <span style="color:${clr};font-weight:600">(${d>0?'+':''}${d.toFixed(1)}%)</span>`}}
-<span class="Apple-converted-space">    </span>h+=`<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--bl)"><span>${fd(p.date)}</span><span>$${p.amount.toFixed(2)}${pct} <button class="dx" onclick="delPrem('${p.date}')" style="margin-left:5px">✕</button></span></div>`});
-<span class="Apple-converted-space">  </span>el.innerHTML=h;
+  const el=document.getElementById('premList');
+  if(!S.premiums.length){document.getElementById('curPrem').textContent='—';el.innerHTML='';return}
+  const sorted=[...S.premiums].sort((a,b)=>a.date.localeCompare(b.date));
+  const latest=sorted[sorted.length-1];
+  document.getElementById('curPrem').textContent='$'+latest.amount.toFixed(2)+' AUD';
+  let h='';sorted.slice().reverse().forEach((p,i,arr)=>{
+    const prev=arr[i+1];
+    let pct='';if(prev){const d=((p.amount-prev.amount)/prev.amount*100);if(d!==0){const clr=d>0?'var(--or)':'var(--gn)';pct=` <span style="color:${clr};font-weight:600">(${d>0?'+':''}${d.toFixed(1)}%)</span>`}}
+    h+=`<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--bl)"><span>${fd(p.date)}</span><span>$${p.amount.toFixed(2)}${pct} <button class="dx" onclick="delPrem('${p.date}')" style="margin-left:5px">✕</button></span></div>`});
+  el.innerHTML=h;
 }
 function addPrem(){const d=document.getElementById('pDate').value,a=parseFloat(document.getElementById('pAmt').value);if(!d||isNaN(a))return;
 S.premiums=S.premiums.filter(p=>p.date!==d);S.premiums.push({date:d,amount:a});svLocal();cloudSettings();rPrem();
@@ -382,61 +382,61 @@ el.innerHTML=S.dietLogs.slice(0,50).map(d=>{const t=d.time?d.time.substring(0,5)
 
 // ========== WEIGHT ==========
 function addWt(){
-<span class="Apple-converted-space">  </span>const w=parseFloat(document.getElementById('wVal').value),d=document.getElementById('wDate').value||localDate();
-<span class="Apple-converted-space">  </span>if(isNaN(w)||w<=0)return;
-<span class="Apple-converted-space">  </span>const rec={date:d,weight:w};
-<span class="Apple-converted-space">  </span>S.weights=S.weights.filter(x=>x.date!==d);
-<span class="Apple-converted-space">  </span>S.weights.push(rec);
-<span class="Apple-converted-space">  </span>S.weights.sort((a,b)=>a.date.localeCompare(b.date));
-<span class="Apple-converted-space">  </span>svLocal();cloudAppend('weight',rec);
-<span class="Apple-converted-space">  </span>rWt();
-<span class="Apple-converted-space">  </span>document.getElementById('wVal').value='';
+  const w=parseFloat(document.getElementById('wVal').value),d=document.getElementById('wDate').value||localDate();
+  if(isNaN(w)||w<=0)return;
+  const rec={date:d,weight:w};
+  S.weights=S.weights.filter(x=>x.date!==d);
+  S.weights.push(rec);
+  S.weights.sort((a,b)=>a.date.localeCompare(b.date));
+  svLocal();cloudAppend('weight',rec);
+  rWt();
+  document.getElementById('wVal').value='';
 }
 function delWt(date){S.weights=S.weights.filter(w=>w.date!==date);svLocal();cloudDelete('weight',date);rWt()}
 function rWtR(){document.getElementById('wtRange').innerHTML=['all','y1','m6','m3','m1'].map(k=>`<button class="ch${S.wtRange===k?' on':''}" onclick="S.wtRange='${k}';rWt()">${L[k]}</button>`).join('')}
 function rWt(){
-<span class="Apple-converted-space">  </span>rWtR();
-<span class="Apple-converted-space">  </span>const allW=[...S.weights].sort((a,b)=>a.date.localeCompare(b.date));
-<span class="Apple-converted-space">  </span>const t=localDate();
-<span class="Apple-converted-space">  </span>const gLast=allW.length?allW[allW.length-1]:null;
-<span class="Apple-converted-space">  </span>const gPrev=allW.length>1?allW[allW.length-2]:null;
-<span class="Apple-converted-space">  </span>const gDiff=gLast&&gPrev?(gLast.weight-gPrev.weight).toFixed(2):null;
-<span class="Apple-converted-space">  </span>let ws=[...allW];
-<span class="Apple-converted-space">  </span>if(S.wtRange==='y1')ws=ws.filter(w=>db(w.date,t)<=365);else if(S.wtRange==='m6')ws=ws.filter(w=>db(w.date,t)<=183);else if(S.wtRange==='m3')ws=ws.filter(w=>db(w.date,t)<=91);else if(S.wtRange==='m1')ws=ws.filter(w=>db(w.date,t)<=31);
-<span class="Apple-converted-space">  </span>if(!ws.length){document.getElementById('wtChart').innerHTML=`<div class="em">${L.noLog}</div>`}
-<span class="Apple-converted-space">  </span>else{
-<span class="Apple-converted-space">    </span>const mn=Math.min(...ws.map(w=>w.weight))-.3,mx=Math.max(...ws.map(w=>w.weight))+.3,cw=Math.max((ws.length-1)*65+75,280);
-<span class="Apple-converted-space">    </span>let svg=`<svg viewBox="0 0 ${cw} 170" style="width:100%;height:100%;overflow:visible">`;
-<span class="Apple-converted-space">    </span>[0,.25,.5,.75,1].forEach(f=>{const y=150-f*130,v=(mn+f*(mx-mn)).toFixed(1);svg+=`<line x1="32" y1="${y}" x2="${cw-8}" y2="${y}" stroke="#e8e0d6" stroke-width="1"/><text x="29" y="${y+3}" text-anchor="end" font-size="8" fill="#a09890">${v}</text>`});
-<span class="Apple-converted-space">    </span>if(ws.length>1){const pts=ws.map((w,i)=>`${i*65+40},${150-((w.weight-mn)/(mx-mn))*130}`).join(' ');svg+=`<polygon fill="url(#wg)" opacity=".2" points="40,150 ${pts} ${(ws.length-1)*65+40},150"/><polyline fill="none" stroke="#8b7355" stroke-width="2" points="${pts}"/>`}
-<span class="Apple-converted-space">    </span>svg+=`<defs><linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b7355"/><stop offset="100%" stop-color="#8b7355" stop-opacity="0"/></linearGradient></defs>`;
-<span class="Apple-converted-space">    </span>ws.forEach((w,i)=>{const x=i*65+40,y=150-((w.weight-mn)/(mx-mn))*130;svg+=`<circle cx="${x}" cy="${y}" r="3" fill="#fff" stroke="#8b7355" stroke-width="2"/><text x="${x}" y="${y-7}" text-anchor="middle" font-size="8" font-weight="600" fill="#6b5b4e">${w.weight}</text><text x="${x}" y="164" text-anchor="middle" font-size="7" fill="#a09890">${fd(w.date).slice(2)}</text>`});
-<span class="Apple-converted-space">    </span>svg+='</svg>';document.getElementById('wtChart').innerHTML=svg;
-<span class="Apple-converted-space">  </span>}
-<span class="Apple-converted-space">  </span>document.getElementById('wtBdg').innerHTML=gLast?`<div class="bg"><div class="bg-l">${lang==='zh'?'目前':'Now'}</div><div class="bg-v">${gLast.weight}kg</div></div>${gDiff!==null?`<div class="bg"><div class="bg-l">${lang==='zh'?'變化':'Δ'}</div><div class="bg-v" style="color:${Math.abs(gDiff)>.3?'var(--or)':'var(--gn)'}">${gDiff>0?'+':''}${gDiff}kg</div></div>`:''}<div class="bg"><div class="bg-l">${lang==='zh'?'理想':'Ideal'}</div><div class="bg-v">5.5-6.5</div></div>`:'';
-<span class="Apple-converted-space">  </span>// Weight log list
-<span class="Apple-converted-space">  </span>const wl=document.getElementById('wtList');
-<span class="Apple-converted-space">  </span>if(!allW.length){wl.innerHTML=`<div class="em">${L.noLog}</div>`}
-<span class="Apple-converted-space">  </span>else{wl.innerHTML=allW.slice().reverse().map(w=>`<div class="li"><div class="lt">⚖️</div><div class="lb"><div class="ld">${fd(w.date)}</div><div class="lx">${w.weight} kg</div></div><button class="dx" onclick="delWt('${w.date}')">✕</button></div>`).join('')}
+  rWtR();
+  const allW=[...S.weights].sort((a,b)=>a.date.localeCompare(b.date));
+  const t=localDate();
+  const gLast=allW.length?allW[allW.length-1]:null;
+  const gPrev=allW.length>1?allW[allW.length-2]:null;
+  const gDiff=gLast&&gPrev?(gLast.weight-gPrev.weight).toFixed(2):null;
+  let ws=[...allW];
+  if(S.wtRange==='y1')ws=ws.filter(w=>db(w.date,t)<=365);else if(S.wtRange==='m6')ws=ws.filter(w=>db(w.date,t)<=183);else if(S.wtRange==='m3')ws=ws.filter(w=>db(w.date,t)<=91);else if(S.wtRange==='m1')ws=ws.filter(w=>db(w.date,t)<=31);
+  if(!ws.length){document.getElementById('wtChart').innerHTML=`<div class="em">${L.noLog}</div>`}
+  else{
+    const mn=Math.min(...ws.map(w=>w.weight))-.3,mx=Math.max(...ws.map(w=>w.weight))+.3,cw=Math.max((ws.length-1)*65+75,280);
+    let svg=`<svg viewBox="0 0 ${cw} 170" style="width:100%;height:100%;overflow:visible">`;
+    [0,.25,.5,.75,1].forEach(f=>{const y=150-f*130,v=(mn+f*(mx-mn)).toFixed(1);svg+=`<line x1="32" y1="${y}" x2="${cw-8}" y2="${y}" stroke="#e8e0d6" stroke-width="1"/><text x="29" y="${y+3}" text-anchor="end" font-size="8" fill="#a09890">${v}</text>`});
+    if(ws.length>1){const pts=ws.map((w,i)=>`${i*65+40},${150-((w.weight-mn)/(mx-mn))*130}`).join(' ');svg+=`<polygon fill="url(#wg)" opacity=".2" points="40,150 ${pts} ${(ws.length-1)*65+40},150"/><polyline fill="none" stroke="#8b7355" stroke-width="2" points="${pts}"/>`}
+    svg+=`<defs><linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b7355"/><stop offset="100%" stop-color="#8b7355" stop-opacity="0"/></linearGradient></defs>`;
+    ws.forEach((w,i)=>{const x=i*65+40,y=150-((w.weight-mn)/(mx-mn))*130;svg+=`<circle cx="${x}" cy="${y}" r="3" fill="#fff" stroke="#8b7355" stroke-width="2"/><text x="${x}" y="${y-7}" text-anchor="middle" font-size="8" font-weight="600" fill="#6b5b4e">${w.weight}</text><text x="${x}" y="164" text-anchor="middle" font-size="7" fill="#a09890">${fd(w.date).slice(2)}</text>`});
+    svg+='</svg>';document.getElementById('wtChart').innerHTML=svg;
+  }
+  document.getElementById('wtBdg').innerHTML=gLast?`<div class="bg"><div class="bg-l">${lang==='zh'?'目前':'Now'}</div><div class="bg-v">${gLast.weight}kg</div></div>${gDiff!==null?`<div class="bg"><div class="bg-l">${lang==='zh'?'變化':'Δ'}</div><div class="bg-v" style="color:${Math.abs(gDiff)>.3?'var(--or)':'var(--gn)'}">${gDiff>0?'+':''}${gDiff}kg</div></div>`:''}<div class="bg"><div class="bg-l">${lang==='zh'?'理想':'Ideal'}</div><div class="bg-v">5.5-6.5</div></div>`:'';
+  // Weight log list
+  const wl=document.getElementById('wtList');
+  if(!allW.length){wl.innerHTML=`<div class="em">${L.noLog}</div>`}
+  else{wl.innerHTML=allW.slice().reverse().map(w=>`<div class="li"><div class="lt">⚖️</div><div class="lb"><div class="ld">${fd(w.date)}</div><div class="lx">${w.weight} kg</div></div><button class="dx" onclick="delWt('${w.date}')">✕</button></div>`).join('')}
 }
 
 // ========== HEALTH ==========
 function initHC(){document.getElementById('hChips').innerHTML=['vomit','stool','urine','appetite','energy','other'].map(k=>`<button class="ch${k===hType?' on':''}" onclick="hType='${k}';hVal='';hairVomit=false;initHC();rHO()">${dl(k)}</button>`).join('');rHO()}
 function rHO(){
-<span class="Apple-converted-space">  </span>const el=document.getElementById('hOpts');
-<span class="Apple-converted-space">  </span>let h='';
-<span class="Apple-converted-space">  </span>if(HO[hType])h=`<div class="cr">${HO[hType].map(o=>{const lbl=lang==='zh'?o.split('/')[0]:o.split('/')[1]||o;return`<button class="ch${hVal===o?' gn':''}" onclick="hVal='${o}';rHO()">${lbl}</button>`}).join('')}</div>`;
-<span class="Apple-converted-space">  </span>else if(hType==='vomit'){
-<span class="Apple-converted-space">    </span>h=`<input type="text" id="hvi" placeholder="${lang==='zh'?'嘔吐物描述':'Describe vomit'}" style="margin-bottom:6px" value="${hVal}" oninput="hVal=this.value">`;
-<span class="Apple-converted-space">    </span>h+=`<label class="ck-row"><input type="checkbox" id="hvHair" ${hairVomit?'checked':''} onchange="hairVomit=this.checked"> 🐾 ${L.hairVomit}</label>`;
-<span class="Apple-converted-space">  </span>} else h=`<input type="text" id="hvi" placeholder="${lang==='zh'?'描述':'Describe'}" style="margin-bottom:6px" value="${hVal}" oninput="hVal=this.value">`;
-<span class="Apple-converted-space">  </span>el.innerHTML=h;
+  const el=document.getElementById('hOpts');
+  let h='';
+  if(HO[hType])h=`<div class="cr">${HO[hType].map(o=>{const lbl=lang==='zh'?o.split('/')[0]:o.split('/')[1]||o;return`<button class="ch${hVal===o?' gn':''}" onclick="hVal='${o}';rHO()">${lbl}</button>`}).join('')}</div>`;
+  else if(hType==='vomit'){
+    h=`<input type="text" id="hvi" placeholder="${lang==='zh'?'嘔吐物描述':'Describe vomit'}" style="margin-bottom:6px" value="${hVal}" oninput="hVal=this.value">`;
+    h+=`<label class="ck-row"><input type="checkbox" id="hvHair" ${hairVomit?'checked':''} onchange="hairVomit=this.checked"> 🐾 ${L.hairVomit}</label>`;
+  } else h=`<input type="text" id="hvi" placeholder="${lang==='zh'?'描述':'Describe'}" style="margin-bottom:6px" value="${hVal}" oninput="hVal=this.value">`;
+  el.innerHTML=h;
 }
 function addH(){
-<span class="Apple-converted-space">  </span>const vi=document.getElementById('hvi'),val=vi?vi.value.trim():hVal;
-<span class="Apple-converted-space">  </span>const e={id:uid(),type:hType,value:val,hair:hType==='vomit'?hairVomit:undefined,date:document.getElementById('hDate').value||localDate(),time:document.getElementById('hTime').value||'',note:document.getElementById('hNote').value.trim()};
-<span class="Apple-converted-space">  </span>S.healthLogs.unshift(e);sortLogs(S.healthLogs);svLocal();cloudAppend('health',e);rH();rAnal();
-<span class="Apple-converted-space">  </span>hVal='';hairVomit=false;document.getElementById('hNote').value='';if(vi)vi.value='';rHO();
+  const vi=document.getElementById('hvi'),val=vi?vi.value.trim():hVal;
+  const e={id:uid(),type:hType,value:val,hair:hType==='vomit'?hairVomit:undefined,date:document.getElementById('hDate').value||localDate(),time:document.getElementById('hTime').value||'',note:document.getElementById('hNote').value.trim()};
+  S.healthLogs.unshift(e);sortLogs(S.healthLogs);svLocal();cloudAppend('health',e);rH();rAnal();
+  hVal='';hairVomit=false;document.getElementById('hNote').value='';if(vi)vi.value='';rHO();
 }
 function delH(id){S.healthLogs=S.healthLogs.filter(h=>h.id!==id);svLocal();cloudDelete('health',id);rH();rAnal()}
 function rH(){const el=document.getElementById('hList');if(!S.healthLogs.length){el.innerHTML=`<div class="em">${L.noLog}</div>`;return}
@@ -449,47 +449,47 @@ return`<div class="li"><div class="lt" style="background:${clr}">${dl(h.type)}${
 // ========== GI ANALYSIS ==========
 function rAnalW(){document.getElementById('analWin').innerHTML=[24,48,72].map(h=>`<button class="ch${S.analWin===h?' on':''}" onclick="S.analWin=${h};rAnal()">${h}h</button>`).join('')}
 function rAnal(){
-<span class="Apple-converted-space">  </span>rAnalW();const el=document.getElementById('analBox'),t=localDate();
-<span class="Apple-converted-space">  </span>const voms=S.healthLogs.filter(h=>h.type==='vomit');
-<span class="Apple-converted-space">  </span>const dias=S.healthLogs.filter(h=>h.type==='stool'&&h.value&&(h.value.includes('腹瀉')||h.value.includes('Diarrhea')));
-<span class="Apple-converted-space">  </span>const gi=[...voms,...dias];
-<span class="Apple-converted-space">  </span>const hairV=voms.filter(h=>h.hair);
-<span class="Apple-converted-space">  </span>const v30=voms.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=30),v90=voms.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=90);
-<span class="Apple-converted-space">  </span>const d30=dias.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=30),d90=dias.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=90);
-<span class="Apple-converted-space">  </span>let html=`<div class="br" style="margin-bottom:8px"><div class="bg"><div class="bg-l">${L.vomit30}</div><div class="bg-v" style="color:${v30.length>3?'var(--or)':'var(--gn)'}">${v30.length}</div></div><div class="bg"><div class="bg-l">${L.dia30}</div><div class="bg-v" style="color:${d30.length>2?'var(--or)':'var(--gn)'}">${d30.length}</div></div><div class="bg"><div class="bg-l">${L.vomit90}</div><div class="bg-v">${v90.length}</div></div><div class="bg"><div class="bg-l">${L.dia90}</div><div class="bg-v">${d90.length}</div></div></div>`;
-<span class="Apple-converted-space">  </span>if(hairV.length){html+=`<div style="background:#f5efe0;border-radius:8px;padding:6px 8px;margin-bottom:8px;font-size:11px;color:var(--b1)">🐾 ${lang==='zh'?'毛球型嘔吐':'Hairball vomit'}: ${hairV.length} ${lang==='zh'?'次':'times'} ${lang==='zh'?'（建議增加刷毛頻率）':'(consider more brushing)'}</div>`}
-<span class="Apple-converted-space">  </span>const lc=S.stapleHistory.length?S.stapleHistory[S.stapleHistory.length-1]:null;
-<span class="Apple-converted-space">  </span>if(lc){const days=db(lc.date,t);if(days>=0&&days<=30)html+=`<div style="background:#fff3e0;border-radius:8px;padding:6px 8px;margin-bottom:8px;font-size:11px;color:var(--or);font-weight:500">${L.analObs} — ${L.analObsDay}${days}${L.analObsDay2}/30 (${lc.to})</div>`}
-<span class="Apple-converted-space">  </span>if(gi.length&&S.dietLogs.length){
-<span class="Apple-converted-space">    </span>const firstSeen={};S.dietLogs.forEach(d=>{const k=[d.brand,d.flavor].filter(Boolean).join(' ');if(k&&(!firstSeen[k]||d.date<firstSeen[k]))firstSeen[k]=d.date});
-<span class="Apple-converted-space">    </span>let newStapleFood=null;if(lc&&db(lc.date,t)>=0&&db(lc.date,t)<=30)newStapleFood=lc.to;
-<span class="Apple-converted-space">    </span>const suspects={};
-<span class="Apple-converted-space">    </span>// Only use food-related vomits (NOT hairball vomits)
-<span class="Apple-converted-space">    </span>const foodVoms=voms.filter(v=>!v.hair);
-<span class="Apple-converted-space">    </span>const foodGi=[...foodVoms,...dias];
-<span class="Apple-converted-space">    </span>foodGi.forEach(v=>{S.dietLogs.forEach(d=>{
-<span class="Apple-converted-space">      </span>if(d.type==='main'&&!(newStapleFood&&[d.brand,d.flavor].filter(Boolean).join(' ').includes(newStapleFood)))return;
-<span class="Apple-converted-space">      </span>const dh=(new Date(v.date+(v.time?' '+v.time:''))-new Date(d.date+(d.time?' '+d.time:'')))/36e5;
-<span class="Apple-converted-space">      </span>if(dh>=0&&dh<=S.analWin){const k=[d.brand,d.flavor].filter(Boolean).join(' ')||d.note||dl(d.type);
-<span class="Apple-converted-space">      </span>if(!suspects[k])suspects[k]={vc:0,dc:0,t:d.type,fd:firstSeen[k]||d.date};
-<span class="Apple-converted-space">      </span>if(v.type==='vomit')suspects[k].vc++;else suspects[k].dc++}})});
-<span class="Apple-converted-space">    </span>const sorted=Object.entries(suspects).sort((a,b)=>(b[1].vc+b[1].dc)-(a[1].vc+a[1].dc));
-<span class="Apple-converted-space">    </span>if(sorted.length){html+=`<div class="cb"><div class="cb-t">⚠️ ${L.analTitle} (${S.analWin}h)</div>`;
-<span class="Apple-converted-space">      </span>sorted.slice(0,10).forEach(([food,info])=>{const isNew=info.fd&&db(info.fd,t)<=14;const syms=[];if(info.vc)syms.push(`${dl('vomit')} ${info.vc}`);if(info.dc)syms.push(`${dl('stool')} ${info.dc}`);
-<span class="Apple-converted-space">      </span>html+=`<div class="cb-i"><b>${food}</b>${isNew?' <span style="color:var(--or);font-size:10px">'+L.analNew+'</span>':''}（${dl(info.t)}）— ${syms.join(', ')}</div>`});
-<span class="Apple-converted-space">      </span>html+=`<div style="font-size:10px;color:var(--t2);margin-top:5px">${L.analNote} ${lang==='zh'?'毛球嘔吐已排除':'Hairball vomits excluded'}</div></div>`;
-<span class="Apple-converted-space">    </span>}}
-<span class="Apple-converted-space">  </span>else if(!gi.length)html+=`<div style="font-size:11px;color:var(--t2);margin-top:5px">${L.analStart}</div>`;
-<span class="Apple-converted-space">  </span>else html+=`<div style="font-size:11px;color:var(--t2);margin-top:5px">${L.analNoDiet}</div>`;
-<span class="Apple-converted-space">  </span>if(gi.length>=3){
-<span class="Apple-converted-space">    </span>html+=`<div style="margin-top:10px;font-size:12px;font-weight:600;color:var(--t3)">${L.timePat}</div>`;
-<span class="Apple-converted-space">    </span>const mns=Array(12).fill(0);gi.forEach(g=>{mns[new Date(g.date).getMonth()]++});
-<span class="Apple-converted-space">    </span>const mN=lang==='zh'?['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-<span class="Apple-converted-space">    </span>const mxM=Math.max(...mns);
-<span class="Apple-converted-space">    </span>html+=`<div style="font-size:10px;color:var(--t2);margin:4px 0 2px">${L.monthPat}</div><div style="display:flex;gap:2px;align-items:end;height:40px">`;
-<span class="Apple-converted-space">    </span>mns.forEach((c,i)=>{const h=mxM?Math.max(2,c/mxM*36):2;html+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center"><div style="width:100%;height:${h}px;background:${c>0?'var(--b2)':'#e8e0d6'};border-radius:2px"></div><div style="font-size:7px;color:var(--t2);margin-top:1px">${mN[i]}</div></div>`});html+='</div>';
-<span class="Apple-converted-space">  </span>}
-<span class="Apple-converted-space">  </span>el.innerHTML=html;
+  rAnalW();const el=document.getElementById('analBox'),t=localDate();
+  const voms=S.healthLogs.filter(h=>h.type==='vomit');
+  const dias=S.healthLogs.filter(h=>h.type==='stool'&&h.value&&(h.value.includes('腹瀉')||h.value.includes('Diarrhea')));
+  const gi=[...voms,...dias];
+  const hairV=voms.filter(h=>h.hair);
+  const v30=voms.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=30),v90=voms.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=90);
+  const d30=dias.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=30),d90=dias.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=90);
+  let html=`<div class="br" style="margin-bottom:8px"><div class="bg"><div class="bg-l">${L.vomit30}</div><div class="bg-v" style="color:${v30.length>3?'var(--or)':'var(--gn)'}">${v30.length}</div></div><div class="bg"><div class="bg-l">${L.dia30}</div><div class="bg-v" style="color:${d30.length>2?'var(--or)':'var(--gn)'}">${d30.length}</div></div><div class="bg"><div class="bg-l">${L.vomit90}</div><div class="bg-v">${v90.length}</div></div><div class="bg"><div class="bg-l">${L.dia90}</div><div class="bg-v">${d90.length}</div></div></div>`;
+  if(hairV.length){html+=`<div style="background:#f5efe0;border-radius:8px;padding:6px 8px;margin-bottom:8px;font-size:11px;color:var(--b1)">🐾 ${lang==='zh'?'毛球型嘔吐':'Hairball vomit'}: ${hairV.length} ${lang==='zh'?'次':'times'} ${lang==='zh'?'（建議增加刷毛頻率）':'(consider more brushing)'}</div>`}
+  const lc=S.stapleHistory.length?S.stapleHistory[S.stapleHistory.length-1]:null;
+  if(lc){const days=db(lc.date,t);if(days>=0&&days<=30)html+=`<div style="background:#fff3e0;border-radius:8px;padding:6px 8px;margin-bottom:8px;font-size:11px;color:var(--or);font-weight:500">${L.analObs} — ${L.analObsDay}${days}${L.analObsDay2}/30 (${lc.to})</div>`}
+  if(gi.length&&S.dietLogs.length){
+    const firstSeen={};S.dietLogs.forEach(d=>{const k=[d.brand,d.flavor].filter(Boolean).join(' ');if(k&&(!firstSeen[k]||d.date<firstSeen[k]))firstSeen[k]=d.date});
+    let newStapleFood=null;if(lc&&db(lc.date,t)>=0&&db(lc.date,t)<=30)newStapleFood=lc.to;
+    const suspects={};
+    // Only use food-related vomits (NOT hairball vomits)
+    const foodVoms=voms.filter(v=>!v.hair);
+    const foodGi=[...foodVoms,...dias];
+    foodGi.forEach(v=>{S.dietLogs.forEach(d=>{
+      if(d.type==='main'&&!(newStapleFood&&[d.brand,d.flavor].filter(Boolean).join(' ').includes(newStapleFood)))return;
+      const dh=(new Date(v.date+(v.time?' '+v.time:''))-new Date(d.date+(d.time?' '+d.time:'')))/36e5;
+      if(dh>=0&&dh<=S.analWin){const k=[d.brand,d.flavor].filter(Boolean).join(' ')||d.note||dl(d.type);
+      if(!suspects[k])suspects[k]={vc:0,dc:0,t:d.type,fd:firstSeen[k]||d.date};
+      if(v.type==='vomit')suspects[k].vc++;else suspects[k].dc++}})});
+    const sorted=Object.entries(suspects).sort((a,b)=>(b[1].vc+b[1].dc)-(a[1].vc+a[1].dc));
+    if(sorted.length){html+=`<div class="cb"><div class="cb-t">⚠️ ${L.analTitle} (${S.analWin}h)</div>`;
+      sorted.slice(0,10).forEach(([food,info])=>{const isNew=info.fd&&db(info.fd,t)<=14;const syms=[];if(info.vc)syms.push(`${dl('vomit')} ${info.vc}`);if(info.dc)syms.push(`${dl('stool')} ${info.dc}`);
+      html+=`<div class="cb-i"><b>${food}</b>${isNew?' <span style="color:var(--or);font-size:10px">'+L.analNew+'</span>':''}（${dl(info.t)}）— ${syms.join(', ')}</div>`});
+      html+=`<div style="font-size:10px;color:var(--t2);margin-top:5px">${L.analNote} ${lang==='zh'?'毛球嘔吐已排除':'Hairball vomits excluded'}</div></div>`;
+    }}
+  else if(!gi.length)html+=`<div style="font-size:11px;color:var(--t2);margin-top:5px">${L.analStart}</div>`;
+  else html+=`<div style="font-size:11px;color:var(--t2);margin-top:5px">${L.analNoDiet}</div>`;
+  if(gi.length>=3){
+    html+=`<div style="margin-top:10px;font-size:12px;font-weight:600;color:var(--t3)">${L.timePat}</div>`;
+    const mns=Array(12).fill(0);gi.forEach(g=>{mns[new Date(g.date).getMonth()]++});
+    const mN=lang==='zh'?['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const mxM=Math.max(...mns);
+    html+=`<div style="font-size:10px;color:var(--t2);margin:4px 0 2px">${L.monthPat}</div><div style="display:flex;gap:2px;align-items:end;height:40px">`;
+    mns.forEach((c,i)=>{const h=mxM?Math.max(2,c/mxM*36):2;html+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center"><div style="width:100%;height:${h}px;background:${c>0?'var(--b2)':'#e8e0d6'};border-radius:2px"></div><div style="font-size:7px;color:var(--t2);margin-top:1px">${mN[i]}</div></div>`});html+='</div>';
+  }
+  el.innerHTML=html;
 }
 
 // ========== VACCINES ==========
@@ -503,31 +503,31 @@ document.getElementById('vaxInfo').innerHTML=`<div style="font-size:11px;line-he
 function toggleShedInput(){const e=document.getElementById('shedInput'),b=document.getElementById('brushInput');e.style.display=e.style.display==='none'?'block':'none';b.style.display='none';if(e.style.display==='block')rAmtBtns('shed')}
 function toggleBrushInput(){const e=document.getElementById('brushInput'),s=document.getElementById('shedInput');e.style.display=e.style.display==='none'?'block':'none';s.style.display='none';if(e.style.display==='block')rAmtBtns('brush')}
 function rAmtBtns(which){
-<span class="Apple-converted-space">  </span>const el=which==='shed'?document.getElementById('shedAmtBtns'):document.getElementById('brushAmtBtns');
-<span class="Apple-converted-space">  </span>const cur=which==='shed'?shedAmt:brushAmt;const cls=which==='brush'?'gn':'';
-<span class="Apple-converted-space">  </span>el.innerHTML=['low','mid','hi'].map(lv=>`<button class="amt-btn ${cls} ${cur===lv?'on':''}" onclick="${which==='shed'?'shedAmt':'brushAmt'}='${lv}';rAmtBtns('${which}')">${L['amt'+(lv==='low'?'Low':lv==='mid'?'Mid':'Hi')]}</button>`).join('')
+  const el=which==='shed'?document.getElementById('shedAmtBtns'):document.getElementById('brushAmtBtns');
+  const cur=which==='shed'?shedAmt:brushAmt;const cls=which==='brush'?'gn':'';
+  el.innerHTML=['low','mid','hi'].map(lv=>`<button class="amt-btn ${cls} ${cur===lv?'on':''}" onclick="${which==='shed'?'shedAmt':'brushAmt'}='${lv}';rAmtBtns('${which}')">${L['amt'+(lv==='low'?'Low':lv==='mid'?'Mid':'Hi')]}</button>`).join('')
 }
 function addShed(){
-<span class="Apple-converted-space">  </span>const r={id:uid(),type:'shed',date:document.getElementById('sDate').value||localDate(),amount:shedAmt};
-<span class="Apple-converted-space">  </span>S.sheddingLogs.unshift(r);svLocal();cloudAppend('shedding',r);rSh();
-<span class="Apple-converted-space">  </span>document.getElementById('shedInput').style.display='none';shedAmt='mid';
+  const r={id:uid(),type:'shed',date:document.getElementById('sDate').value||localDate(),amount:shedAmt};
+  S.sheddingLogs.unshift(r);svLocal();cloudAppend('shedding',r);rSh();
+  document.getElementById('shedInput').style.display='none';shedAmt='mid';
 }
 function addBrush(){
-<span class="Apple-converted-space">  </span>const r={id:uid(),type:'brush',date:document.getElementById('bDate').value||localDate(),amount:brushAmt};
-<span class="Apple-converted-space">  </span>S.sheddingLogs.unshift(r);svLocal();cloudAppend('shedding',r);rSh();
-<span class="Apple-converted-space">  </span>document.getElementById('brushInput').style.display='none';brushAmt='mid';
+  const r={id:uid(),type:'brush',date:document.getElementById('bDate').value||localDate(),amount:brushAmt};
+  S.sheddingLogs.unshift(r);svLocal();cloudAppend('shedding',r);rSh();
+  document.getElementById('brushInput').style.display='none';brushAmt='mid';
 }
 function delSh(id){S.sheddingLogs=S.sheddingLogs.filter(s=>s.id!==id);svLocal();cloudDelete('shedding',id);rSh()}
 function rSh(){
-<span class="Apple-converted-space">  </span>const el=document.getElementById('shList');
-<span class="Apple-converted-space">  </span>const logs=[...S.sheddingLogs].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
-<span class="Apple-converted-space">  </span>// Status
-<span class="Apple-converted-space">  </span>const m=new Date().getMonth(),hi=[2,3,4,8,9,10].includes(m);
-<span class="Apple-converted-space">  </span>const brushes=logs.filter(l=>l.type==='brush');
-<span class="Apple-converted-space">  </span>const lastBrush=brushes.length?brushes[0]:null;
-<span class="Apple-converted-space">  </span>const daysSince=lastBrush?db(lastBrush.date,localDate()):null;
-<span class="Apple-converted-space">  </span>const brushClr=daysSince===null?'var(--t2)':daysSince>7?'var(--or)':daysSince>3?'var(--yl)':'var(--gn)';
-<span class="Apple-converted-space">  </span>document.getElementById('shedSt').innerHTML=`
+  const el=document.getElementById('shList');
+  const logs=[...S.sheddingLogs].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  // Status
+  const m=new Date().getMonth(),hi=[2,3,4,8,9,10].includes(m);
+  const brushes=logs.filter(l=>l.type==='brush');
+  const lastBrush=brushes.length?brushes[0]:null;
+  const daysSince=lastBrush?db(lastBrush.date,localDate()):null;
+  const brushClr=daysSince===null?'var(--t2)':daysSince>7?'var(--or)':daysSince>3?'var(--yl)':'var(--gn)';
+  document.getElementById('shedSt').innerHTML=`
 <div style="display:flex;gap:10px">
 <div style="flex:1;display:flex;align-items:center;gap:9px">
 <div style="width:40px;height:40px;border-radius:9px;background:${hi?'linear-gradient(135deg,var(--yl),var(--or))':'linear-gradient(135deg,var(--gn),#8bb07a)'};display:flex;align-items:center;justify-content:center;font-size:20px">${hi?'🔥':'✨'}</div>
@@ -537,41 +537,41 @@ function rSh(){
 <div style="font-size:9px;color:var(--t2)">${L.lastBrush}</div>
 <div style="font-size:14px;font-weight:700;color:${brushClr}">${daysSince===null?L.neverBrush:daysSince===0?(lang==='zh'?'今天':'Today'):daysSince+' '+L.daysAgo}</div>
 </div></div>`;
-<span class="Apple-converted-space">  </span>// Log list
-<span class="Apple-converted-space">  </span>if(!logs.length){el.innerHTML=`<div class="em">${L.noLog}</div>`;return}
-<span class="Apple-converted-space">  </span>const amtClr={low:'#e6ddd4',mid:'#c9a96e',hi:'#c47a5a'};
-<span class="Apple-converted-space">  </span>el.innerHTML=logs.slice(0,40).map(s=>{
-<span class="Apple-converted-space">    </span>const isBrush=s.type==='brush';
-<span class="Apple-converted-space">    </span>const tagBg=isBrush?'#dce8d6;color:#5a7a4e':'#f5e6d4;color:#a07544';
-<span class="Apple-converted-space">    </span>const amtLbl=L['amt'+(s.amount==='low'?'Low':s.amount==='mid'?'Mid':'Hi')];
-<span class="Apple-converted-space">    </span>return`<div class="li"><div class="lt" style="background:${tagBg}">${isBrush?'🖐️ '+L.brushLog:'📊 '+L.shedLog}</div><div class="lb"><div class="ld">${fd(s.date)}</div><div class="lx"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${amtClr[s.amount]||'#ccc'};margin-right:4px;vertical-align:middle"></span>${isBrush?(lang==='zh'?'刷出 ':'Brushed: '):(lang==='zh'?'掉毛 ':'Shed: ')}${amtLbl}</div></div><button class="dx" onclick="delSh('${s.id}')">✕</button></div>`;
-<span class="Apple-converted-space">  </span>}).join('');
+  // Log list
+  if(!logs.length){el.innerHTML=`<div class="em">${L.noLog}</div>`;return}
+  const amtClr={low:'#e6ddd4',mid:'#c9a96e',hi:'#c47a5a'};
+  el.innerHTML=logs.slice(0,40).map(s=>{
+    const isBrush=s.type==='brush';
+    const tagBg=isBrush?'#dce8d6;color:#5a7a4e':'#f5e6d4;color:#a07544';
+    const amtLbl=L['amt'+(s.amount==='low'?'Low':s.amount==='mid'?'Mid':'Hi')];
+    return`<div class="li"><div class="lt" style="background:${tagBg}">${isBrush?'🖐️ '+L.brushLog:'📊 '+L.shedLog}</div><div class="lb"><div class="ld">${fd(s.date)}</div><div class="lx"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${amtClr[s.amount]||'#ccc'};margin-right:4px;vertical-align:middle"></span>${isBrush?(lang==='zh'?'刷出 ':'Brushed: '):(lang==='zh'?'掉毛 ':'Shed: ')}${amtLbl}</div></div><button class="dx" onclick="delSh('${s.id}')">✕</button></div>`;
+  }).join('');
 }
 
 // ========== CARE ==========
 function rCare(){
-<span class="Apple-converted-space">  </span>const el=document.getElementById('careList'),t=localDate();
-<span class="Apple-converted-space">  </span>if(!S.careItems.length){el.innerHTML=`<div class="em">${L.noLog}</div>`;return}
-<span class="Apple-converted-space">  </span>el.innerHTML=S.careItems.map(c=>{
-<span class="Apple-converted-space">    </span>const nm=c.custom?c.name:L[c.name]||c.name;
-<span class="Apple-converted-space">    </span>if(!c.last){return`<div class="mc"><div class="mc-n">${nm} <button class="dx" onclick="delCare('${c.id}')">✕</button></div><div class="mc-i">${lang==='zh'?'週期：每':'Every'} ${c.cycle} ${lang==='zh'?'天':'d'} | ${L.noMed}</div><div class="care-row"><button class="btn bs" onclick="markCare('${c.id}')">${L.doneToday}</button><button class="bo bs" onclick="editCare('${c.id}')">⚙️</button></div></div>`}
-<span class="Apple-converted-space">    </span>const next=new Date(new Date(c.last).getTime()+c.cycle*864e5);
-<span class="Apple-converted-space">    </span>const dl2=db(t,next.toISOString().slice(0,10));
-<span class="Apple-converted-space">    </span>const pct=Math.max(0,Math.min(100,((c.cycle-Math.max(0,dl2))/c.cycle)*100));
-<span class="Apple-converted-space">    </span>const clr=dl2<=0?'var(--or)':dl2<=Math.max(1,c.cycle*0.2)?'var(--yl)':'var(--gn)';
-<span class="Apple-converted-space">    </span>return`<div class="mc"><div class="mc-n">${nm} <button class="dx" onclick="delCare('${c.id}')">✕</button></div>
+  const el=document.getElementById('careList'),t=localDate();
+  if(!S.careItems.length){el.innerHTML=`<div class="em">${L.noLog}</div>`;return}
+  el.innerHTML=S.careItems.map(c=>{
+    const nm=c.custom?c.name:L[c.name]||c.name;
+    if(!c.last){return`<div class="mc"><div class="mc-n">${nm} <button class="dx" onclick="delCare('${c.id}')">✕</button></div><div class="mc-i">${lang==='zh'?'週期：每':'Every'} ${c.cycle} ${lang==='zh'?'天':'d'} | ${L.noMed}</div><div class="care-row"><button class="btn bs" onclick="markCare('${c.id}')">${L.doneToday}</button><button class="bo bs" onclick="editCare('${c.id}')">⚙️</button></div></div>`}
+    const next=new Date(new Date(c.last).getTime()+c.cycle*864e5);
+    const dl2=db(t,next.toISOString().slice(0,10));
+    const pct=Math.max(0,Math.min(100,((c.cycle-Math.max(0,dl2))/c.cycle)*100));
+    const clr=dl2<=0?'var(--or)':dl2<=Math.max(1,c.cycle*0.2)?'var(--yl)':'var(--gn)';
+    return`<div class="mc"><div class="mc-n">${nm} <button class="dx" onclick="delCare('${c.id}')">✕</button></div>
 <div class="mc-i">${lang==='zh'?'週期：每':'Every'} ${c.cycle} ${lang==='zh'?'天':'d'} | ${lang==='zh'?'上次：':'Last: '}${fd(c.last)}</div>
 <div class="mc-i" style="font-weight:600;color:${clr}">${lang==='zh'?'下次：':'Next: '}${fd(next.toISOString().slice(0,10))}（${dl2>0?dl2+(lang==='zh'?' 天後':' d'):(lang==='zh'?'已到期！':'Due!')}）</div>
 <div class="mb"><div class="mb-f" style="width:${pct}%;background:${clr}"></div></div>
 <div class="care-row"><button class="btn bs" onclick="markCare('${c.id}')">${L.doneToday}</button><button class="bo bs" onclick="editCare('${c.id}')">⚙️</button></div></div>`;
-<span class="Apple-converted-space">  </span>}).join('');
+  }).join('');
 }
 function markCare(id){const c=S.careItems.find(x=>x.id===id);if(!c)return;c.last=localDate();svLocal();cloudSettings();rCare()}
 function editCare(id){const c=S.careItems.find(x=>x.id===id);if(!c)return;
-<span class="Apple-converted-space">  </span>const nm=c.custom?c.name:L[c.name]||c.name;
-<span class="Apple-converted-space">  </span>const newCycle=prompt((lang==='zh'?'週期（天）':'Cycle (days)')+' - '+nm,c.cycle);
-<span class="Apple-converted-space">  </span>if(newCycle===null)return;
-<span class="Apple-converted-space">  </span>const nc=parseInt(newCycle);if(!isNaN(nc)&&nc>0){c.cycle=nc;svLocal();cloudSettings();rCare()}
+  const nm=c.custom?c.name:L[c.name]||c.name;
+  const newCycle=prompt((lang==='zh'?'週期（天）':'Cycle (days)')+' - '+nm,c.cycle);
+  if(newCycle===null)return;
+  const nc=parseInt(newCycle);if(!isNaN(nc)&&nc>0){c.cycle=nc;svLocal();cloudSettings();rCare()}
 }
 function addCare(){const n=document.getElementById('cName').value.trim(),c=parseInt(document.getElementById('cCycle').value),l=document.getElementById('cLast').value||'';
 if(!n||!c)return;S.careItems.push({id:uid(),name:n,cycle:c,last:l,custom:true});svLocal();cloudSettings();rCare();
@@ -599,18 +599,18 @@ function rAll(){document.getElementById('age').textContent=age();document.getEle
 
 // ========== INIT ==========
 async function init(){
-<span class="Apple-converted-space">  </span>lang=localStorage.getItem('mia-lang')||'zh';L=lang==='zh'?ZH:EN;
-<span class="Apple-converted-space">  </span>ldLocal();
-<span class="Apple-converted-space">  </span>document.getElementById('dDate').value=localDate();document.getElementById('dTime').value=localTime();
-<span class="Apple-converted-space">  </span>document.getElementById('wDate').value=localDate();document.getElementById('hDate').value=localDate();
-<span class="Apple-converted-space">  </span>document.getElementById('hTime').value=localTime();
-<span class="Apple-converted-space">  </span>document.getElementById('sDate').value=localDate();document.getElementById('bDate').value=localDate();
-<span class="Apple-converted-space">  </span>document.getElementById('pDate').value=localDate();
-<span class="Apple-converted-space">  </span>if(S.gasUrl)document.getElementById('gasUrl').value=S.gasUrl;
-<span class="Apple-converted-space">  </span>applyLang();initTb();rAll();sw(curTab);
-<span class="Apple-converted-space">  </span>if(S.gasUrl){document.getElementById('loadMsg').textContent=lang==='zh'?'正在從雲端載入...':'Loading from cloud...';
-<span class="Apple-converted-space">  </span>const ok=await cloudLoad();if(ok)rAll()}
-<span class="Apple-converted-space">  </span>document.getElementById('loader').classList.add('hide');
+  lang=localStorage.getItem('mia-lang')||'zh';L=lang==='zh'?ZH:EN;
+  ldLocal();
+  document.getElementById('dDate').value=localDate();document.getElementById('dTime').value=localTime();
+  document.getElementById('wDate').value=localDate();document.getElementById('hDate').value=localDate();
+  document.getElementById('hTime').value=localTime();
+  document.getElementById('sDate').value=localDate();document.getElementById('bDate').value=localDate();
+  document.getElementById('pDate').value=localDate();
+  if(S.gasUrl)document.getElementById('gasUrl').value=S.gasUrl;
+  applyLang();initTb();rAll();sw(curTab);
+  if(S.gasUrl){document.getElementById('loadMsg').textContent=lang==='zh'?'正在從雲端載入...':'Loading from cloud...';
+  const ok=await cloudLoad();if(ok)rAll()}
+  document.getElementById('loader').classList.add('hide');
 }
 init();
 </script>
