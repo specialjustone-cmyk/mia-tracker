@@ -285,7 +285,20 @@ function age(){const n=new Date(),b=new Date('2014-07-01');let y=n.getFullYear()
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 function dl(t){return L[t]||t}
 function sortLogs(arr){arr.sort((a,b)=>{const ka=(a.date||'')+' '+(a.time||'00:00'),kb=(b.date||'')+' '+(b.time||'00:00');return kb.localeCompare(ka)})}
-function cleanDate(d){if(!d)return'';const s=String(d);if(s.length>=10)return s.substring(0,10);return s}
+function cleanDate(d){
+  if(!d)return'';
+  const s=String(d);
+  // Already YYYY-MM-DD
+  if(/^\d{4}-\d{2}-\d{2}/.test(s))return s.substring(0,10);
+  // Try parsing as Date (e.g., "Thu Apr 16 2026", ISO string)
+  try{
+    const dt=new Date(s);
+    if(!isNaN(dt.getTime())){
+      return dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');
+    }
+  }catch(e){}
+  return s;
+}
 function cleanTime(t){if(!t)return'';const s=String(t);const m=s.match(/(\d{1,2}):(\d{2})/);if(m)return m[1].padStart(2,'0')+':'+m[2];return''}
 function cleanRec(r){const c={...r};if(c.date)c.date=cleanDate(c.date);if(c.time!==undefined)c.time=cleanTime(c.time);return c}
 
@@ -297,6 +310,13 @@ function ldLocal(){
   if(!S.favorites)S.favorites=[];if(!S.stapleHistory)S.stapleHistory=[];if(!S.careItems||!S.careItems.length)S.careItems=[...DEFAULT_CARE];
   if(!S.premiums||!S.premiums.length)S.premiums=[...DEFAULT_PREMIUM];
   if(!S.weights)S.weights=[];if(!S.dietLogs)S.dietLogs=[];if(!S.healthLogs)S.healthLogs=[];if(!S.sheddingLogs)S.sheddingLogs=[];
+  // Clean all dates - protects against residual bad data like "Thu Apr 16 2026"
+  S.weights=S.weights.map(cleanRec);
+  S.dietLogs=S.dietLogs.map(cleanRec);
+  S.healthLogs=S.healthLogs.map(cleanRec);
+  S.sheddingLogs=S.sheddingLogs.map(cleanRec);
+  // Dedupe weights by cleaned date (keep latest)
+  const wMap={};S.weights.forEach(w=>{if(w.date)wMap[w.date]=w});S.weights=Object.values(wMap).sort((a,b)=>a.date.localeCompare(b.date));
   }catch(e){S.careItems=[...DEFAULT_CARE];S.premiums=[...DEFAULT_PREMIUM]}
 }
 
