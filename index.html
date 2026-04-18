@@ -306,20 +306,26 @@ async function cloudDelete(type,id){if(!S.gasUrl)return;try{await fetch(S.gasUrl
 async function cloudSettings(){if(!S.gasUrl)return;try{await fetch(S.gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'settings',settings:{staple:S.staple,stapleHistory:S.stapleHistory,favorites:S.favorites,careItems:S.careItems,premiums:S.premiums}})})}catch(e){}}
 async function cloudLoad(){
   if(!S.gasUrl)return false;
-  try{const r=await fetch(S.gasUrl+'?action=load');const d=await r.json();
-  if(d.status!=='ok')return false;
-  if(d.dietLogs)S.dietLogs=mergeById(S.dietLogs,d.dietLogs.map(cleanRec));
-  if(d.healthLogs)S.healthLogs=mergeById(S.healthLogs,d.healthLogs.map(cleanRec));
-  if(d.weights)S.weights=mergeByDate(S.weights,d.weights.map(cleanRec));
-  if(d.sheddingLogs)S.sheddingLogs=mergeById(S.sheddingLogs,d.sheddingLogs.map(cleanRec));
-  if(d.settings){
-    if(d.settings.staple!==undefined)S.staple=d.settings.staple||'';
-    if(d.settings.stapleHistory)S.stapleHistory=d.settings.stapleHistory;
-    if(d.settings.favorites)S.favorites=d.settings.favorites;
-    if(d.settings.careItems&&d.settings.careItems.length)S.careItems=d.settings.careItems;
-    if(d.settings.premiums&&d.settings.premiums.length)S.premiums=d.settings.premiums;
-  }
-  svLocal();return true;}catch(e){return false}
+  try{
+    const ctrl=new AbortController();
+    const tm=setTimeout(()=>ctrl.abort(),5000);
+    const r=await fetch(S.gasUrl+'?action=load',{signal:ctrl.signal});
+    clearTimeout(tm);
+    const d=await r.json();
+    if(d.status!=='ok')return false;
+    if(d.dietLogs)S.dietLogs=mergeById(S.dietLogs,d.dietLogs.map(cleanRec));
+    if(d.healthLogs)S.healthLogs=mergeById(S.healthLogs,d.healthLogs.map(cleanRec));
+    if(d.weights)S.weights=mergeByDate(S.weights,d.weights.map(cleanRec));
+    if(d.sheddingLogs)S.sheddingLogs=mergeById(S.sheddingLogs,d.sheddingLogs.map(cleanRec));
+    if(d.settings){
+      if(d.settings.staple!==undefined)S.staple=d.settings.staple||'';
+      if(d.settings.stapleHistory)S.stapleHistory=d.settings.stapleHistory;
+      if(d.settings.favorites)S.favorites=d.settings.favorites;
+      if(d.settings.careItems&&d.settings.careItems.length)S.careItems=d.settings.careItems;
+      if(d.settings.premiums&&d.settings.premiums.length)S.premiums=d.settings.premiums;
+    }
+    svLocal();return true;
+  }catch(e){console.log('cloudLoad err:',e);return false}
 }
 function mergeById(local,cloud){const map={};cloud.forEach(r=>{if(r.id)map[r.id]=r});local.forEach(r=>{if(r.id)map[r.id]=r});return Object.values(map).sort((a,b)=>{const da=(a.date||'')+(a.time||''),db2=(b.date||'')+(b.time||'');return db2.localeCompare(da)})}
 function mergeByDate(local,cloud){const map={};cloud.forEach(r=>{if(r.date)map[r.date]=r});local.forEach(r=>{if(r.date)map[r.date]=r});return Object.values(map).sort((a,b)=>(a.date||'').localeCompare(b.date||''))}
@@ -599,18 +605,26 @@ function rAll(){document.getElementById('age').textContent=age();document.getEle
 
 // ========== INIT ==========
 async function init(){
-  lang=localStorage.getItem('mia-lang')||'zh';L=lang==='zh'?ZH:EN;
-  ldLocal();
-  document.getElementById('dDate').value=localDate();document.getElementById('dTime').value=localTime();
-  document.getElementById('wDate').value=localDate();document.getElementById('hDate').value=localDate();
-  document.getElementById('hTime').value=localTime();
-  document.getElementById('sDate').value=localDate();document.getElementById('bDate').value=localDate();
-  document.getElementById('pDate').value=localDate();
-  if(S.gasUrl)document.getElementById('gasUrl').value=S.gasUrl;
-  applyLang();initTb();rAll();sw(curTab);
-  if(S.gasUrl){document.getElementById('loadMsg').textContent=lang==='zh'?'正在從雲端載入...':'Loading from cloud...';
-  const ok=await cloudLoad();if(ok)rAll()}
-  document.getElementById('loader').classList.add('hide');
+  try{
+    lang=localStorage.getItem('mia-lang')||'zh';L=lang==='zh'?ZH:EN;
+    ldLocal();
+    document.getElementById('dDate').value=localDate();document.getElementById('dTime').value=localTime();
+    document.getElementById('wDate').value=localDate();document.getElementById('hDate').value=localDate();
+    document.getElementById('hTime').value=localTime();
+    document.getElementById('sDate').value=localDate();document.getElementById('bDate').value=localDate();
+    document.getElementById('pDate').value=localDate();
+    if(S.gasUrl)document.getElementById('gasUrl').value=S.gasUrl;
+    applyLang();initTb();rAll();sw(curTab);
+    if(S.gasUrl){
+      document.getElementById('loadMsg').textContent=lang==='zh'?'正在從雲端載入...':'Loading from cloud...';
+      try{const ok=await cloudLoad();if(ok)rAll()}catch(e){console.log('load err:',e)}
+    }
+  }catch(e){
+    console.error('Init error:',e);
+    document.getElementById('loadMsg').textContent='Error: '+e.message;
+  }finally{
+    document.getElementById('loader').classList.add('hide');
+  }
 }
 init();
 </script>
