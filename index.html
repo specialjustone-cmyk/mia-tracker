@@ -20,7 +20,7 @@ body{font-family:'Noto Sans TC','DM Sans',sans-serif;background:linear-gradient(
 .hd-t{font-family:'DM Serif Display',serif;font-size:26px;margin-bottom:1px}
 .hd-i{font-size:11px;opacity:.7}
 .tb{display:flex;background:var(--cd);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:100;overflow-x:auto}
-.tb button{flex:1;min-width:44px;padding:9px 2px 7px;border:none;background:transparent;border-bottom:3px solid transparent;color:var(--t2);font-family:inherit;font-size:9px;font-weight:500;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;transition:all .2s}
+.tb button{flex:1;min-width:44px;padding:9px 2px 7px;border:none;background:transparent;border-bottom:3px solid transparent;color:var(--t2);font-family:inherit;font-size:9px;font-weight:500;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px}
 .tb button.on{background:var(--bg);border-bottom-color:var(--b2);color:var(--b1)}
 .tb button span{font-size:15px}
 .ct{padding:12px;max-width:600px;margin:0 auto}
@@ -38,23 +38,22 @@ input,select,textarea{border:1px solid #e0d8ce;border-radius:8px;padding:7px 9px
 .bo{background:transparent;border:1.5px solid var(--b2);color:var(--b2);border-radius:8px;padding:7px 12px;font-size:11px;font-weight:500;font-family:inherit;cursor:pointer}
 .bs{padding:5px 10px;font-size:10px}
 .cr{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px}
-.ch{border:none;border-radius:16px;padding:4px 11px;font-size:11px;font-weight:500;font-family:inherit;cursor:pointer;background:var(--bl);color:var(--t3);transition:all .15s}
+.ch{border:none;border-radius:16px;padding:4px 11px;font-size:11px;font-weight:500;font-family:inherit;cursor:pointer;background:var(--bl);color:var(--t3)}
 .ch.on{background:var(--b2);color:#fff}.ch.gn{background:var(--gn);color:#fff}
 .li{display:flex;align-items:flex-start;gap:7px;padding:7px 0;border-bottom:1px solid var(--bl)}
 .lt{background:var(--bl);border-radius:5px;padding:2px 6px;font-size:9px;font-weight:600;color:var(--b2);white-space:nowrap;flex-shrink:0}
 .lb{flex:1;min-width:0}.ld{font-size:10px;color:var(--t2)}.lx{font-size:11px;font-weight:500;margin-top:1px}.ln{font-size:10px;color:var(--t3);margin-top:1px}
 .dx{border:none;background:none;color:#ccc;cursor:pointer;font-size:12px;padding:3px;flex-shrink:0}
 .em{font-size:11px;color:var(--t2);text-align:center;padding:16px}
-.qb{display:inline-flex;align-items:center;gap:5px;background:var(--bg);border:1.5px solid var(--bd);border-radius:9px;padding:5px 10px;margin:2px;cursor:pointer;font-size:11px;font-family:inherit;color:var(--tx);transition:all .15s}
+.qb{display:inline-flex;align-items:center;gap:5px;background:var(--bg);border:1.5px solid var(--bd);border-radius:9px;padding:5px 10px;margin:2px;cursor:pointer;font-size:11px;font-family:inherit;color:var(--tx)}
 .qb:active{background:var(--b2);color:#fff;border-color:var(--b2)}
 .mc{background:linear-gradient(135deg,#f8f4ef,#f0ebe4);border-radius:11px;padding:10px;margin-bottom:7px;border:1px solid var(--bd)}
-.mc-n{font-weight:600;font-size:12px;color:var(--b1)}.mc-i{font-size:10px;color:var(--t2);margin-top:2px}
+.mc-n{font-weight:600;font-size:12px;color:var(--b1);display:flex;justify-content:space-between;align-items:center}
+.mc-i{font-size:10px;color:var(--t2);margin-top:2px}
 .mb{height:5px;border-radius:3px;background:#e8e0d6;margin-top:5px;overflow:hidden}.mb-f{height:100%;border-radius:3px}
 .cb{background:#fef9f0;border:1.5px solid var(--gd);border-radius:11px;padding:10px;margin-top:7px}
 .cb-t{font-size:12px;font-weight:700;color:var(--or);margin-bottom:5px}
 .cb-i{font-size:11px;line-height:1.5;color:var(--tx);padding:3px 0;border-bottom:1px solid #f5efe5}
-.sb{display:flex;gap:4px}.sb button{flex:1;height:32px;border-radius:7px;border:none;cursor:pointer;font-weight:600;font-size:12px;color:#bbb;background:var(--bl)}
-.hb{background:var(--bg);border-radius:9px;padding:9px;border:1px solid var(--bd);margin-top:5px;font-size:11px;line-height:1.6}
 .ft{text-align:center;padding:18px 14px 36px;font-size:9px;color:#ccc}
 .mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;justify-content:center;align-items:center}.mo.sh{display:flex}
 .ml{background:var(--cd);border-radius:14px;padding:18px;width:92%;max-width:420px;max-height:80vh;overflow-y:auto}
@@ -62,6 +61,13 @@ input,select,textarea{border:1px solid #e0d8ce;border-radius:8px;padding:7px 9px
 .ml pre{background:var(--bg);border-radius:7px;padding:9px;font-size:10px;overflow-x:auto;white-space:pre-wrap;word-break:break-all;max-height:50vh}
 .ld-o{position:fixed;inset:0;background:rgba(253,246,238,.9);z-index:300;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;font-size:13px;color:var(--b2)}
 .ld-o.hide{display:none}
+.amt-btns{display:flex;gap:5px;margin-top:6px}
+.amt-btn{flex:1;padding:8px;border-radius:8px;border:1.5px solid var(--bd);background:var(--bg);font-family:inherit;font-size:12px;color:var(--tx);cursor:pointer}
+.amt-btn.on{background:var(--b2);color:#fff;border-color:var(--b2)}
+.amt-btn.gn.on{background:var(--gn);border-color:var(--gn)}
+.care-row{display:flex;gap:8px;align-items:center;margin-top:6px}
+.ck-row{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11px;color:var(--t3);cursor:pointer}
+.ck-row input{width:auto;margin:0}
 </style>
 </head>
 <body>
@@ -69,7 +75,7 @@ input,select,textarea{border:1px solid #e0d8ce;border-radius:8px;padding:7px 9px
 
 <div class="hd">
 <div class="hd-r"><button class="lng" id="lngBtn" onclick="toggleLang()">🌐 EN</button></div>
-<div class="hd-s">Pet Health Tracker v3.1</div>
+<div class="hd-s">Pet Health Tracker v4</div>
 <div class="hd-t">Mia 咪啊</div>
 <div class="hd-i">Tuxedo DSH · <span id="age"></span> · Sydney</div>
 </div>
@@ -90,12 +96,17 @@ input,select,textarea{border:1px solid #e0d8ce;border-radius:8px;padding:7px 9px
 <div class="ir"><span class="il" data-i="insurer">保險</span><span class="iv">Trupanion AU</span></div>
 <div class="ir"><span class="il" data-i="polNum">保單</span><span class="iv">TA0000028910</span></div>
 <div class="ir"><span class="il" data-i="polPrd">保期</span><span class="iv">2025/09/08-2026/09/08</span></div>
-<div class="ir"><span class="il" data-i="prem">月繳</span><span class="iv">$83.13 AUD</span></div>
+<div class="ir"><span class="il" data-i="prem">目前月繳</span><span class="iv" id="curPrem">—</span></div>
 <div class="ir"><span class="il">Excess</span><span class="iv">$1,000/illness or injury</span></div>
 <div class="ir"><span class="il">Co-Pay</span><span class="iv">90%/10%</span></div>
 <div class="ir"><span class="il" data-i="maxBen">上限</span><span class="iv" data-i="noLim">無上限</span></div>
 <div class="ir"><span class="il" data-i="wait">等待期</span><span class="iv" data-i="waitV">意外5天/疾病30天</span></div>
-<div class="ir"><span class="il" data-i="svc">客服</span><span class="iv">1300 328 042</span></div></div>
+<div class="ir"><span class="il" data-i="svc">客服</span><span class="iv">1300 328 042</span></div>
+<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--bl)">
+<div style="font-size:11px;font-weight:600;color:var(--b2);margin-bottom:5px">📈 <span data-i="premHist">保費歷史</span></div>
+<div id="premList" style="font-size:11px"></div>
+<div class="fr" style="margin-top:6px"><input type="date" id="pDate" style="font-size:11px"><input type="number" step="0.01" id="pAmt" data-ph="premPh" style="font-size:11px"><button class="btn bs" onclick="addPrem()" data-i="addPrem">新增</button></div>
+</div></div>
 <div class="c"><div class="c-t" data-i="medHx">病史摘要</div><div id="hxBox" style="font-size:11px;line-height:1.5"></div></div>
 <div class="c"><div class="c-t">⚙️ <span data-i="sync">同步設定</span></div>
 <div style="margin-bottom:7px"><input type="text" id="gasUrl" placeholder="Google Apps Script URL" style="font-size:10px"></div>
@@ -106,7 +117,6 @@ input,select,textarea{border:1px solid #e0d8ce;border-radius:8px;padding:7px 9px
 <!-- FAVORITES -->
 <div class="tc" id="tab-favs">
 <div class="c"><div class="c-t">🍽️ <span data-i="staple">目前主食</span></div><div id="stapleBox"></div></div>
-<div class="c"><div class="c-t">💊 <span data-i="prevMed">預防用藥</span></div><div id="medBox"></div></div>
 <div class="c"><div class="c-t">⭐ <span data-i="favMgr">常用食物管理</span></div>
 <p style="font-size:11px;color:var(--t2);margin-bottom:8px" data-i="favDesc">新增常用食物，在飲食分頁快速記錄</p>
 <div class="fr"><select id="fType"><option value="treat">零食</option><option value="supplement">保健品</option><option value="human">人類食物</option><option value="main">主食</option><option value="other">其他</option></select></div>
@@ -118,11 +128,6 @@ input,select,textarea{border:1px solid #e0d8ce;border-radius:8px;padding:7px 9px
 <p style="font-size:11px;color:var(--t2);margin-bottom:7px" data-i="chgDesc">更換時系統自動記錄日期，新主食進入30天觀察期</p>
 <div class="fr"><input type="text" id="sNew" data-ph="newStaplePh"></div>
 <button class="btn" onclick="chgStaple()" style="width:100%" data-i="confirmChg">確認更換主食</button></div>
-<div class="c"><div class="c-t" data-i="medSetup">預防用藥設定</div>
-<p style="font-size:11px;color:var(--t2);margin-bottom:7px" data-i="medDesc">跳蚤/蜱蟲/驅蟲藥等週期性用藥</p>
-<div class="fr"><input type="text" id="mName" data-ph="medNamePh"><input type="number" id="mCycle" data-ph="cyclePh"></div>
-<div class="fr"><input type="date" id="mLast"><span style="font-size:10px;color:var(--t2);display:flex;align-items:center" data-i="lastDose">上次用藥日</span></div>
-<button class="btn" onclick="saveMed()" style="width:100%" data-i="saveMed">儲存用藥設定</button></div>
 </div>
 
 <!-- DIET -->
@@ -144,6 +149,7 @@ input,select,textarea{border:1px solid #e0d8ce;border-radius:8px;padding:7px 9px
 <div id="wtChart" style="height:170px;overflow-x:auto;margin-bottom:7px"></div><div class="br" id="wtBdg"></div></div>
 <div class="c"><div class="c-t" data-i="addWt">新增體重</div>
 <div class="fr"><input type="date" id="wDate"><input type="number" step="0.01" id="wVal" data-ph="wtPh"><button class="btn" onclick="addWt()" data-i="save">儲存</button></div></div>
+<div class="c"><div class="c-t" data-i="wtLog">體重紀錄</div><div id="wtList"></div></div>
 </div>
 
 <!-- HEALTH -->
@@ -164,15 +170,39 @@ input,select,textarea{border:1px solid #e0d8ce;border-radius:8px;padding:7px 9px
 <div class="c"><div class="c-t">🇦🇺 <span data-i="auVax">澳洲疫苗建議</span></div><div id="vaxInfo"></div></div>
 </div>
 
-<!-- SHEDDING -->
+<!-- SHEDDING + BRUSHING -->
 <div class="tc" id="tab-sh">
-<div class="c"><div class="c-t" data-i="shedStat">掉毛狀態</div><div id="shedSt"></div></div>
-<div class="c"><div class="c-t" data-i="logShed">記錄掉毛</div>
-<div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:10px;color:var(--t2)" data-i="less">少</span><span style="font-size:10px;color:var(--t2)" data-i="more">多</span></div>
-<div class="sb" id="sBar"></div>
-<div class="fr" style="margin-top:7px"><input type="date" id="sDate"><input type="text" id="sNote" data-ph="notePh"></div>
-<button class="btn" onclick="addSh()" style="width:100%" data-i="log">記錄</button></div>
-<div class="c"><div class="c-t" data-i="shedLog">掉毛紀錄</div><div id="shList"></div></div>
+<div class="c"><div class="c-t">🌟 <span data-i="shedBrush">掉毛 & 刷毛</span></div>
+<div id="shedSt"></div>
+<div style="display:flex;gap:8px;margin-top:10px">
+<button class="btn" style="flex:1" onclick="toggleShedInput()">📊 <span data-i="logShedAmt">記錄掉毛</span></button>
+<button class="btn" style="flex:1" onclick="toggleBrushInput()">🖐️ <span data-i="logBrush">記錄刷毛</span></button>
+</div>
+<div id="shedInput" style="display:none;margin-top:10px;padding:10px;background:var(--bg);border-radius:8px">
+<div style="font-size:11px;color:var(--t2);margin-bottom:5px" data-i="shedAmt">今日掉毛量</div>
+<div class="amt-btns" id="shedAmtBtns"></div>
+<div class="fr" style="margin-top:7px"><input type="date" id="sDate"><button class="btn bs" onclick="addShed()" data-i="saveShed">記錄</button></div>
+</div>
+<div id="brushInput" style="display:none;margin-top:10px;padding:10px;background:var(--bg);border-radius:8px">
+<div style="font-size:11px;color:var(--t2);margin-bottom:5px" data-i="brushAmt">刷出毛量</div>
+<div class="amt-btns" id="brushAmtBtns"></div>
+<div class="fr" style="margin-top:7px"><input type="date" id="bDate"><button class="btn bs" onclick="addBrush()" data-i="saveBrush">記錄</button></div>
+</div>
+</div>
+<div class="c"><div class="c-t" data-i="shedBrushLog">掉毛 & 刷毛紀錄</div><div id="shList"></div></div>
+</div>
+
+<!-- CARE -->
+<div class="tc" id="tab-ca">
+<div class="c"><div class="c-t">🧼 <span data-i="careTitle">日常照護</span></div>
+<p style="font-size:11px;color:var(--t2);margin-bottom:8px" data-i="careDesc">追蹤週期性照護項目，自動計算下次提醒</p>
+<div id="careList"></div>
+</div>
+<div class="c"><div class="c-t" data-i="addCare">新增照護項目</div>
+<div class="fr"><input type="text" id="cName" data-ph="careNamePh"><input type="number" id="cCycle" data-ph="cyclePh"></div>
+<div class="fr"><input type="date" id="cLast"><span style="font-size:10px;color:var(--t2);display:flex;align-items:center" data-i="lastDone">上次日期</span></div>
+<button class="btn" onclick="addCare()" style="width:100%" data-i="saveCare">儲存照護項目</button>
+</div>
 </div>
 
 <!-- EXPORT -->
@@ -188,185 +218,145 @@ input,select,textarea{border:1px solid #e0d8ce;border-radius:8px;padding:7px 9px
 <div class="mo" id="exMo"><div class="ml"><div class="ml-t" id="moT"></div><pre id="moC"></pre>
 <div style="margin-top:10px;display:flex;gap:7px"><button class="btn" onclick="cpR()" data-i="copy">複製</button><button class="bo" onclick="clMo()" data-i="close">關閉</button></div>
 <div id="cpM" style="font-size:10px;color:var(--gn);margin-top:5px;display:none" data-i="copied">已複製！</div></div></div>
-<div class="ft">Mia 咪啊 Health Tracker v3.1</div>
+<div class="ft">Mia 咪啊 Health Tracker v4.0</div>
 
 <script>
 // ========== i18n ==========
-const ZH={info:'基本資料',name:'名字',breed:'品種',sex:'性別',sexV:'已結紮母貓',dob:'出生',chip:'晶片',owner:'飼主',loc:'所在地',ins:'保險資訊',insurer:'保險',polNum:'保單',polPrd:'保期',prem:'月繳',maxBen:'上限',noLim:'無上限',wait:'等待期',waitV:'意外5天/疾病30天',svc:'客服',medHx:'病史摘要',sync:'同步設定',save:'儲存',test:'測試',refresh:'重新整理',staple:'目前主食',prevMed:'預防用藥',favMgr:'常用食物管理',favDesc:'新增常用食物，在飲食分頁快速記錄',addFav:'新增到常用清單',curList:'目前清單',chgStaple:'更換主食',chgDesc:'更換時系統自動記錄日期，新主食進入30天觀察期',confirmChg:'確認更換主食',medSetup:'預防用藥設定',medDesc:'跳蚤/蜱蟲/驅蟲藥等週期性用藥',lastDose:'上次用藥日',saveMed:'儲存用藥設定',quickLog:'快速記錄',manualIn:'手動輸入',logDiet:'記錄飲食',dietLog:'飲食日誌',wtTrend:'體重趨勢',addWt:'新增體重',addHealth:'新增健康紀錄',giAnal:'腸胃分析',healthLog:'健康日誌',vaxStat:'疫苗狀態',auVax:'澳洲疫苗建議',shedStat:'掉毛狀態',logShed:'記錄掉毛',shedLog:'掉毛紀錄',export:'匯出報告',expDesc:'產生報告複製到Claude分析或帶給獸醫',fullRpt:'完整報告',giRpt:'腸胃分析',dataMgr:'資料管理',clearAll:'清除所有資料',log:'記錄',copy:'複製',close:'關閉',copied:'已複製！',less:'少',more:'多',confirmReset:'確定清除所有資料？',
-brandPh:'品牌',itemPh:'品項名稱',defAmtPh:'預設份量（選填）',newStaplePh:'新主食名稱',medNamePh:'藥品名稱',cyclePh:'週期（天）',flavPh:'口味/品項',amtPh:'份量',notePh:'備註',wtPh:'體重(kg)',
-tProfile:'基本',tFavs:'常用',tDiet:'飲食',tWt:'體重',tHealth:'健康',tVax:'疫苗',tShed:'掉毛',tExp:'匯出',
+const ZH={info:'基本資料',name:'名字',breed:'品種',sex:'性別',sexV:'已結紮母貓',dob:'出生',chip:'晶片',owner:'飼主',loc:'所在地',ins:'保險資訊',insurer:'保險',polNum:'保單',polPrd:'保期',prem:'目前月繳',premHist:'保費歷史',addPrem:'新增',premPh:'金額 AUD',maxBen:'上限',noLim:'無上限',wait:'等待期',waitV:'意外5天/疾病30天',svc:'客服',medHx:'病史摘要',sync:'同步設定',save:'儲存',test:'測試',refresh:'重新整理',staple:'目前主食',favMgr:'常用食物管理',favDesc:'新增常用食物，在飲食分頁快速記錄',addFav:'新增到常用清單',curList:'目前清單',chgStaple:'更換主食',chgDesc:'更換時系統自動記錄日期，新主食進入30天觀察期',confirmChg:'確認更換主食',quickLog:'快速記錄',manualIn:'手動輸入',logDiet:'記錄飲食',dietLog:'飲食日誌',wtTrend:'體重趨勢',addWt:'新增體重',wtLog:'體重紀錄',addHealth:'新增健康紀錄',giAnal:'腸胃分析',healthLog:'健康日誌',vaxStat:'疫苗狀態',auVax:'澳洲疫苗建議',shedBrush:'掉毛 & 刷毛',logShedAmt:'記錄掉毛',logBrush:'記錄刷毛',shedAmt:'今日掉毛量',brushAmt:'刷出毛量',saveShed:'記錄',saveBrush:'記錄',shedBrushLog:'掉毛 & 刷毛紀錄',careTitle:'日常照護',careDesc:'追蹤週期性照護項目，自動計算下次提醒',addCare:'新增照護項目',careNamePh:'項目名稱',lastDone:'上次日期',saveCare:'儲存照護項目',export:'匯出報告',expDesc:'產生報告複製到Claude分析或帶給獸醫',fullRpt:'完整報告',giRpt:'腸胃分析',dataMgr:'資料管理',clearAll:'清除所有資料',log:'記錄',copy:'複製',close:'關閉',copied:'已複製！',confirmReset:'確定清除所有資料？',
+amtLow:'少',amtMid:'中',amtHi:'多',
+brandPh:'品牌',itemPh:'品項名稱',defAmtPh:'預設份量（選填）',newStaplePh:'新主食名稱',cyclePh:'週期（天）',flavPh:'口味/品項',amtPh:'份量',notePh:'備註',wtPh:'體重(kg)',
+tProfile:'基本',tFavs:'常用',tDiet:'飲食',tWt:'體重',tHealth:'健康',tVax:'疫苗',tShed:'掉毛',tCare:'照護',tExp:'匯出',
 main:'主食',treat:'零食',supplement:'保健品',human:'人類食物',other:'其他',
 vomit:'嘔吐',stool:'排便',urine:'排尿',appetite:'食慾',energy:'精神',
 all:'全部',y1:'近1年',m6:'近6月',m3:'近3月',m1:'近1月',
 noFav:'到「⭐常用」分頁新增常用食物',noLog:'尚無紀錄',startLog:'開始記錄吧！',
-todayDosed:'✅ 今天已用藥',noMed:'尚未設定，到「⭐常用」分頁設定',medHist:'用藥紀錄',chgFrom:'換藥：',
-shedHigh:'掉毛高峰期',shedNorm:'一般掉毛期',brushDaily:'建議每天刷毛',brushWeek:'每週1-2次',
+noMed:'尚未設定',doneToday:'✅ 今天已做',
+shedHigh:'掉毛高峰期',shedNorm:'一般掉毛期',lastBrush:'上次刷毛',daysAgo:'天前',neverBrush:'從未刷毛',
 analStart:'開始記錄嘔吐/腹瀉和飲食後自動分析',analNoDiet:'請同時記錄飲食才能交叉比對',analTitle:'嘔吐/腹瀉前飲食關聯',analNote:'※ 相關性分析，非因果。主食已排除。',analNew:'🆕 新食物',analObs:'📋 主食轉換觀察中',analObsDay:'第',analObsDay2:'天',
 vomit30:'30天嘔吐',dia30:'30天腹瀉',vomit90:'90天嘔吐',dia90:'90天腹瀉',timePat:'時間模式',monthPat:'月份分佈',hourPat:'時段分佈',
+hairVomit:'帶毛球',
+shedLog:'掉毛',brushLog:'刷毛',
 hx1:'Pancreatitis（胰腺炎）病史（領養前）',hx2:'嘔吐發作 ~2次/年，每次持續2-3週',hx3:'T4 grey zone (45→23) — 持續監控',hx4:'Mild eosinophilia 輕微嗜酸性粒細胞增多 (2024/05)',hx5:'微微過重 (BCS 5-6/9)',
-vaxF3:'已於 2025/08/06 施打 3年疫苗。下次 2028/08/05。',vaxFeLV:'2023/07 施打 3yr，2026/07 到期。室內貓可與獸醫討論。',vaxFIV:'NSW 盛行率 ~15%。若外出建議討論。',vaxRab:'澳洲不需要。已有 FAVN 通過。'};
-const EN={info:'Profile',name:'Name',breed:'Breed',sex:'Sex',sexV:'Spayed Female',dob:'DOB',chip:'Microchip',owner:'Owner',loc:'Location',ins:'Insurance',insurer:'Insurer',polNum:'Policy#',polPrd:'Period',prem:'Monthly',maxBen:'Max',noLim:'No Limit',wait:'Waiting',waitV:'Accident 5d / Illness 30d',svc:'Support',medHx:'Medical History',sync:'Sync Settings',save:'Save',test:'Test',refresh:'Refresh',staple:'Current Staple Food',prevMed:'Preventive Medication',favMgr:'Favorites Manager',favDesc:'Add favorites for quick logging in Diet tab',addFav:'Add to Favorites',curList:'Current List',chgStaple:'Change Staple Food',chgDesc:'System auto-records date; new food enters 30-day observation',confirmChg:'Confirm Change',medSetup:'Medication Setup',medDesc:'Flea/tick/parasite prevention (periodic)',lastDose:'Last dose date',saveMed:'Save Medication',quickLog:'Quick Log',manualIn:'Manual Input',logDiet:'Log Diet',dietLog:'Diet Log',wtTrend:'Weight Trend',addWt:'Add Weight',addHealth:'Add Health Record',giAnal:'GI Analysis',healthLog:'Health Log',vaxStat:'Vaccine Status',auVax:'AU Vaccine Guide',shedStat:'Shedding Status',logShed:'Log Shedding',shedLog:'Shedding Log',export:'Export Report',expDesc:'Generate report to paste into Claude or show vet',fullRpt:'Full Report',giRpt:'GI Analysis',dataMgr:'Data',clearAll:'Clear All Data',log:'Log',copy:'Copy',close:'Close',copied:'Copied!',less:'Low',more:'Heavy',confirmReset:'Clear all data? Cannot undo!',
-brandPh:'Brand',itemPh:'Item name',defAmtPh:'Default amount (optional)',newStaplePh:'New staple food',medNamePh:'Medication name',cyclePh:'Cycle (days)',flavPh:'Flavor/Item',amtPh:'Amount',notePh:'Note',wtPh:'Weight(kg)',
-tProfile:'Profile',tFavs:'Favs',tDiet:'Diet',tWt:'Weight',tHealth:'Health',tVax:'Vaccine',tShed:'Shed',tExp:'Export',
+vaxF3:'已於 2025/08/06 施打 3年疫苗。下次 2028/08/05。',vaxFeLV:'2023/07 施打 3yr，2026/07 到期。室內貓可與獸醫討論。',vaxFIV:'NSW 盛行率 ~15%。若外出建議討論。',vaxRab:'澳洲不需要。已有 FAVN 通過。',
+careFlea:'跳蚤/蜱蟲/驅蟲藥',careBrush:'刷毛',careTeeth:'刷牙',careNail:'剪指甲'};
+
+const EN={info:'Profile',name:'Name',breed:'Breed',sex:'Sex',sexV:'Spayed Female',dob:'DOB',chip:'Microchip',owner:'Owner',loc:'Location',ins:'Insurance',insurer:'Insurer',polNum:'Policy#',polPrd:'Period',prem:'Current Monthly',premHist:'Premium History',addPrem:'Add',premPh:'Amount AUD',maxBen:'Max',noLim:'No Limit',wait:'Waiting',waitV:'Accident 5d / Illness 30d',svc:'Support',medHx:'Medical History',sync:'Sync Settings',save:'Save',test:'Test',refresh:'Refresh',staple:'Current Staple',favMgr:'Favorites',favDesc:'Add favorites for quick logging',addFav:'Add to Favorites',curList:'Current List',chgStaple:'Change Staple',chgDesc:'New staple enters 30-day observation',confirmChg:'Confirm Change',quickLog:'Quick Log',manualIn:'Manual Input',logDiet:'Log Diet',dietLog:'Diet Log',wtTrend:'Weight Trend',addWt:'Add Weight',wtLog:'Weight Log',addHealth:'Add Health Record',giAnal:'GI Analysis',healthLog:'Health Log',vaxStat:'Vaccine Status',auVax:'AU Vaccine',shedBrush:'Shedding & Brushing',logShedAmt:'Log Shedding',logBrush:'Log Brushing',shedAmt:'Shedding amount',brushAmt:'Fur brushed out',saveShed:'Save',saveBrush:'Save',shedBrushLog:'Shedding & Brushing Log',careTitle:'Daily Care',careDesc:'Track periodic care, auto reminders',addCare:'Add Care Item',careNamePh:'Item name',lastDone:'Last date',saveCare:'Save Care Item',export:'Export Report',expDesc:'Generate report for Claude or vet',fullRpt:'Full Report',giRpt:'GI Analysis',dataMgr:'Data',clearAll:'Clear All Data',log:'Log',copy:'Copy',close:'Close',copied:'Copied!',confirmReset:'Clear all data?',
+amtLow:'Low',amtMid:'Mid',amtHi:'High',
+brandPh:'Brand',itemPh:'Item',defAmtPh:'Default amount',newStaplePh:'New staple',cyclePh:'Cycle (days)',flavPh:'Flavor',amtPh:'Amount',notePh:'Note',wtPh:'Weight(kg)',
+tProfile:'Profile',tFavs:'Favs',tDiet:'Diet',tWt:'Weight',tHealth:'Health',tVax:'Vaccine',tShed:'Fur',tCare:'Care',tExp:'Export',
 main:'Staple',treat:'Treat',supplement:'Supplement',human:'Human',other:'Other',
 vomit:'Vomit',stool:'Stool',urine:'Urine',appetite:'Appetite',energy:'Energy',
 all:'All',y1:'1Y',m6:'6M',m3:'3M',m1:'1M',
-noFav:'Add favorites in ⭐Favs tab',noLog:'No records',startLog:'Start logging!',
-todayDosed:'✅ Dosed Today',noMed:'Not set. Go to ⭐Favs tab',medHist:'Dose History',chgFrom:'Changed: ',
-shedHigh:'Heavy Shedding',shedNorm:'Normal Shedding',brushDaily:'Brush daily',brushWeek:'1-2x/week',
-analStart:'Log vomit/diarrhea & diet for auto-analysis',analNoDiet:'Log diet too for cross-analysis',analTitle:'Diet before vomit/diarrhea',analNote:'※ Correlation, not causation. Staple excluded.',analNew:'🆕 New',analObs:'📋 Staple transition',analObsDay:'Day ',analObsDay2:'',
+noFav:'Add favorites in ⭐Favs',noLog:'No records',startLog:'Start logging!',
+noMed:'Not set',doneToday:'✅ Done Today',
+shedHigh:'Heavy Shedding',shedNorm:'Normal Shedding',lastBrush:'Last brushed',daysAgo:'days ago',neverBrush:'Never brushed',
+analStart:'Log vomit/diarrhea & diet for analysis',analNoDiet:'Log diet too',analTitle:'Diet before vomit/diarrhea',analNote:'※ Correlation only. Staple excluded.',analNew:'🆕 New',analObs:'📋 Staple transition',analObsDay:'Day ',analObsDay2:'',
 vomit30:'30d Vomit',dia30:'30d Diarrhea',vomit90:'90d Vomit',dia90:'90d Diarrhea',timePat:'Patterns',monthPat:'Monthly',hourPat:'Hourly',
-hx1:'Pancreatitis history (prior to adoption)',hx2:'Vomiting episodes ~2x/year, 2-3 weeks each',hx3:'T4 grey zone (45→23) — monitor',hx4:'Mild eosinophilia (May 2024)',hx5:'Slightly overweight (BCS 5-6/9)',
-vaxF3:'Vaccinated 2025/08/06 (3yr). Next 2028/08/05.',vaxFeLV:'Given 2023/07 (3yr), due 2026/07.',vaxFIV:'NSW ~15%. Discuss if outdoor.',vaxRab:'Not required in AU. FAVN passed.'};
+hairVomit:'With hairball',
+shedLog:'Shed',brushLog:'Brush',
+hx1:'Pancreatitis history (prior to adoption)',hx2:'Vomiting ~2x/year, 2-3 weeks',hx3:'T4 grey zone (45→23) — monitor',hx4:'Mild eosinophilia (May 2024)',hx5:'Slightly overweight (BCS 5-6/9)',
+vaxF3:'Given 2025/08/06 (3yr). Next 2028/08/05.',vaxFeLV:'Given 2023/07 (3yr), due 2026/07.',vaxFIV:'NSW ~15%.',vaxRab:'Not required in AU.',
+careFlea:'Flea/Tick/Parasite Med',careBrush:'Brushing',careTeeth:'Teeth Brushing',careNail:'Nail Trim'};
 
 let lang='zh',L=ZH;
 function toggleLang(){lang=lang==='zh'?'en':'zh';L=lang==='zh'?ZH:EN;localStorage.setItem('mia-lang',lang);applyLang()}
 function applyLang(){document.getElementById('lngBtn').textContent=lang==='zh'?'🌐 EN':'🌐 中文';document.querySelectorAll('[data-i]').forEach(el=>{if(L[el.dataset.i])el.textContent=L[el.dataset.i]});document.querySelectorAll('[data-ph]').forEach(el=>{if(L[el.dataset.ph])el.placeholder=L[el.dataset.ph]});initTb();rAll()}
 
 // ========== STATE ==========
-const TABS=[{id:'profile',i:'🐱',k:'tProfile'},{id:'favs',i:'⭐',k:'tFavs'},{id:'diet',i:'🍽️',k:'tDiet'},{id:'wt',i:'⚖️',k:'tWt'},{id:'hp',i:'📋',k:'tHealth'},{id:'vx',i:'💉',k:'tVax'},{id:'sh',i:'✨',k:'tShed'},{id:'ex',i:'📤',k:'tExp'}];
+const TABS=[{id:'profile',i:'🐱',k:'tProfile'},{id:'favs',i:'⭐',k:'tFavs'},{id:'diet',i:'🍽️',k:'tDiet'},{id:'wt',i:'⚖️',k:'tWt'},{id:'hp',i:'📋',k:'tHealth'},{id:'vx',i:'💉',k:'tVax'},{id:'sh',i:'🌟',k:'tShed'},{id:'ca',i:'🧼',k:'tCare'},{id:'ex',i:'📤',k:'tExp'}];
 let curTab='profile';
 function initTb(){document.getElementById('tabBar').innerHTML=TABS.map(t=>`<button class="${t.id===curTab?'on':''}" onclick="sw('${t.id}')"><span>${t.i}</span>${L[t.k]}</button>`).join('')}
 function sw(id){curTab=id;document.querySelectorAll('.tb button').forEach((b,i)=>b.classList.toggle('on',TABS[i].id===id));document.querySelectorAll('.tc').forEach(c=>c.classList.toggle('on',c.id==='tab-'+id))}
 
-let S={weights:[],dietLogs:[],healthLogs:[],sheddingLogs:[],favorites:[],staple:'',stapleHistory:[],med:{name:'',cycle:0,last:''},medHistory:[],gasUrl:'',analWin:72,wtRange:'all'};
+// S: weights, dietLogs, healthLogs (type:vomit/stool/urine/appetite/energy/other), sheddingLogs (type:shed/brush, level:low/mid/hi), careItems, premiums
+let S={weights:[],dietLogs:[],healthLogs:[],sheddingLogs:[],careItems:[],premiums:[],favorites:[],staple:'',stapleHistory:[],gasUrl:'',analWin:72,wtRange:'all'};
 const HO={stool:['正常/Normal','偏軟/Soft','腹瀉/Diarrhea','便秘/Constipated','未排便/None'],urine:['正常/Normal','頻繁/Frequent','減少/Less','血尿/Blood','未排尿/None'],appetite:['正常/Normal','增加/Increased','減少/Decreased','不吃/None'],energy:['正常(BAR)/Normal','嗜睡/Lethargic','過度興奮/Hyperactive','虛弱/Weak']};
 const VAX=[{n:'FVRCP/F3(3yr)',d:'2025-08-06',nx:'2028-08-05'},{n:'FeLV(3yr)',d:'2023-07-06',nx:'2026-07-06'},{n:'Rabies(3yr)',d:'2024-12-21',nx:'N/A'}];
-let hType='vomit',dType='main',hVal='',sLv=3;
+const DEFAULT_CARE=[{id:'default-flea',name:'careFlea',cycle:84,last:'',custom:false},{id:'default-brush',name:'careBrush',cycle:3,last:'',custom:false},{id:'default-teeth',name:'careTeeth',cycle:2,last:'',custom:false},{id:'default-nail',name:'careNail',cycle:21,last:'',custom:false}];
+const DEFAULT_PREMIUM=[{date:'2025-09-08',amount:83.13}];
+let hType='vomit',dType='main',hVal='',hairVomit=false,shedAmt='mid',brushAmt='mid';
 
 // ========== HELPERS ==========
 function localDate(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function localTime(){const d=new Date();return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}
 function fd(d){if(!d)return'';const p=String(d).substring(0,10).split('-');return p.length===3?p[0]+'/'+p[1]+'/'+p[2]:d}
-function fdt(d,t){return fd(d)+(t?' '+t:'')}
 function db(a,b){return Math.floor((new Date(b)-new Date(a))/864e5)}
 function age(){const n=new Date(),b=new Date('2014-07-01');let y=n.getFullYear()-b.getFullYear(),m=n.getMonth()-b.getMonth();if(m<0){y--;m+=12}return y+(lang==='zh'?'歲':'y ')+m+(lang==='zh'?'個月':'m')}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 function dl(t){return L[t]||t}
-// Sort logs: newest first by date+time combined
 function sortLogs(arr){arr.sort((a,b)=>{const ka=(a.date||'')+' '+(a.time||'00:00'),kb=(b.date||'')+' '+(b.time||'00:00');return kb.localeCompare(ka)})}
-
-// ========== LOCAL STORAGE ==========
-function svLocal(){localStorage.setItem('mia-tracker',JSON.stringify(S))}
-function ldLocal(){
-  try{
-    const s=JSON.parse(localStorage.getItem('mia-tracker'));
-    if(s){Object.keys(s).forEach(k=>{if(s[k]!==undefined&&s[k]!==null)S[k]=s[k]})}
-    if(!S.favorites)S.favorites=[];
-    if(!S.stapleHistory)S.stapleHistory=[];
-    if(!S.medHistory)S.medHistory=[];
-    if(!S.med||typeof S.med!=='object')S.med={name:'',cycle:0,last:''};
-    if(!S.weights)S.weights=[];
-  }catch(e){S.weights=[]}
-}
-
-// ========== CLOUD SYNC (FIXED: merge, not overwrite) ==========
-async function cloudAppend(type,record){
-  if(!S.gasUrl)return;
-  try{await fetch(S.gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'append',type,record})})}catch(e){console.log('sync err',e)}
-}
-async function cloudDelete(type,id){
-  if(!S.gasUrl)return;
-  try{await fetch(S.gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'delete',type,id})})}catch(e){}
-}
-async function cloudSettings(){
-  if(!S.gasUrl)return;
-  // Only called from user actions. Always write current state.
-  try{await fetch(S.gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'settings',settings:{staple:S.staple,stapleHistory:S.stapleHistory,med:S.med,medHistory:S.medHistory,favorites:S.favorites}})})}catch(e){}
-}
-
-// Normalize date to YYYY-MM-DD, time to HH:MM
 function cleanDate(d){if(!d)return'';const s=String(d);if(s.length>=10)return s.substring(0,10);return s}
 function cleanTime(t){if(!t)return'';const s=String(t);const m=s.match(/(\d{1,2}):(\d{2})/);if(m)return m[1].padStart(2,'0')+':'+m[2];return''}
 function cleanRec(r){const c={...r};if(c.date)c.date=cleanDate(c.date);if(c.time!==undefined)c.time=cleanTime(c.time);return c}
 
-// FIXED cloudLoad: MERGE cloud data with local, normalize all date/time formats
+// ========== STORAGE ==========
+function svLocal(){localStorage.setItem('mia-tracker',JSON.stringify(S))}
+function ldLocal(){
+<span class="Apple-converted-space">  </span>try{const s=JSON.parse(localStorage.getItem('mia-tracker'));
+<span class="Apple-converted-space">  </span>if(s){Object.keys(s).forEach(k=>{if(s[k]!==undefined&&s[k]!==null)S[k]=s[k]})}
+<span class="Apple-converted-space">  </span>if(!S.favorites)S.favorites=[];if(!S.stapleHistory)S.stapleHistory=[];if(!S.careItems||!S.careItems.length)S.careItems=[...DEFAULT_CARE];
+<span class="Apple-converted-space">  </span>if(!S.premiums||!S.premiums.length)S.premiums=[...DEFAULT_PREMIUM];
+<span class="Apple-converted-space">  </span>if(!S.weights)S.weights=[];if(!S.dietLogs)S.dietLogs=[];if(!S.healthLogs)S.healthLogs=[];if(!S.sheddingLogs)S.sheddingLogs=[];
+<span class="Apple-converted-space">  </span>}catch(e){S.careItems=[...DEFAULT_CARE];S.premiums=[...DEFAULT_PREMIUM]}
+}
+
+// ========== CLOUD ==========
+async function cloudAppend(type,record){if(!S.gasUrl)return;try{await fetch(S.gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'append',type,record})})}catch(e){}}
+async function cloudDelete(type,id){if(!S.gasUrl)return;try{await fetch(S.gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'delete',type,id})})}catch(e){}}
+async function cloudSettings(){if(!S.gasUrl)return;try{await fetch(S.gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'settings',settings:{staple:S.staple,stapleHistory:S.stapleHistory,favorites:S.favorites,careItems:S.careItems,premiums:S.premiums}})})}catch(e){}}
 async function cloudLoad(){
-  if(!S.gasUrl)return false;
-  try{
-    const r=await fetch(S.gasUrl+'?action=load');
-    const d=await r.json();
-    if(d.status!=='ok')return false;
-
-    // Clean and merge
-    if(d.dietLogs)S.dietLogs=mergeById(S.dietLogs,d.dietLogs.map(cleanRec));
-    if(d.healthLogs)S.healthLogs=mergeById(S.healthLogs,d.healthLogs.map(cleanRec));
-    if(d.weights)S.weights=mergeByDate(S.weights,d.weights.map(cleanRec));
-    if(d.sheddingLogs)S.sheddingLogs=mergeById(S.sheddingLogs,d.sheddingLogs.map(cleanRec));
-
-    // Settings: cloud is source of truth for these on load
-    if(d.settings){
-      if(d.settings.staple!==undefined)S.staple=d.settings.staple||'';
-      if(d.settings.stapleHistory)S.stapleHistory=d.settings.stapleHistory;
-      if(d.settings.med)S.med=d.settings.med;
-      if(d.settings.medHistory)S.medHistory=d.settings.medHistory;
-      if(d.settings.favorites)S.favorites=d.settings.favorites;
-    }
-    svLocal();
-    return true;
-  }catch(e){console.log('load err',e);return false}
+<span class="Apple-converted-space">  </span>if(!S.gasUrl)return false;
+<span class="Apple-converted-space">  </span>try{const r=await fetch(S.gasUrl+'?action=load');const d=await r.json();
+<span class="Apple-converted-space">  </span>if(d.status!=='ok')return false;
+<span class="Apple-converted-space">  </span>if(d.dietLogs)S.dietLogs=mergeById(S.dietLogs,d.dietLogs.map(cleanRec));
+<span class="Apple-converted-space">  </span>if(d.healthLogs)S.healthLogs=mergeById(S.healthLogs,d.healthLogs.map(cleanRec));
+<span class="Apple-converted-space">  </span>if(d.weights)S.weights=mergeByDate(S.weights,d.weights.map(cleanRec));
+<span class="Apple-converted-space">  </span>if(d.sheddingLogs)S.sheddingLogs=mergeById(S.sheddingLogs,d.sheddingLogs.map(cleanRec));
+<span class="Apple-converted-space">  </span>if(d.settings){
+<span class="Apple-converted-space">    </span>if(d.settings.staple!==undefined)S.staple=d.settings.staple||'';
+<span class="Apple-converted-space">    </span>if(d.settings.stapleHistory)S.stapleHistory=d.settings.stapleHistory;
+<span class="Apple-converted-space">    </span>if(d.settings.favorites)S.favorites=d.settings.favorites;
+<span class="Apple-converted-space">    </span>if(d.settings.careItems&&d.settings.careItems.length)S.careItems=d.settings.careItems;
+<span class="Apple-converted-space">    </span>if(d.settings.premiums&&d.settings.premiums.length)S.premiums=d.settings.premiums;
+<span class="Apple-converted-space">  </span>}
+<span class="Apple-converted-space">  </span>svLocal();return true;}catch(e){return false}
 }
-
-function mergeById(local,cloud){
-  const map={};
-  // Local takes precedence (newer user-entered data)
-  cloud.forEach(r=>{if(r.id)map[r.id]=r});
-  local.forEach(r=>{if(r.id)map[r.id]=r});
-  return Object.values(map).sort((a,b)=>{
-    const da=(a.date||'')+(a.time||''), db2=(b.date||'')+(b.time||'');
-    return db2.localeCompare(da);
-  });
-}
-function mergeByDate(local,cloud){
-  const map={};
-  // Local takes precedence on same date
-  cloud.forEach(r=>{if(r.date)map[r.date]=r});
-  local.forEach(r=>{if(r.date)map[r.date]=r});
-  return Object.values(map).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
-}
-
-async function fullSync(){
-  if(!S.gasUrl)return;
-  // NOTE: Does NOT sync settings - those are only written via user actions
-  try{await fetch(S.gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'fullSync',dietLogs:S.dietLogs,healthLogs:S.healthLogs,weights:S.weights,sheddingLogs:S.sheddingLogs})})}catch(e){}
-}
-
-function saveGas(){S.gasUrl=document.getElementById('gasUrl').value.trim();svLocal();showMsg('✅');fullSync()}
-function testGas(){if(!S.gasUrl){showMsg('❌ URL');return}showMsg('⏳...');fetch(S.gasUrl+'?action=ping').then(r=>r.json()).then(d=>showMsg(d.status==='ok'?'✅ Connected':'❌')).catch(e=>showMsg('❌ '+e.message))}
-async function manualLoad(){showMsg('⏳...');const ok=await cloudLoad();showMsg(ok?'✅ Loaded':'❌ Failed');if(ok)rAll()}
+function mergeById(local,cloud){const map={};cloud.forEach(r=>{if(r.id)map[r.id]=r});local.forEach(r=>{if(r.id)map[r.id]=r});return Object.values(map).sort((a,b)=>{const da=(a.date||'')+(a.time||''),db2=(b.date||'')+(b.time||'');return db2.localeCompare(da)})}
+function mergeByDate(local,cloud){const map={};cloud.forEach(r=>{if(r.date)map[r.date]=r});local.forEach(r=>{if(r.date)map[r.date]=r});return Object.values(map).sort((a,b)=>(a.date||'').localeCompare(b.date||''))}
+function saveGas(){S.gasUrl=document.getElementById('gasUrl').value.trim();svLocal();showMsg('✅')}
+function testGas(){if(!S.gasUrl){showMsg('❌');return}showMsg('⏳...');fetch(S.gasUrl+'?action=ping').then(r=>r.json()).then(d=>showMsg(d.status==='ok'?'✅ Connected':'❌')).catch(e=>showMsg('❌'))}
+async function manualLoad(){showMsg('⏳...');const ok=await cloudLoad();showMsg(ok?'✅ Loaded':'❌');if(ok)rAll()}
 function showMsg(m){document.getElementById('gasMsg').textContent=m}
 
 // ========== STAPLE ==========
 function rStaple(){
-  const el=document.getElementById('stapleBox');
-  if(!S.staple){el.innerHTML=`<div class="em">${lang==='zh'?'尚未設定主食，點下方「更換主食」設定':'Not set. Use "Change Staple Food" below'}</div>`;return}
-  let obs='';const lc=S.stapleHistory.length?S.stapleHistory[S.stapleHistory.length-1]:null;
-  if(lc){const days=db(lc.date,localDate());if(days>=0&&days<=30)obs=`<div style="background:#fff3e0;border-radius:8px;padding:6px 8px;margin-top:5px;font-size:11px;color:var(--or);font-weight:500">${L.analObs} — ${L.analObsDay}${days}${L.analObsDay2}/30</div>`}
-  let h=`<div style="font-size:12px;font-weight:500;margin-bottom:4px">${S.staple}</div>${obs}`;
-  if(S.stapleHistory.length){h+=`<div style="font-size:10px;color:var(--t2);margin-top:4px">`;S.stapleHistory.slice(-5).reverse().forEach(s=>{h+=`<div style="padding:1px 0">${fd(s.date)}: ${s.from||'—'} → ${s.to}</div>`});h+='</div>'}
-  el.innerHTML=h;
+<span class="Apple-converted-space">  </span>const el=document.getElementById('stapleBox');
+<span class="Apple-converted-space">  </span>if(!S.staple){el.innerHTML=`<div class="em">${lang==='zh'?'尚未設定主食，點下方「更換主食」設定':'Not set. Use "Change Staple" below'}</div>`;return}
+<span class="Apple-converted-space">  </span>let obs='';const lc=S.stapleHistory.length?S.stapleHistory[S.stapleHistory.length-1]:null;
+<span class="Apple-converted-space">  </span>if(lc){const days=db(lc.date,localDate());if(days>=0&&days<=30)obs=`<div style="background:#fff3e0;border-radius:8px;padding:6px 8px;margin-top:5px;font-size:11px;color:var(--or);font-weight:500">${L.analObs} — ${L.analObsDay}${days}${L.analObsDay2}/30</div>`}
+<span class="Apple-converted-space">  </span>let h=`<div style="font-size:12px;font-weight:500;margin-bottom:4px">${S.staple}</div>${obs}`;
+<span class="Apple-converted-space">  </span>if(S.stapleHistory.length){h+=`<div style="font-size:10px;color:var(--t2);margin-top:4px">`;S.stapleHistory.slice(-5).reverse().forEach(s=>{h+=`<div style="padding:1px 0">${fd(s.date)}: ${s.from||'—'} → ${s.to}</div>`});h+='</div>'}
+<span class="Apple-converted-space">  </span>el.innerHTML=h;
 }
 function chgStaple(){const nv=document.getElementById('sNew').value.trim();if(!nv)return;if(S.staple)S.stapleHistory.push({date:localDate(),from:S.staple,to:nv});S.staple=nv;svLocal();cloudSettings();rStaple();document.getElementById('sNew').value=''}
 
-// ========== MED ==========
-function rMed(){
-  const el=document.getElementById('medBox');
-  if(!S.med.name){el.innerHTML=`<div class="em">${L.noMed}</div>`;return}
-  const next=new Date(new Date(S.med.last).getTime()+S.med.cycle*864e5);const dl2=db(localDate(),next.toISOString().slice(0,10));
-  const pct=Math.max(0,Math.min(100,((S.med.cycle-Math.max(0,dl2))/S.med.cycle)*100));
-  const clr=dl2<=7?'var(--or)':dl2<=14?'var(--yl)':'var(--gn)';
-  let h=`<div class="mc"><div class="mc-n">${S.med.name}</div>
-  <div class="mc-i">${lang==='zh'?'週期：每':'Every'} ${S.med.cycle} ${lang==='zh'?'天':'days'} | ${lang==='zh'?'上次：':'Last: '}${fd(S.med.last)}</div>
-  <div class="mc-i" style="font-weight:600;color:${clr}">${lang==='zh'?'下次：':'Next: '}${fd(next.toISOString().slice(0,10))}（${dl2>0?dl2+(lang==='zh'?' 天後':' days'):(lang==='zh'?'已到期！':'Due!')}）</div>
-  <div class="mb"><div class="mb-f" style="width:${pct}%;background:${clr}"></div></div>
-  <button class="btn bs" style="margin-top:7px" onclick="markMed()">${L.todayDosed}</button></div>`;
-  if(S.medHistory.length){h+=`<div style="font-size:10px;color:var(--t2);font-weight:600;margin-top:4px">${L.medHist}</div>`;S.medHistory.slice(-10).reverse().forEach(m=>{h+=`<div style="font-size:10px;color:var(--t2);padding:1px 0">${fd(m.date)} — ${m.name}</div>`})}
-  el.innerHTML=h;
+// ========== PREMIUMS ==========
+function rPrem(){
+<span class="Apple-converted-space">  </span>const el=document.getElementById('premList');
+<span class="Apple-converted-space">  </span>if(!S.premiums.length){document.getElementById('curPrem').textContent='—';el.innerHTML='';return}
+<span class="Apple-converted-space">  </span>const sorted=[...S.premiums].sort((a,b)=>a.date.localeCompare(b.date));
+<span class="Apple-converted-space">  </span>const latest=sorted[sorted.length-1];
+<span class="Apple-converted-space">  </span>document.getElementById('curPrem').textContent='$'+latest.amount.toFixed(2)+' AUD';
+<span class="Apple-converted-space">  </span>let h='';sorted.slice().reverse().forEach((p,i,arr)=>{
+<span class="Apple-converted-space">    </span>const prev=arr[i+1];
+<span class="Apple-converted-space">    </span>let pct='';if(prev){const d=((p.amount-prev.amount)/prev.amount*100);if(d!==0){const clr=d>0?'var(--or)':'var(--gn)';pct=` <span style="color:${clr};font-weight:600">(${d>0?'+':''}${d.toFixed(1)}%)</span>`}}
+<span class="Apple-converted-space">    </span>h+=`<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--bl)"><span>${fd(p.date)}</span><span>$${p.amount.toFixed(2)}${pct} <button class="dx" onclick="delPrem('${p.date}')" style="margin-left:5px">✕</button></span></div>`});
+<span class="Apple-converted-space">  </span>el.innerHTML=h;
 }
-function markMed(){S.medHistory.push({date:localDate(),name:S.med.name});S.med.last=localDate();svLocal();cloudSettings();rMed()}
-function saveMed(){const n=document.getElementById('mName').value.trim(),c=parseInt(document.getElementById('mCycle').value),l=document.getElementById('mLast').value||localDate();
-if(!n||!c)return;if(S.med.name&&S.med.name!==n)S.medHistory.push({date:localDate(),name:L.chgFrom+S.med.name+' → '+n});
-S.med={name:n,cycle:c,last:l};svLocal();cloudSettings();rMed()}
+function addPrem(){const d=document.getElementById('pDate').value,a=parseFloat(document.getElementById('pAmt').value);if(!d||isNaN(a))return;
+S.premiums=S.premiums.filter(p=>p.date!==d);S.premiums.push({date:d,amount:a});svLocal();cloudSettings();rPrem();
+document.getElementById('pDate').value='';document.getElementById('pAmt').value=''}
+function delPrem(date){S.premiums=S.premiums.filter(p=>p.date!==date);svLocal();cloudSettings();rPrem()}
 
 // ========== FAVORITES ==========
 function addFav(){const f={id:uid(),type:document.getElementById('fType').value,brand:document.getElementById('fBrand').value.trim(),flavor:document.getElementById('fFlav').value.trim(),amount:document.getElementById('fAmt').value.trim()};
@@ -382,151 +372,245 @@ const d={id:uid(),type:f.type,date:localDate(),time:localTime(),brand:f.brand||'
 S.dietLogs.unshift(d);sortLogs(S.dietLogs);svLocal();cloudAppend('diet',d);rDiet()}
 
 // ========== DIET ==========
-function initDC(){document.getElementById('dChips').innerHTML=['main','treat','supplement','human','other'].map(k=>`<button class="ch${k===dType?' on':''}" data-t="${k}" onclick="dType='${k}';initDC()">${dl(k)}</button>`).join('')}
+function initDC(){document.getElementById('dChips').innerHTML=['main','treat','supplement','human','other'].map(k=>`<button class="ch${k===dType?' on':''}" onclick="dType='${k}';initDC()">${dl(k)}</button>`).join('')}
 function addDiet(){const d={id:uid(),type:dType,date:document.getElementById('dDate').value||localDate(),time:document.getElementById('dTime').value||'',brand:document.getElementById('dBrand').value.trim(),flavor:document.getElementById('dFlav').value.trim(),amount:document.getElementById('dAmt').value.trim(),note:document.getElementById('dNote').value.trim()};
 if(!d.brand&&!d.flavor&&!d.note)return;S.dietLogs.unshift(d);sortLogs(S.dietLogs);svLocal();cloudAppend('diet',d);rDiet();['dBrand','dFlav','dAmt','dNote'].forEach(i=>document.getElementById(i).value='')}
 function delDiet(id){S.dietLogs=S.dietLogs.filter(d=>d.id!==id);svLocal();cloudDelete('diet',id);rDiet()}
 function rDiet(){const el=document.getElementById('dietList');if(!S.dietLogs.length){el.innerHTML=`<div class="em">${L.startLog}</div>`;return}
 sortLogs(S.dietLogs);
-el.innerHTML=S.dietLogs.slice(0,50).map(d=>{const timeStr=d.time?d.time.substring(0,5):'';return`<div class="li"><div class="lt">${dl(d.type)}</div><div class="lb"><div class="ld">${fd(d.date)}${timeStr?' '+timeStr:''}</div><div class="lx">${[d.brand,d.flavor].filter(Boolean).join(' · ')}</div>${d.amount?`<div class="ln">${d.amount}</div>`:''}${d.note?`<div class="ln">${d.note}</div>`:''}</div><button class="dx" onclick="delDiet('${d.id}')">✕</button></div>`}).join('')}
+el.innerHTML=S.dietLogs.slice(0,50).map(d=>{const t=d.time?d.time.substring(0,5):'';return`<div class="li"><div class="lt">${dl(d.type)}</div><div class="lb"><div class="ld">${fd(d.date)}${t?' '+t:''}</div><div class="lx">${[d.brand,d.flavor].filter(Boolean).join(' · ')}</div>${d.amount?`<div class="ln">${d.amount}</div>`:''}${d.note?`<div class="ln">${d.note}</div>`:''}</div><button class="dx" onclick="delDiet('${d.id}')">✕</button></div>`}).join('')}
 
 // ========== WEIGHT ==========
-function addWt(){const w=parseFloat(document.getElementById('wVal').value),d=document.getElementById('wDate').value||localDate();if(isNaN(w)||w<=0)return;
-const rec={date:d,weight:w};
-// Remove existing entry for same date
-S.weights=S.weights.filter(x=>x.date!==d);
-S.weights.push(rec);S.weights.sort((a,b)=>a.date.localeCompare(b.date));svLocal();cloudAppend('weight',rec);rWt();document.getElementById('wVal').value=''}
+function addWt(){
+<span class="Apple-converted-space">  </span>const w=parseFloat(document.getElementById('wVal').value),d=document.getElementById('wDate').value||localDate();
+<span class="Apple-converted-space">  </span>if(isNaN(w)||w<=0)return;
+<span class="Apple-converted-space">  </span>const rec={date:d,weight:w};
+<span class="Apple-converted-space">  </span>S.weights=S.weights.filter(x=>x.date!==d);
+<span class="Apple-converted-space">  </span>S.weights.push(rec);
+<span class="Apple-converted-space">  </span>S.weights.sort((a,b)=>a.date.localeCompare(b.date));
+<span class="Apple-converted-space">  </span>svLocal();cloudAppend('weight',rec);
+<span class="Apple-converted-space">  </span>rWt();
+<span class="Apple-converted-space">  </span>document.getElementById('wVal').value='';
+}
+function delWt(date){S.weights=S.weights.filter(w=>w.date!==date);svLocal();cloudDelete('weight',date);rWt()}
 function rWtR(){document.getElementById('wtRange').innerHTML=['all','y1','m6','m3','m1'].map(k=>`<button class="ch${S.wtRange===k?' on':''}" onclick="S.wtRange='${k}';rWt()">${L[k]}</button>`).join('')}
 function rWt(){
-  rWtR();const allW=[...S.weights];const t=localDate();
-  // Always use global latest for badge
-  const gLast=allW.length?allW[allW.length-1]:null;
-  const gPrev=allW.length>1?allW[allW.length-2]:null;
-  const gDiff=gLast&&gPrev?(gLast.weight-gPrev.weight).toFixed(2):null;
-  // Filter for chart only
-  let ws=[...allW];
-  if(S.wtRange==='y1')ws=ws.filter(w=>db(w.date,t)<=365);else if(S.wtRange==='m6')ws=ws.filter(w=>db(w.date,t)<=183);
-  else if(S.wtRange==='m3')ws=ws.filter(w=>db(w.date,t)<=91);else if(S.wtRange==='m1')ws=ws.filter(w=>db(w.date,t)<=31);
-  if(!ws.length){document.getElementById('wtChart').innerHTML=`<div class="em">${L.noLog}</div>`}else{
-  const mn=Math.min(...ws.map(w=>w.weight))-.3,mx=Math.max(...ws.map(w=>w.weight))+.3,cw=Math.max((ws.length-1)*65+75,280);
-  let svg=`<svg viewBox="0 0 ${cw} 170" style="width:100%;height:100%;overflow:visible">`;
-  [0,.25,.5,.75,1].forEach(f=>{const y=150-f*130,v=(mn+f*(mx-mn)).toFixed(1);svg+=`<line x1="32" y1="${y}" x2="${cw-8}" y2="${y}" stroke="#e8e0d6" stroke-width="1"/><text x="29" y="${y+3}" text-anchor="end" font-size="8" fill="#a09890">${v}</text>`});
-  if(ws.length>1){const pts=ws.map((w,i)=>`${i*65+40},${150-((w.weight-mn)/(mx-mn))*130}`).join(' ');svg+=`<polygon fill="url(#wg)" opacity=".2" points="40,150 ${pts} ${(ws.length-1)*65+40},150"/><polyline fill="none" stroke="#8b7355" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="${pts}"/>`}
-  svg+=`<defs><linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b7355"/><stop offset="100%" stop-color="#8b7355" stop-opacity="0"/></linearGradient></defs>`;
-  ws.forEach((w,i)=>{const x=i*65+40,y=150-((w.weight-mn)/(mx-mn))*130;svg+=`<circle cx="${x}" cy="${y}" r="3" fill="#fff" stroke="#8b7355" stroke-width="2"/><text x="${x}" y="${y-7}" text-anchor="middle" font-size="8" font-weight="600" fill="#6b5b4e">${w.weight}</text><text x="${x}" y="${164}" text-anchor="middle" font-size="7" fill="#a09890">${fd(w.date).slice(2)}</text>`});
-  svg+='</svg>';document.getElementById('wtChart').innerHTML=svg}
-  // Badge always shows global latest
-  document.getElementById('wtBdg').innerHTML=gLast?`<div class="bg"><div class="bg-l">${lang==='zh'?'目前':'Now'}</div><div class="bg-v">${gLast.weight}kg</div></div>${gDiff!==null?`<div class="bg"><div class="bg-l">${lang==='zh'?'變化':'Δ'}</div><div class="bg-v" style="color:${Math.abs(gDiff)>.3?'var(--or)':'var(--gn)'}">${gDiff>0?'+':''}${gDiff}kg</div></div>`:''}<div class="bg"><div class="bg-l">${lang==='zh'?'理想':'Ideal'}</div><div class="bg-v">5.5-6.5</div></div>`:''}
+<span class="Apple-converted-space">  </span>rWtR();
+<span class="Apple-converted-space">  </span>const allW=[...S.weights].sort((a,b)=>a.date.localeCompare(b.date));
+<span class="Apple-converted-space">  </span>const t=localDate();
+<span class="Apple-converted-space">  </span>const gLast=allW.length?allW[allW.length-1]:null;
+<span class="Apple-converted-space">  </span>const gPrev=allW.length>1?allW[allW.length-2]:null;
+<span class="Apple-converted-space">  </span>const gDiff=gLast&&gPrev?(gLast.weight-gPrev.weight).toFixed(2):null;
+<span class="Apple-converted-space">  </span>let ws=[...allW];
+<span class="Apple-converted-space">  </span>if(S.wtRange==='y1')ws=ws.filter(w=>db(w.date,t)<=365);else if(S.wtRange==='m6')ws=ws.filter(w=>db(w.date,t)<=183);else if(S.wtRange==='m3')ws=ws.filter(w=>db(w.date,t)<=91);else if(S.wtRange==='m1')ws=ws.filter(w=>db(w.date,t)<=31);
+<span class="Apple-converted-space">  </span>if(!ws.length){document.getElementById('wtChart').innerHTML=`<div class="em">${L.noLog}</div>`}
+<span class="Apple-converted-space">  </span>else{
+<span class="Apple-converted-space">    </span>const mn=Math.min(...ws.map(w=>w.weight))-.3,mx=Math.max(...ws.map(w=>w.weight))+.3,cw=Math.max((ws.length-1)*65+75,280);
+<span class="Apple-converted-space">    </span>let svg=`<svg viewBox="0 0 ${cw} 170" style="width:100%;height:100%;overflow:visible">`;
+<span class="Apple-converted-space">    </span>[0,.25,.5,.75,1].forEach(f=>{const y=150-f*130,v=(mn+f*(mx-mn)).toFixed(1);svg+=`<line x1="32" y1="${y}" x2="${cw-8}" y2="${y}" stroke="#e8e0d6" stroke-width="1"/><text x="29" y="${y+3}" text-anchor="end" font-size="8" fill="#a09890">${v}</text>`});
+<span class="Apple-converted-space">    </span>if(ws.length>1){const pts=ws.map((w,i)=>`${i*65+40},${150-((w.weight-mn)/(mx-mn))*130}`).join(' ');svg+=`<polygon fill="url(#wg)" opacity=".2" points="40,150 ${pts} ${(ws.length-1)*65+40},150"/><polyline fill="none" stroke="#8b7355" stroke-width="2" points="${pts}"/>`}
+<span class="Apple-converted-space">    </span>svg+=`<defs><linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b7355"/><stop offset="100%" stop-color="#8b7355" stop-opacity="0"/></linearGradient></defs>`;
+<span class="Apple-converted-space">    </span>ws.forEach((w,i)=>{const x=i*65+40,y=150-((w.weight-mn)/(mx-mn))*130;svg+=`<circle cx="${x}" cy="${y}" r="3" fill="#fff" stroke="#8b7355" stroke-width="2"/><text x="${x}" y="${y-7}" text-anchor="middle" font-size="8" font-weight="600" fill="#6b5b4e">${w.weight}</text><text x="${x}" y="164" text-anchor="middle" font-size="7" fill="#a09890">${fd(w.date).slice(2)}</text>`});
+<span class="Apple-converted-space">    </span>svg+='</svg>';document.getElementById('wtChart').innerHTML=svg;
+<span class="Apple-converted-space">  </span>}
+<span class="Apple-converted-space">  </span>document.getElementById('wtBdg').innerHTML=gLast?`<div class="bg"><div class="bg-l">${lang==='zh'?'目前':'Now'}</div><div class="bg-v">${gLast.weight}kg</div></div>${gDiff!==null?`<div class="bg"><div class="bg-l">${lang==='zh'?'變化':'Δ'}</div><div class="bg-v" style="color:${Math.abs(gDiff)>.3?'var(--or)':'var(--gn)'}">${gDiff>0?'+':''}${gDiff}kg</div></div>`:''}<div class="bg"><div class="bg-l">${lang==='zh'?'理想':'Ideal'}</div><div class="bg-v">5.5-6.5</div></div>`:'';
+<span class="Apple-converted-space">  </span>// Weight log list
+<span class="Apple-converted-space">  </span>const wl=document.getElementById('wtList');
+<span class="Apple-converted-space">  </span>if(!allW.length){wl.innerHTML=`<div class="em">${L.noLog}</div>`}
+<span class="Apple-converted-space">  </span>else{wl.innerHTML=allW.slice().reverse().map(w=>`<div class="li"><div class="lt">⚖️</div><div class="lb"><div class="ld">${fd(w.date)}</div><div class="lx">${w.weight} kg</div></div><button class="dx" onclick="delWt('${w.date}')">✕</button></div>`).join('')}
+}
 
 // ========== HEALTH ==========
-function initHC(){document.getElementById('hChips').innerHTML=['vomit','stool','urine','appetite','energy','other'].map(k=>`<button class="ch${k===hType?' on':''}" onclick="hType='${k}';hVal='';initHC();rHO()">${dl(k)}</button>`).join('');rHO()}
-function rHO(){const el=document.getElementById('hOpts');
-if(HO[hType])el.innerHTML=`<div class="cr">${HO[hType].map(o=>{const lbl=lang==='zh'?o.split('/')[0]:o.split('/')[1]||o;return`<button class="ch${hVal===o?' gn':''}" onclick="hVal='${o}';rHO()">${lbl}</button>`}).join('')}</div>`;
-else el.innerHTML=`<input type="text" id="hvi" placeholder="${hType==='vomit'?(lang==='zh'?'嘔吐物描述':'Describe vomit'):(lang==='zh'?'描述':'Describe')}" style="margin-bottom:6px" oninput="hVal=this.value">`}
-function addH(){const vi=document.getElementById('hvi'),val=vi?vi.value.trim():hVal;
-const e={id:uid(),type:hType,value:val,date:document.getElementById('hDate').value||localDate(),time:document.getElementById('hTime').value||'',note:document.getElementById('hNote').value.trim()};
-S.healthLogs.unshift(e);sortLogs(S.healthLogs);svLocal();cloudAppend('health',e);rH();rAnal();hVal='';document.getElementById('hNote').value='';if(vi)vi.value='';rHO()}
+function initHC(){document.getElementById('hChips').innerHTML=['vomit','stool','urine','appetite','energy','other'].map(k=>`<button class="ch${k===hType?' on':''}" onclick="hType='${k}';hVal='';hairVomit=false;initHC();rHO()">${dl(k)}</button>`).join('');rHO()}
+function rHO(){
+<span class="Apple-converted-space">  </span>const el=document.getElementById('hOpts');
+<span class="Apple-converted-space">  </span>let h='';
+<span class="Apple-converted-space">  </span>if(HO[hType])h=`<div class="cr">${HO[hType].map(o=>{const lbl=lang==='zh'?o.split('/')[0]:o.split('/')[1]||o;return`<button class="ch${hVal===o?' gn':''}" onclick="hVal='${o}';rHO()">${lbl}</button>`}).join('')}</div>`;
+<span class="Apple-converted-space">  </span>else if(hType==='vomit'){
+<span class="Apple-converted-space">    </span>h=`<input type="text" id="hvi" placeholder="${lang==='zh'?'嘔吐物描述':'Describe vomit'}" style="margin-bottom:6px" value="${hVal}" oninput="hVal=this.value">`;
+<span class="Apple-converted-space">    </span>h+=`<label class="ck-row"><input type="checkbox" id="hvHair" ${hairVomit?'checked':''} onchange="hairVomit=this.checked"> 🐾 ${L.hairVomit}</label>`;
+<span class="Apple-converted-space">  </span>} else h=`<input type="text" id="hvi" placeholder="${lang==='zh'?'描述':'Describe'}" style="margin-bottom:6px" value="${hVal}" oninput="hVal=this.value">`;
+<span class="Apple-converted-space">  </span>el.innerHTML=h;
+}
+function addH(){
+<span class="Apple-converted-space">  </span>const vi=document.getElementById('hvi'),val=vi?vi.value.trim():hVal;
+<span class="Apple-converted-space">  </span>const e={id:uid(),type:hType,value:val,hair:hType==='vomit'?hairVomit:undefined,date:document.getElementById('hDate').value||localDate(),time:document.getElementById('hTime').value||'',note:document.getElementById('hNote').value.trim()};
+<span class="Apple-converted-space">  </span>S.healthLogs.unshift(e);sortLogs(S.healthLogs);svLocal();cloudAppend('health',e);rH();rAnal();
+<span class="Apple-converted-space">  </span>hVal='';hairVomit=false;document.getElementById('hNote').value='';if(vi)vi.value='';rHO();
+}
 function delH(id){S.healthLogs=S.healthLogs.filter(h=>h.id!==id);svLocal();cloudDelete('health',id);rH();rAnal()}
 function rH(){const el=document.getElementById('hList');if(!S.healthLogs.length){el.innerHTML=`<div class="em">${L.noLog}</div>`;return}
 sortLogs(S.healthLogs);
-const tagClr={vomit:'#e8c4b8;color:#b5563a',stool:'#e6ddd4;color:#7a6552',urine:'#d6e5f0;color:#4a7a9b',appetite:'#dce8d6;color:#5a7a4e',energy:'#e2d8ec;color:#7a5a8e',other:'#e8e0d6;color:#6b5b4e'};
+const tc={vomit:'#e8c4b8;color:#b5563a',stool:'#e6ddd4;color:#7a6552',urine:'#d6e5f0;color:#4a7a9b',appetite:'#dce8d6;color:#5a7a4e',energy:'#e2d8ec;color:#7a5a8e',other:'#e8e0d6;color:#6b5b4e'};
 el.innerHTML=S.healthLogs.slice(0,40).map(h=>{const v=h.value?(lang==='zh'?h.value.split('/')[0]:h.value.split('/')[1]||h.value):'';
-const tc=tagClr[h.type]||tagClr.other;
-const timeStr=h.time?h.time.substring(0,5):'';
-return`<div class="li"><div class="lt" style="background:${tc}">${dl(h.type)}</div><div class="lb"><div class="ld">${fd(h.date)}${timeStr?' '+timeStr:''}</div>${v?`<div class="lx">${v}</div>`:''}${h.note?`<div class="ln">${h.note}</div>`:''}</div><button class="dx" onclick="delH('${h.id}')">✕</button></div>`}).join('')}
+const clr=tc[h.type]||tc.other;const t=h.time?h.time.substring(0,5):'';const hair=h.hair?' 🐾':'';
+return`<div class="li"><div class="lt" style="background:${clr}">${dl(h.type)}${hair}</div><div class="lb"><div class="ld">${fd(h.date)}${t?' '+t:''}</div>${v?`<div class="lx">${v}</div>`:''}${h.note?`<div class="ln">${h.note}</div>`:''}</div><button class="dx" onclick="delH('${h.id}')">✕</button></div>`}).join('')}
 
 // ========== GI ANALYSIS ==========
 function rAnalW(){document.getElementById('analWin').innerHTML=[24,48,72].map(h=>`<button class="ch${S.analWin===h?' on':''}" onclick="S.analWin=${h};rAnal()">${h}h</button>`).join('')}
 function rAnal(){
-  rAnalW();const el=document.getElementById('analBox'),t=localDate();
-  const voms=S.healthLogs.filter(h=>h.type==='vomit');
-  const dias=S.healthLogs.filter(h=>h.type==='stool'&&h.value&&(h.value.includes('腹瀉')||h.value.includes('Diarrhea')));
-  const gi=[...voms,...dias];
-  const v30=voms.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=30),v90=voms.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=90);
-  const d30=dias.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=30),d90=dias.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=90);
-  let html=`<div class="br" style="margin-bottom:8px"><div class="bg"><div class="bg-l">${L.vomit30}</div><div class="bg-v" style="color:${v30.length>3?'var(--or)':'var(--gn)'}">${v30.length}</div></div><div class="bg"><div class="bg-l">${L.dia30}</div><div class="bg-v" style="color:${d30.length>2?'var(--or)':'var(--gn)'}">${d30.length}</div></div><div class="bg"><div class="bg-l">${L.vomit90}</div><div class="bg-v">${v90.length}</div></div><div class="bg"><div class="bg-l">${L.dia90}</div><div class="bg-v">${d90.length}</div></div></div>`;
-  // Staple observation
-  const lc=S.stapleHistory.length?S.stapleHistory[S.stapleHistory.length-1]:null;
-  if(lc){const days=db(lc.date,t);if(days>=0&&days<=30)html+=`<div style="background:#fff3e0;border-radius:8px;padding:6px 8px;margin-bottom:8px;font-size:11px;color:var(--or);font-weight:500">${L.analObs} — ${L.analObsDay}${days}${L.analObsDay2}/30 (${lc.to})</div>`}
-  if(gi.length&&S.dietLogs.length){
-    const firstSeen={};S.dietLogs.forEach(d=>{const k=[d.brand,d.flavor].filter(Boolean).join(' ');if(k&&(!firstSeen[k]||d.date<firstSeen[k]))firstSeen[k]=d.date});
-    // Also treat new staple food within 30 days as trackable
-    let newStapleFood=null;
-    if(lc&&db(lc.date,t)>=0&&db(lc.date,t)<=30)newStapleFood=lc.to;
-    const suspects={};
-    gi.forEach(v=>{S.dietLogs.forEach(d=>{
-      if(d.type==='main'&&!(newStapleFood&&[d.brand,d.flavor].filter(Boolean).join(' ').includes(newStapleFood)))return;
-      const dh=(new Date(v.date+(v.time?' '+v.time:''))-new Date(d.date+(d.time?' '+d.time:'')))/36e5;
-      if(dh>=0&&dh<=S.analWin){const k=[d.brand,d.flavor].filter(Boolean).join(' ')||d.note||dl(d.type);
-      if(!suspects[k])suspects[k]={vc:0,dc:0,t:d.type,fd:firstSeen[k]||d.date};
-      if(v.type==='vomit')suspects[k].vc++;else suspects[k].dc++}})});
-    const sorted=Object.entries(suspects).sort((a,b)=>(b[1].vc+b[1].dc)-(a[1].vc+a[1].dc));
-    if(sorted.length){html+=`<div class="cb"><div class="cb-t">⚠️ ${L.analTitle} (${S.analWin}h)</div>`;
-    sorted.slice(0,10).forEach(([food,info])=>{const isNew=info.fd&&db(info.fd,t)<=14;const syms=[];if(info.vc)syms.push(`${dl('vomit')} ${info.vc}`);if(info.dc)syms.push(`${dl('stool')} ${info.dc}`);
-    html+=`<div class="cb-i"><b>${food}</b>${isNew?' <span style="color:var(--or);font-size:10px">'+L.analNew+'</span>':''}（${dl(info.t)}）— ${syms.join(', ')}</div>`});
-    html+=`<div style="font-size:10px;color:var(--t2);margin-top:5px">${L.analNote}</div></div>`}}
-  else if(!gi.length)html+=`<div style="font-size:11px;color:var(--t2);margin-top:5px">${L.analStart}</div>`;
-  else html+=`<div style="font-size:11px;color:var(--t2);margin-top:5px">${L.analNoDiet}</div>`;
-  // Time patterns
-  if(gi.length>=3){
-    html+=`<div style="margin-top:10px;font-size:12px;font-weight:600;color:var(--t3)">${L.timePat}</div>`;
-    const months=Array(12).fill(0);gi.forEach(g=>{months[new Date(g.date).getMonth()]++});
-    const mN=lang==='zh'?['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const mxM=Math.max(...months);
-    html+=`<div style="font-size:10px;color:var(--t2);margin:4px 0 2px">${L.monthPat}</div><div style="display:flex;gap:2px;align-items:end;height:40px">`;
-    months.forEach((c,i)=>{const h=mxM?Math.max(2,c/mxM*36):2;html+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center"><div style="width:100%;height:${h}px;background:${c>0?'var(--b2)':'#e8e0d6'};border-radius:2px"></div><div style="font-size:7px;color:var(--t2);margin-top:1px">${mN[i]}</div></div>`});html+='</div>';
-    if(gi.some(g=>g.time)){const hrs=Array(24).fill(0);gi.forEach(g=>{if(g.time)hrs[parseInt(g.time)]++});const mxH=Math.max(...hrs);
-    html+=`<div style="font-size:10px;color:var(--t2);margin:8px 0 2px">${L.hourPat}</div><div style="display:flex;gap:1px;align-items:end;height:30px">`;
-    hrs.forEach((c,i)=>{const h=mxH?Math.max(1,c/mxH*26):1;html+=`<div style="flex:1"><div style="width:100%;height:${h}px;background:${c>0?'var(--gd)':'#eee'};border-radius:1px"></div>${i%6===0?`<div style="font-size:6px;color:var(--t2);text-align:center">${i}h</div>`:''}</div>`});html+='</div>'}}
-  el.innerHTML=html;
+<span class="Apple-converted-space">  </span>rAnalW();const el=document.getElementById('analBox'),t=localDate();
+<span class="Apple-converted-space">  </span>const voms=S.healthLogs.filter(h=>h.type==='vomit');
+<span class="Apple-converted-space">  </span>const dias=S.healthLogs.filter(h=>h.type==='stool'&&h.value&&(h.value.includes('腹瀉')||h.value.includes('Diarrhea')));
+<span class="Apple-converted-space">  </span>const gi=[...voms,...dias];
+<span class="Apple-converted-space">  </span>const hairV=voms.filter(h=>h.hair);
+<span class="Apple-converted-space">  </span>const v30=voms.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=30),v90=voms.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=90);
+<span class="Apple-converted-space">  </span>const d30=dias.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=30),d90=dias.filter(h=>db(h.date,t)>=0&&db(h.date,t)<=90);
+<span class="Apple-converted-space">  </span>let html=`<div class="br" style="margin-bottom:8px"><div class="bg"><div class="bg-l">${L.vomit30}</div><div class="bg-v" style="color:${v30.length>3?'var(--or)':'var(--gn)'}">${v30.length}</div></div><div class="bg"><div class="bg-l">${L.dia30}</div><div class="bg-v" style="color:${d30.length>2?'var(--or)':'var(--gn)'}">${d30.length}</div></div><div class="bg"><div class="bg-l">${L.vomit90}</div><div class="bg-v">${v90.length}</div></div><div class="bg"><div class="bg-l">${L.dia90}</div><div class="bg-v">${d90.length}</div></div></div>`;
+<span class="Apple-converted-space">  </span>if(hairV.length){html+=`<div style="background:#f5efe0;border-radius:8px;padding:6px 8px;margin-bottom:8px;font-size:11px;color:var(--b1)">🐾 ${lang==='zh'?'毛球型嘔吐':'Hairball vomit'}: ${hairV.length} ${lang==='zh'?'次':'times'} ${lang==='zh'?'（建議增加刷毛頻率）':'(consider more brushing)'}</div>`}
+<span class="Apple-converted-space">  </span>const lc=S.stapleHistory.length?S.stapleHistory[S.stapleHistory.length-1]:null;
+<span class="Apple-converted-space">  </span>if(lc){const days=db(lc.date,t);if(days>=0&&days<=30)html+=`<div style="background:#fff3e0;border-radius:8px;padding:6px 8px;margin-bottom:8px;font-size:11px;color:var(--or);font-weight:500">${L.analObs} — ${L.analObsDay}${days}${L.analObsDay2}/30 (${lc.to})</div>`}
+<span class="Apple-converted-space">  </span>if(gi.length&&S.dietLogs.length){
+<span class="Apple-converted-space">    </span>const firstSeen={};S.dietLogs.forEach(d=>{const k=[d.brand,d.flavor].filter(Boolean).join(' ');if(k&&(!firstSeen[k]||d.date<firstSeen[k]))firstSeen[k]=d.date});
+<span class="Apple-converted-space">    </span>let newStapleFood=null;if(lc&&db(lc.date,t)>=0&&db(lc.date,t)<=30)newStapleFood=lc.to;
+<span class="Apple-converted-space">    </span>const suspects={};
+<span class="Apple-converted-space">    </span>// Only use food-related vomits (NOT hairball vomits)
+<span class="Apple-converted-space">    </span>const foodVoms=voms.filter(v=>!v.hair);
+<span class="Apple-converted-space">    </span>const foodGi=[...foodVoms,...dias];
+<span class="Apple-converted-space">    </span>foodGi.forEach(v=>{S.dietLogs.forEach(d=>{
+<span class="Apple-converted-space">      </span>if(d.type==='main'&&!(newStapleFood&&[d.brand,d.flavor].filter(Boolean).join(' ').includes(newStapleFood)))return;
+<span class="Apple-converted-space">      </span>const dh=(new Date(v.date+(v.time?' '+v.time:''))-new Date(d.date+(d.time?' '+d.time:'')))/36e5;
+<span class="Apple-converted-space">      </span>if(dh>=0&&dh<=S.analWin){const k=[d.brand,d.flavor].filter(Boolean).join(' ')||d.note||dl(d.type);
+<span class="Apple-converted-space">      </span>if(!suspects[k])suspects[k]={vc:0,dc:0,t:d.type,fd:firstSeen[k]||d.date};
+<span class="Apple-converted-space">      </span>if(v.type==='vomit')suspects[k].vc++;else suspects[k].dc++}})});
+<span class="Apple-converted-space">    </span>const sorted=Object.entries(suspects).sort((a,b)=>(b[1].vc+b[1].dc)-(a[1].vc+a[1].dc));
+<span class="Apple-converted-space">    </span>if(sorted.length){html+=`<div class="cb"><div class="cb-t">⚠️ ${L.analTitle} (${S.analWin}h)</div>`;
+<span class="Apple-converted-space">      </span>sorted.slice(0,10).forEach(([food,info])=>{const isNew=info.fd&&db(info.fd,t)<=14;const syms=[];if(info.vc)syms.push(`${dl('vomit')} ${info.vc}`);if(info.dc)syms.push(`${dl('stool')} ${info.dc}`);
+<span class="Apple-converted-space">      </span>html+=`<div class="cb-i"><b>${food}</b>${isNew?' <span style="color:var(--or);font-size:10px">'+L.analNew+'</span>':''}（${dl(info.t)}）— ${syms.join(', ')}</div>`});
+<span class="Apple-converted-space">      </span>html+=`<div style="font-size:10px;color:var(--t2);margin-top:5px">${L.analNote} ${lang==='zh'?'毛球嘔吐已排除':'Hairball vomits excluded'}</div></div>`;
+<span class="Apple-converted-space">    </span>}}
+<span class="Apple-converted-space">  </span>else if(!gi.length)html+=`<div style="font-size:11px;color:var(--t2);margin-top:5px">${L.analStart}</div>`;
+<span class="Apple-converted-space">  </span>else html+=`<div style="font-size:11px;color:var(--t2);margin-top:5px">${L.analNoDiet}</div>`;
+<span class="Apple-converted-space">  </span>if(gi.length>=3){
+<span class="Apple-converted-space">    </span>html+=`<div style="margin-top:10px;font-size:12px;font-weight:600;color:var(--t3)">${L.timePat}</div>`;
+<span class="Apple-converted-space">    </span>const mns=Array(12).fill(0);gi.forEach(g=>{mns[new Date(g.date).getMonth()]++});
+<span class="Apple-converted-space">    </span>const mN=lang==='zh'?['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+<span class="Apple-converted-space">    </span>const mxM=Math.max(...mns);
+<span class="Apple-converted-space">    </span>html+=`<div style="font-size:10px;color:var(--t2);margin:4px 0 2px">${L.monthPat}</div><div style="display:flex;gap:2px;align-items:end;height:40px">`;
+<span class="Apple-converted-space">    </span>mns.forEach((c,i)=>{const h=mxM?Math.max(2,c/mxM*36):2;html+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center"><div style="width:100%;height:${h}px;background:${c>0?'var(--b2)':'#e8e0d6'};border-radius:2px"></div><div style="font-size:7px;color:var(--t2);margin-top:1px">${mN[i]}</div></div>`});html+='</div>';
+<span class="Apple-converted-space">  </span>}
+<span class="Apple-converted-space">  </span>el.innerHTML=html;
 }
 
 // ========== VACCINES ==========
 function rV(){const el=document.getElementById('vList'),t=localDate();
-el.innerHTML=VAX.map((v,i)=>{let clr,lb;if(v.nx==='N/A'){clr='#a0a0a0';lb=lang==='zh'?'澳洲不需要':'Not required in AU'}
-else{const d=db(t,v.nx);if(d<0){clr='var(--or)';lb=(lang==='zh'?'已過期 ':'Overdue ')+Math.abs(d)+(lang==='zh'?' 天':'d')}else if(d<=90){clr='var(--yl)';lb=d+(lang==='zh'?' 天後到期':'d to go')}else{clr='var(--gn)';lb=d+(lang==='zh'?' 天後':'d')}}
+el.innerHTML=VAX.map((v,i)=>{let clr,lb;if(v.nx==='N/A'){clr='#a0a0a0';lb=lang==='zh'?'澳洲不需要':'N/A in AU'}
+else{const d=db(t,v.nx);if(d<0){clr='var(--or)';lb=(lang==='zh'?'已過期':'Overdue ')+Math.abs(d)+(lang==='zh'?'天':'d')}else if(d<=90){clr='var(--yl)';lb=d+(lang==='zh'?'天後到期':'d')}else{clr='var(--gn)';lb=d+(lang==='zh'?'天後':'d')}}
 return`<div style="display:flex;align-items:center;gap:9px;padding:8px 0;${i<VAX.length-1?'border-bottom:1px solid var(--bl)':''}"><div style="width:8px;height:8px;border-radius:50%;background:${clr}"></div><div style="flex:1"><div style="font-weight:600;font-size:12px">${v.n}</div><div style="font-size:10px;color:var(--t2)">${fd(v.d)}</div></div><div style="text-align:right"><div style="font-size:10px;font-weight:600;color:${clr}">${lb}</div></div></div>`}).join('');
 document.getElementById('vaxInfo').innerHTML=`<div style="font-size:11px;line-height:1.6"><div style="font-weight:700;color:var(--b2)">F3/FVRCP</div><p style="margin:2px 0 8px">${L.vaxF3}</p><div style="font-weight:700;color:var(--b2)">FeLV</div><p style="margin:2px 0 8px">${L.vaxFeLV}</p><div style="font-weight:700;color:var(--b2)">FIV</div><p style="margin:2px 0 8px">${L.vaxFIV}</p><div style="font-weight:700;color:var(--b2)">Rabies</div><p style="margin:2px 0 8px">${L.vaxRab}</p></div>`}
 
-// ========== SHEDDING ==========
-function initSB(){document.getElementById('sBar').innerHTML=[1,2,3,4,5].map(n=>`<button onclick="sLv=${n};initSB()" style="${n<=sLv?`background:hsl(${35-n*5},${50+n*8}%,${70-n*8}%);color:#fff`:''}">${n}</button>`).join('')}
-function addSh(){const r={id:uid(),date:document.getElementById('sDate').value||localDate(),level:sLv,note:document.getElementById('sNote').value.trim()};S.sheddingLogs.unshift(r);S.sheddingLogs.sort((a,b)=>(b.date||'').localeCompare(a.date||''));svLocal();cloudAppend('shedding',r);rSh();document.getElementById('sNote').value=''}
+// ========== SHEDDING + BRUSHING ==========
+function toggleShedInput(){const e=document.getElementById('shedInput'),b=document.getElementById('brushInput');e.style.display=e.style.display==='none'?'block':'none';b.style.display='none';if(e.style.display==='block')rAmtBtns('shed')}
+function toggleBrushInput(){const e=document.getElementById('brushInput'),s=document.getElementById('shedInput');e.style.display=e.style.display==='none'?'block':'none';s.style.display='none';if(e.style.display==='block')rAmtBtns('brush')}
+function rAmtBtns(which){
+<span class="Apple-converted-space">  </span>const el=which==='shed'?document.getElementById('shedAmtBtns'):document.getElementById('brushAmtBtns');
+<span class="Apple-converted-space">  </span>const cur=which==='shed'?shedAmt:brushAmt;const cls=which==='brush'?'gn':'';
+<span class="Apple-converted-space">  </span>el.innerHTML=['low','mid','hi'].map(lv=>`<button class="amt-btn ${cls} ${cur===lv?'on':''}" onclick="${which==='shed'?'shedAmt':'brushAmt'}='${lv}';rAmtBtns('${which}')">${L['amt'+(lv==='low'?'Low':lv==='mid'?'Mid':'Hi')]}</button>`).join('')
+}
+function addShed(){
+<span class="Apple-converted-space">  </span>const r={id:uid(),type:'shed',date:document.getElementById('sDate').value||localDate(),amount:shedAmt};
+<span class="Apple-converted-space">  </span>S.sheddingLogs.unshift(r);svLocal();cloudAppend('shedding',r);rSh();
+<span class="Apple-converted-space">  </span>document.getElementById('shedInput').style.display='none';shedAmt='mid';
+}
+function addBrush(){
+<span class="Apple-converted-space">  </span>const r={id:uid(),type:'brush',date:document.getElementById('bDate').value||localDate(),amount:brushAmt};
+<span class="Apple-converted-space">  </span>S.sheddingLogs.unshift(r);svLocal();cloudAppend('shedding',r);rSh();
+<span class="Apple-converted-space">  </span>document.getElementById('brushInput').style.display='none';brushAmt='mid';
+}
 function delSh(id){S.sheddingLogs=S.sheddingLogs.filter(s=>s.id!==id);svLocal();cloudDelete('shedding',id);rSh()}
-function rSh(){const el=document.getElementById('shList');if(!S.sheddingLogs.length){el.innerHTML=`<div class="em">${L.startLog}</div>`;return}
-S.sheddingLogs.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
-el.innerHTML=S.sheddingLogs.slice(0,30).map(s=>{const bars=[1,2,3,4,5].map(n=>`<div style="width:6px;height:13px;border-radius:2px;background:${n<=s.level?`hsl(${35-n*5},${50+n*8}%,${70-n*8}%)`:'#eee'}"></div>`).join('');
-return`<div class="li"><div style="display:flex;gap:1px">${bars}</div><div class="lb"><div class="ld">${fd(s.date)}</div>${s.note?`<div class="ln">${s.note}</div>`:''}</div><button class="dx" onclick="delSh('${s.id}')">✕</button></div>`}).join('');
-const m=new Date().getMonth(),hi=[2,3,4,8,9,10].includes(m);
-document.getElementById('shedSt').innerHTML=`<div style="display:flex;align-items:center;gap:9px"><div style="width:40px;height:40px;border-radius:9px;background:${hi?'linear-gradient(135deg,var(--yl),var(--or))':'linear-gradient(135deg,var(--gn),#8bb07a)'};display:flex;align-items:center;justify-content:center;font-size:20px">${hi?'🔥':'✨'}</div><div><div style="font-weight:600;font-size:13px">${hi?L.shedHigh:L.shedNorm}</div><div style="font-size:10px;color:var(--t2)">${hi?L.brushDaily:L.brushWeek}</div></div></div>`}
+function rSh(){
+<span class="Apple-converted-space">  </span>const el=document.getElementById('shList');
+<span class="Apple-converted-space">  </span>const logs=[...S.sheddingLogs].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+<span class="Apple-converted-space">  </span>// Status
+<span class="Apple-converted-space">  </span>const m=new Date().getMonth(),hi=[2,3,4,8,9,10].includes(m);
+<span class="Apple-converted-space">  </span>const brushes=logs.filter(l=>l.type==='brush');
+<span class="Apple-converted-space">  </span>const lastBrush=brushes.length?brushes[0]:null;
+<span class="Apple-converted-space">  </span>const daysSince=lastBrush?db(lastBrush.date,localDate()):null;
+<span class="Apple-converted-space">  </span>const brushClr=daysSince===null?'var(--t2)':daysSince>7?'var(--or)':daysSince>3?'var(--yl)':'var(--gn)';
+<span class="Apple-converted-space">  </span>document.getElementById('shedSt').innerHTML=`
+<div style="display:flex;gap:10px">
+<div style="flex:1;display:flex;align-items:center;gap:9px">
+<div style="width:40px;height:40px;border-radius:9px;background:${hi?'linear-gradient(135deg,var(--yl),var(--or))':'linear-gradient(135deg,var(--gn),#8bb07a)'};display:flex;align-items:center;justify-content:center;font-size:20px">${hi?'🔥':'✨'}</div>
+<div><div style="font-weight:600;font-size:12px">${hi?L.shedHigh:L.shedNorm}</div><div style="font-size:10px;color:var(--t2)">${hi?(lang==='zh'?'建議每天刷毛':'Brush daily'):(lang==='zh'?'每週1-2次':'1-2x/week')}</div></div>
+</div>
+<div style="flex:1;background:var(--bg);border-radius:9px;padding:8px;text-align:center">
+<div style="font-size:9px;color:var(--t2)">${L.lastBrush}</div>
+<div style="font-size:14px;font-weight:700;color:${brushClr}">${daysSince===null?L.neverBrush:daysSince===0?(lang==='zh'?'今天':'Today'):daysSince+' '+L.daysAgo}</div>
+</div></div>`;
+<span class="Apple-converted-space">  </span>// Log list
+<span class="Apple-converted-space">  </span>if(!logs.length){el.innerHTML=`<div class="em">${L.noLog}</div>`;return}
+<span class="Apple-converted-space">  </span>const amtClr={low:'#e6ddd4',mid:'#c9a96e',hi:'#c47a5a'};
+<span class="Apple-converted-space">  </span>el.innerHTML=logs.slice(0,40).map(s=>{
+<span class="Apple-converted-space">    </span>const isBrush=s.type==='brush';
+<span class="Apple-converted-space">    </span>const tagBg=isBrush?'#dce8d6;color:#5a7a4e':'#f5e6d4;color:#a07544';
+<span class="Apple-converted-space">    </span>const amtLbl=L['amt'+(s.amount==='low'?'Low':s.amount==='mid'?'Mid':'Hi')];
+<span class="Apple-converted-space">    </span>return`<div class="li"><div class="lt" style="background:${tagBg}">${isBrush?'🖐️ '+L.brushLog:'📊 '+L.shedLog}</div><div class="lb"><div class="ld">${fd(s.date)}</div><div class="lx"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${amtClr[s.amount]||'#ccc'};margin-right:4px;vertical-align:middle"></span>${isBrush?(lang==='zh'?'刷出 ':'Brushed: '):(lang==='zh'?'掉毛 ':'Shed: ')}${amtLbl}</div></div><button class="dx" onclick="delSh('${s.id}')">✕</button></div>`;
+<span class="Apple-converted-space">  </span>}).join('');
+}
+
+// ========== CARE ==========
+function rCare(){
+<span class="Apple-converted-space">  </span>const el=document.getElementById('careList'),t=localDate();
+<span class="Apple-converted-space">  </span>if(!S.careItems.length){el.innerHTML=`<div class="em">${L.noLog}</div>`;return}
+<span class="Apple-converted-space">  </span>el.innerHTML=S.careItems.map(c=>{
+<span class="Apple-converted-space">    </span>const nm=c.custom?c.name:L[c.name]||c.name;
+<span class="Apple-converted-space">    </span>if(!c.last){return`<div class="mc"><div class="mc-n">${nm} <button class="dx" onclick="delCare('${c.id}')">✕</button></div><div class="mc-i">${lang==='zh'?'週期：每':'Every'} ${c.cycle} ${lang==='zh'?'天':'d'} | ${L.noMed}</div><div class="care-row"><button class="btn bs" onclick="markCare('${c.id}')">${L.doneToday}</button><button class="bo bs" onclick="editCare('${c.id}')">⚙️</button></div></div>`}
+<span class="Apple-converted-space">    </span>const next=new Date(new Date(c.last).getTime()+c.cycle*864e5);
+<span class="Apple-converted-space">    </span>const dl2=db(t,next.toISOString().slice(0,10));
+<span class="Apple-converted-space">    </span>const pct=Math.max(0,Math.min(100,((c.cycle-Math.max(0,dl2))/c.cycle)*100));
+<span class="Apple-converted-space">    </span>const clr=dl2<=0?'var(--or)':dl2<=Math.max(1,c.cycle*0.2)?'var(--yl)':'var(--gn)';
+<span class="Apple-converted-space">    </span>return`<div class="mc"><div class="mc-n">${nm} <button class="dx" onclick="delCare('${c.id}')">✕</button></div>
+<div class="mc-i">${lang==='zh'?'週期：每':'Every'} ${c.cycle} ${lang==='zh'?'天':'d'} | ${lang==='zh'?'上次：':'Last: '}${fd(c.last)}</div>
+<div class="mc-i" style="font-weight:600;color:${clr}">${lang==='zh'?'下次：':'Next: '}${fd(next.toISOString().slice(0,10))}（${dl2>0?dl2+(lang==='zh'?' 天後':' d'):(lang==='zh'?'已到期！':'Due!')}）</div>
+<div class="mb"><div class="mb-f" style="width:${pct}%;background:${clr}"></div></div>
+<div class="care-row"><button class="btn bs" onclick="markCare('${c.id}')">${L.doneToday}</button><button class="bo bs" onclick="editCare('${c.id}')">⚙️</button></div></div>`;
+<span class="Apple-converted-space">  </span>}).join('');
+}
+function markCare(id){const c=S.careItems.find(x=>x.id===id);if(!c)return;c.last=localDate();svLocal();cloudSettings();rCare()}
+function editCare(id){const c=S.careItems.find(x=>x.id===id);if(!c)return;
+<span class="Apple-converted-space">  </span>const nm=c.custom?c.name:L[c.name]||c.name;
+<span class="Apple-converted-space">  </span>const newCycle=prompt((lang==='zh'?'週期（天）':'Cycle (days)')+' - '+nm,c.cycle);
+<span class="Apple-converted-space">  </span>if(newCycle===null)return;
+<span class="Apple-converted-space">  </span>const nc=parseInt(newCycle);if(!isNaN(nc)&&nc>0){c.cycle=nc;svLocal();cloudSettings();rCare()}
+}
+function addCare(){const n=document.getElementById('cName').value.trim(),c=parseInt(document.getElementById('cCycle').value),l=document.getElementById('cLast').value||'';
+if(!n||!c)return;S.careItems.push({id:uid(),name:n,cycle:c,last:l,custom:true});svLocal();cloudSettings();rCare();
+['cName','cCycle','cLast'].forEach(i=>document.getElementById(i).value='')}
+function delCare(id){if(!confirm(lang==='zh'?'確定刪除此項目？':'Delete this item?'))return;S.careItems=S.careItems.filter(c=>c.id!==id);svLocal();cloudSettings();rCare()}
 
 // ========== MISC ==========
 function rHx(){document.getElementById('hxBox').innerHTML=[L.hx1,L.hx2,L.hx3,L.hx4,L.hx5].map((h,i)=>`<div style="padding:3px 0;${i<4?'border-bottom:1px solid var(--bl)':''}"><span style="color:var(--gd)">●</span> ${h}</div>`).join('')}
-function expR(type){let t='';const ln=s=>t+=s+'\n';ln('=== Mia 咪啊 Health Report ===');ln('Generated: '+new Date().toLocaleString());ln('Staple: '+S.staple);if(S.med.name)ln('Prevention: '+S.med.name+' q'+S.med.cycle+'d');ln('');
+function expR(type){let t='';const ln=s=>t+=s+'\n';
+ln('=== Mia 咪啊 Health Report ===');ln('Generated: '+new Date().toLocaleString());if(S.staple)ln('Staple: '+S.staple);ln('');
 if(type==='all'){ln('[Weight]');S.weights.forEach(w=>ln(fd(w.date)+' → '+w.weight+'kg'));ln('')}
-if(type==='all'||type==='gi'){ln('[Vomit]');S.healthLogs.filter(h=>h.type==='vomit').forEach(h=>ln(fdt(h.date,h.time)+' | '+(h.value||'')));ln('');ln('[Diarrhea]');S.healthLogs.filter(h=>h.type==='stool'&&h.value&&(h.value.includes('腹瀉')||h.value.includes('Diarrhea'))).forEach(h=>ln(fdt(h.date,h.time)+' | '+(h.value||'')));ln('');ln('[Diet (30)]');S.dietLogs.slice(0,30).forEach(d=>ln(fdt(d.date,d.time)+' | '+dl(d.type)+' | '+[d.brand,d.flavor].filter(Boolean).join(' ')+(d.amount?' | '+d.amount:'')));ln('');if(S.stapleHistory.length){ln('[Staple Changes]');S.stapleHistory.forEach(s=>ln(fd(s.date)+': '+s.from+' → '+s.to));ln('')}}
-if(type==='all'){ln('[Other Health]');S.healthLogs.filter(h=>h.type!=='vomit').forEach(h=>ln(fdt(h.date,h.time)+' | '+dl(h.type)+' | '+(h.value||'')));ln('');ln('[Shedding]');S.sheddingLogs.forEach(s=>ln(fd(s.date)+' Lv'+s.level+'/5'+(s.note?' '+s.note:'')))}
-if(type==='csv'){t='type,date,time,d1,d2,amount,note\n';S.dietLogs.forEach(d=>ln(['diet-'+d.type,d.date,d.time,d.brand,d.flavor,d.amount,d.note].map(s=>'"'+(s||'')+'"').join(',')));S.healthLogs.forEach(h=>ln(['health-'+h.type,h.date,h.time,h.value,'','',h.note].map(s=>'"'+(s||'')+'"').join(',')));S.weights.forEach(w=>ln(['weight',w.date,'',w.weight,'','',''].map(s=>'"'+(s||'')+'"').join(',')))}
+if(type==='all'||type==='gi'){
+ln('[Vomit]');S.healthLogs.filter(h=>h.type==='vomit').forEach(h=>ln(fd(h.date)+(h.time?' '+h.time.substring(0,5):'')+' | '+(h.value||'')+(h.hair?' [HAIRBALL]':'')));ln('');
+ln('[Diarrhea]');S.healthLogs.filter(h=>h.type==='stool'&&h.value&&(h.value.includes('腹瀉')||h.value.includes('Diarrhea'))).forEach(h=>ln(fd(h.date)+(h.time?' '+h.time.substring(0,5):'')+' | '+(h.value||'')));ln('');
+ln('[Diet (30)]');S.dietLogs.slice(0,30).forEach(d=>ln(fd(d.date)+(d.time?' '+d.time.substring(0,5):'')+' | '+dl(d.type)+' | '+[d.brand,d.flavor].filter(Boolean).join(' ')+(d.amount?' | '+d.amount:'')));ln('')}
+if(type==='all'){ln('[Other Health]');S.healthLogs.filter(h=>h.type!=='vomit').forEach(h=>ln(fd(h.date)+(h.time?' '+h.time.substring(0,5):'')+' | '+dl(h.type)+' | '+(h.value||'')));ln('');
+ln('[Shedding & Brushing]');S.sheddingLogs.forEach(s=>ln(fd(s.date)+' | '+(s.type==='brush'?'Brush':'Shed')+' | '+(s.amount||'')));ln('');
+ln('[Care]');S.careItems.forEach(c=>{const nm=c.custom?c.name:L[c.name]||c.name;ln(nm+' q'+c.cycle+'d, last: '+(c.last||'—'))})}
+if(type==='csv'){t='type,date,time,d1,d2,amount,note\n';S.dietLogs.forEach(d=>ln(['diet-'+d.type,d.date,d.time,d.brand,d.flavor,d.amount,d.note].map(s=>'"'+(s||'')+'"').join(',')));S.healthLogs.forEach(h=>ln(['health-'+h.type,h.date,h.time,h.value,h.hair?'hair':'','',h.note].map(s=>'"'+(s||'')+'"').join(',')));S.weights.forEach(w=>ln(['weight',w.date,'',w.weight,'','',''].map(s=>'"'+(s||'')+'"').join(',')));S.sheddingLogs.forEach(s=>ln([s.type,s.date,'',s.amount,'','',''].map(x=>'"'+(x||'')+'"').join(',')))}
 document.getElementById('moT').textContent=type==='csv'?'CSV':type==='gi'?'GI Analysis':'Full Report';document.getElementById('moC').textContent=t;document.getElementById('exMo').classList.add('sh')}
 function cpR(){const t=document.getElementById('moC').textContent;navigator.clipboard.writeText(t).then(()=>{document.getElementById('cpM').style.display='block';setTimeout(()=>document.getElementById('cpM').style.display='none',2000)}).catch(()=>{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);document.getElementById('cpM').style.display='block';setTimeout(()=>document.getElementById('cpM').style.display='none',2000)})}
 function clMo(){document.getElementById('exMo').classList.remove('sh')}
 function resetAll(){localStorage.removeItem('mia-tracker');localStorage.removeItem('mia-lang');location.reload()}
-function rAll(){document.getElementById('age').textContent=age();document.getElementById('ageD').textContent=age();rHx();rStaple();rMed();rFavs();rFavBtns();initDC();rDiet();rWt();initHC();rH();rAnal();rV();initSB();rSh()}
+function rAll(){document.getElementById('age').textContent=age();document.getElementById('ageD').textContent=age();rHx();rPrem();rStaple();rFavs();rFavBtns();initDC();rDiet();rWt();initHC();rH();rAnal();rV();rSh();rCare()}
 
 // ========== INIT ==========
 async function init(){
-  lang=localStorage.getItem('mia-lang')||'zh';L=lang==='zh'?ZH:EN;
-  ldLocal();
-  document.getElementById('dDate').value=localDate();document.getElementById('dTime').value=localTime();
-  document.getElementById('wDate').value=localDate();document.getElementById('hDate').value=localDate();
-  document.getElementById('hTime').value=localTime();document.getElementById('sDate').value=localDate();
-  document.getElementById('mLast').value=S.med.last||localDate();
-  if(S.gasUrl)document.getElementById('gasUrl').value=S.gasUrl;
-  if(S.med.name){document.getElementById('mName').value=S.med.name;document.getElementById('mCycle').value=S.med.cycle}
-  applyLang();initTb();rAll();sw(curTab);
-  // Cloud load: merge, not overwrite
-  if(S.gasUrl){document.getElementById('loadMsg').textContent=lang==='zh'?'正在從雲端載入...':'Loading from cloud...';
-  const ok=await cloudLoad();if(ok)rAll()}
-  document.getElementById('loader').classList.add('hide');
+<span class="Apple-converted-space">  </span>lang=localStorage.getItem('mia-lang')||'zh';L=lang==='zh'?ZH:EN;
+<span class="Apple-converted-space">  </span>ldLocal();
+<span class="Apple-converted-space">  </span>document.getElementById('dDate').value=localDate();document.getElementById('dTime').value=localTime();
+<span class="Apple-converted-space">  </span>document.getElementById('wDate').value=localDate();document.getElementById('hDate').value=localDate();
+<span class="Apple-converted-space">  </span>document.getElementById('hTime').value=localTime();
+<span class="Apple-converted-space">  </span>document.getElementById('sDate').value=localDate();document.getElementById('bDate').value=localDate();
+<span class="Apple-converted-space">  </span>document.getElementById('pDate').value=localDate();
+<span class="Apple-converted-space">  </span>if(S.gasUrl)document.getElementById('gasUrl').value=S.gasUrl;
+<span class="Apple-converted-space">  </span>applyLang();initTb();rAll();sw(curTab);
+<span class="Apple-converted-space">  </span>if(S.gasUrl){document.getElementById('loadMsg').textContent=lang==='zh'?'正在從雲端載入...':'Loading from cloud...';
+<span class="Apple-converted-space">  </span>const ok=await cloudLoad();if(ok)rAll()}
+<span class="Apple-converted-space">  </span>document.getElementById('loader').classList.add('hide');
 }
 init();
 </script>
